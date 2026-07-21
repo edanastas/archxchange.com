@@ -27,7 +27,7 @@ if ( $_FILES["file"] ) {
 	
 	$filename = "/Library/WebServer/Documents/ARCHXCHANGE/www/upload/". uniqid("") ."";
 	
-	move_uploaded_file({$_FILES['file']['tmp_name'], $filename ."");
+	move_uploaded_file($_FILES['file']['tmp_name'], $filename ."");
 	//$imginfo = getimagesize($filename.".gif");
 	//dev_print($imginfo);
 	

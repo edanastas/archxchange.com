@@ -96,7 +96,7 @@ function local_type($type) {
 			switch ( $type ) {
 				case 'title':
 					$return .= "<label>Project Title</label>
-						<input type=text name='title' ". form_value("Project Title",{$_POST['title']) ." style='width:200px;color:gray;'><p>
+						<input type=text name='title' ". form_value("Project Title",$_POST['title']) ." style='width:200px;color:gray;'><p>
 						<label></label>
 						<input type=submit name='SUBMIT_TITLE' value='Submit New Project Title'><p>";
 					break;
@@ -112,7 +112,7 @@ function local_type($type) {
 							$sql = "SELECT * FROM categories WHERE approved IS NOT NULL";
 							$query = mysqli_query($db, $sql);
 							while (  $category = mysqli_fetch_array($query) ) {
-								$return .= "<option value='". ${category}['category_id'] ."' ". ({$_POST['category_id'] == ${category}['category_id'] ? " SELECTED" : null) .">". ucwords({$category['category']) ." [". ${category}['category_id'] ."]</option>";
+								$return .= "<option value='". ${category}['category_id'] ."' ". ($_POST['category_id'] == ${category}['category_id'] ? " SELECTED" : null) .">". ucwords({$category['category']) ." [". ${category}['category_id'] ."]</option>";
 							}
 							$return .= "<option value=''>Add Building Category...</option>
 						</select><p>
@@ -126,7 +126,7 @@ function local_type($type) {
 							$sql = "SELECT * FROM styles WHERE approved IS NOT NULL";
 							$query = mysqli_query($db, $sql);
 							while (  $style = mysqli_fetch_array($query) ) {
-								$return .= "<option value='". ${style}['style_id'] ."' ". ({$_POST['style_id'] == ${style}['style_id'] ? " SELECTED" : null) .">". ucwords({$style['style']) ." [". ${style}['style_id'] ."]</option>";
+								$return .= "<option value='". ${style}['style_id'] ."' ". ($_POST['style_id'] == ${style}['style_id'] ? " SELECTED" : null) .">". ucwords({$style['style']) ." [". ${style}['style_id'] ."]</option>";
 							}
 							$return .= "<option value=''>Add Design Style...</option>
 						</select><p>
@@ -142,7 +142,7 @@ function local_type($type) {
 							$sql = "SELECT * FROM professions WHERE approved IS NOT NULL";
 							$query = mysqli_query($db, $sql);
 							while (  $profession = mysqli_fetch_array($query) ) {
-								$return .= "<option value='". ${profession}['profession_id'] ."' ". ({$_POST['profession_id'] == ${profession}['profession_id'] ? " SELECTED" : null) .">". ucwords({$profession['profession']) ." [". ${profession}['profession_id'] ."]</option>";
+								$return .= "<option value='". ${profession}['profession_id'] ."' ". ($_POST['profession_id'] == ${profession}['profession_id'] ? " SELECTED" : null) .">". ucwords({$profession['profession']) ." [". ${profession}['profession_id'] ."]</option>";
 							}
 							$return .= "<option value=''>Add Team Member...</option>
 						</select><p>
@@ -154,7 +154,7 @@ function local_type($type) {
 		
 				case 'description':
 					$return .= "<label>Title</label>
-						<input type=text name='description_title' ". form_value("Description Title",{$_POST['title']) ." style='width:200px;color:gray;'><p>
+						<input type=text name='description_title' ". form_value("Description Title",$_POST['title']) ." style='width:200px;color:gray;'><p>
 						<label>Description</label>
 						<textarea name='description' style='width:200px;' rows=4>". ( ${_POST}['description'] ? ${_POST}['description'] : null ) ."</textarea><p>
 						<label></label>
@@ -163,7 +163,7 @@ function local_type($type) {
 		
 				case 'link':
 					$return .= "<label>Link</label>
-						<input type=text name='link_title' ". form_value("Link Title",{$_POST['link_title']) ." style='width:200px;color:gray;'><p>
+						<input type=text name='link_title' ". form_value("Link Title",$_POST['link_title']) ." style='width:200px;color:gray;'><p>
 						<label>URL/Web Address</label>
 						<textarea name='url' style='width:200px;' rows=4>". ( ${_POST}['url'] ? ${_POST}['url'] : null ) ."</textarea><p>
 						<label></label>
@@ -175,7 +175,7 @@ function local_type($type) {
 	</div>";
 	
 	
-	$return .= "<form name='". $type ."_form' method=post action='". ${_SERVER}['PHP_SELF'] ."". ({$_SERVER['QUERY_STRING'] ? "?". ${_SERVER}['QUERY_STRING'] : NULL) ."'>";
+	$return .= "<form name='". $type ."_form' method=post action='". ${_SERVER}['PHP_SELF'] ."". ($_SERVER['QUERY_STRING'] ? "?". ${_SERVER}['QUERY_STRING'] : NULL) ."'>";
 	
 	///////////////// STOP!
 	// THIS PART SHOULD BE CUSTOMIZED DEPENDING ON DATA TYPE
@@ -541,12 +541,12 @@ function local_return_id($value,$table,$type) { // ([id/SUBMITTED VALUE]/categor
 ////////// COMMENTS
 ////////////////////////////////////////
 ////////////////////////////////////////
-if ( is_array({$_POST['SUBMIT_COMMENT']) ) {
+if ( is_array($_POST['SUBMIT_COMMENT']) ) {
 	
-	list($comment_type) = array_keys({$_POST['SUBMIT_COMMENT']);
+	list($comment_type) = array_keys($_POST['SUBMIT_COMMENT']);
 	//$log[] = $comment_type;
 	
-	list($comment_parent_id) = array_keys({$_POST['comment'][$comment_type]);
+	list($comment_parent_id) = array_keys($_POST['comment'][$comment_type]);
 	$log[] = $comment_parent_id;
 	
 //	foreach( ${_POST}['comment'][$comment_type] AS $key => $value) {
@@ -555,7 +555,7 @@ if ( is_array({$_POST['SUBMIT_COMMENT']) ) {
 				parent_id = '". $comment_parent_id ."', 
 				user_id = '". USER_ID ."', 
 				type = '". local_type_id($comment_type) ."', 
-				comment = '". query_prep({$_POST['comment'][$comment_type][$comment_parent_id]) ."'";
+				comment = '". query_prep($_POST['comment'][$comment_type][$comment_parent_id]) ."'";
 			if ( !mysqli_query($db, $sql) ) {
 				echo "error: ". mysqli_error($db) ."<p>";
 				error("there was an error trying to insert the users comments for project_id: ". ${_GET}['CRYPT_REF_ID'] .", comment_type: ". $comment_type .", comment_parent_id: ". $comment_parent_id ."",$sql);
@@ -576,13 +576,13 @@ if ( is_array({$_POST['SUBMIT_COMMENT']) ) {
 	
 	
 	$sql = "INSERT INTO projects_title SET 
-		title = '". query_prep({$_POST['title']) ."', 
+		title = '". query_prep($_POST['title']) ."', 
 		project_id = '". ${_GET}['CRYPT_REF_ID'] ."', 
 		user_id = '". USER_ID ."'";
 	if ( !$query = mysqli_query($db, $sql) ) {
 		error("there was an error adding a title to the project",$sql);
 	} else {
-		header("location:". ${_SERVER}['PHP_SELF'] ."". ({$_SERVER['QUERY_STRING'] ? "?". ${_SERVER}['QUERY_STRING'] : NULL));
+		header("location:". ${_SERVER}['PHP_SELF'] ."". ($_SERVER['QUERY_STRING'] ? "?". ${_SERVER}['QUERY_STRING'] : NULL));
 	}
 	
 ////////// LOCATION
@@ -599,7 +599,7 @@ if ( is_array({$_POST['SUBMIT_COMMENT']) ) {
 	
 	// CHECK IF EXACT category_id WAS SUBMITTED
 	// get category_id
-	if ( $category_id = local_return_id({$_POST['category_id'],'categories','category') ) {
+	if ( $category_id = local_return_id($_POST['category_id'],'categories','category') ) {
 		
 		// CHECK IF EXACT style_id WAS SUBMITTED
 		$sql = "SELECT * FROM projects_category 
@@ -630,7 +630,7 @@ if ( is_array({$_POST['SUBMIT_COMMENT']) ) {
 	
 
 	// get style_id
-	if ( $style_id = local_return_id({$_POST['style_id'],'styles','style') ) {
+	if ( $style_id = local_return_id($_POST['style_id'],'styles','style') ) {
 		
 		// CHECK IF EXACT style_id WAS SUBMITTED
 		$sql = "SELECT * FROM projects_style 
@@ -663,15 +663,15 @@ if ( is_array({$_POST['SUBMIT_COMMENT']) ) {
 	// CHECK IF EXACT profession_id / name COMBINATION HAS BEEN SUBMITTED
 	
 	// get profession_id
-//	if ( $profession_id = local_return_profession_id({$_POST['profession_id']) ) {
-	if ( $profession_id = local_return_id({$_POST['profession_id'],'professions','profession') ) {
+//	if ( $profession_id = local_return_profession_id($_POST['profession_id']) ) {
+	if ( $profession_id = local_return_id($_POST['profession_id'],'professions','profession') ) {
 		
 		// insert into the projects_professions table
 		$sql = "INSERT INTO projects_team SET 
 			project_id = '". ${_GET}['CRYPT_REF_ID'] ."', 
 			profession_id = '". $profession_id ."', 
-			name = '". query_prep({$_POST['name']) ."', 
-			user_id = ". ({$_POST['me'] && defined('USER_ID') ? "'". USER_ID ."'" : "NULL");
+			name = '". query_prep($_POST['name']) ."', 
+			user_id = ". ($_POST['me'] && defined('USER_ID') ? "'". USER_ID ."'" : "NULL");
 		if ( !$query = mysqli_query($db, $sql) ) {
 			error("there was an error trying to insert the project profession association",$sql,1);
 		} else {
@@ -686,8 +686,8 @@ if ( is_array({$_POST['SUBMIT_COMMENT']) ) {
 } elseif ( ${_POST}['SUBMIT_DESCRIPTION'] ) {
 	
 	$sql = "INSERT INTO projects_description SET 
-		title = '". query_prep({$_POST['description_title']) ."', 
-		description = '". query_prep({$_POST['description']) ."', 
+		title = '". query_prep($_POST['description_title']) ."', 
+		description = '". query_prep($_POST['description']) ."', 
 		project_id = '". ${_GET}['CRYPT_REF_ID'] ."', 
 		user_id = '". USER_ID ."'";
 	
@@ -696,7 +696,7 @@ if ( is_array({$_POST['SUBMIT_COMMENT']) ) {
 	if ( !$query = mysqli_query($db, $sql) ) {
 		error("there was an error adding a description to the project",$sql);
 	} else {
-		header("location:". ${_SERVER}['PHP_SELF'] ."". ({$_SERVER['QUERY_STRING'] ? "?". ${_SERVER}['QUERY_STRING'] : NULL));
+		header("location:". ${_SERVER}['PHP_SELF'] ."". ($_SERVER['QUERY_STRING'] ? "?". ${_SERVER}['QUERY_STRING'] : NULL));
 	}
 	
 ////////// LINKS
@@ -707,8 +707,8 @@ if ( is_array({$_POST['SUBMIT_COMMENT']) ) {
 	// CHECK IF EXACT url HAS BEEN SUBMITTED
 	
 	$sql = "INSERT INTO projects_link SET 
-		title = '". query_prep({$_POST['link_title']) ."', 
-		url = '". query_prep({$_POST['url']) ."', 
+		title = '". query_prep($_POST['link_title']) ."', 
+		url = '". query_prep($_POST['url']) ."', 
 		project_id = '". ${_GET}['CRYPT_REF_ID'] ."', 
 		user_id = '". USER_ID ."'";
 	
@@ -717,7 +717,7 @@ if ( is_array({$_POST['SUBMIT_COMMENT']) ) {
 	if ( !$query = mysqli_query($db, $sql) ) {
 		error("there was an error adding a link to the project",$sql);
 	} else {
-		header("location:". ${_SERVER}['PHP_SELF'] ."". ({$_SERVER['QUERY_STRING'] ? "?". ${_SERVER}['QUERY_STRING'] : NULL));
+		header("location:". ${_SERVER}['PHP_SELF'] ."". ($_SERVER['QUERY_STRING'] ? "?". ${_SERVER}['QUERY_STRING'] : NULL));
 	}
 	
 ////////// IMAGE
@@ -730,17 +730,17 @@ if ( is_array({$_POST['SUBMIT_COMMENT']) ) {
 			user_id = '". USER_ID ."', 
 			project_id = '". ${_GET}['CRYPT_REF_ID'] ."', 
 			
-			file_type = ". ({$_FILES['file']['type'] ? "'". ${_FILES}['file']['type'] ."'" : "NULL") .",
-			file_size = ". ({$_FILES['file']['size'] ? "'". ${_FILES}['file']['size'] ."'" : "NULL") .",
-			file_name = ". ({$_FILES['file']['name'] ? "'". ${_FILES}['file']['name'] ."'" : "NULL") .",
+			file_type = ". ($_FILES['file']['type'] ? "'". ${_FILES}['file']['type'] ."'" : "NULL") .",
+			file_size = ". ($_FILES['file']['size'] ? "'". ${_FILES}['file']['size'] ."'" : "NULL") .",
+			file_name = ". ($_FILES['file']['name'] ? "'". ${_FILES}['file']['name'] ."'" : "NULL") .",
 			
 			title = ". ($_POST['image_title_'. $key] ? "'". $_POST['image_title_'. $key] ."'" : 
-				({$_POST['title'] ? "'". ${_POST}['title'] ."'" : "NULL")) .",
+				($_POST['title'] ? "'". ${_POST}['title'] ."'" : "NULL")) .",
 			
 			caption = ". ($_POST['image_caption_'. $key] ? "'". $_POST['image_caption_'. $key] ."'" : 
-				({$_POST['caption'] ? "'". ${_POST}['caption'] ."'" : "NULL")) .",
+				($_POST['caption'] ? "'". ${_POST}['caption'] ."'" : "NULL")) .",
 			
-			date = ". ({$_POST['date'] ? "'". ${_POST}['date'] ."'" : "NULL") ."";
+			date = ". ($_POST['date'] ? "'". ${_POST}['date'] ."'" : "NULL") ."";
 		
 		$log[] = $sql;
 		
@@ -1084,7 +1084,7 @@ echo "<div id='upload_images' style='display:none;margin-left:160px;'>
 	<div class='form'>
 		<!--<h2>Upload Image</h2>-->
 		<form name=uploadForm enctype='multipart/form-data' action='". ${_SERVER}['PHP_SELF'] . 
-			({$_SERVER['QUERY_STRING'] ? "?". ${_SERVER}['QUERY_STRING'] : NULL) ."' method=post>
+			($_SERVER['QUERY_STRING'] ? "?". ${_SERVER}['QUERY_STRING'] : NULL) ."' method=post>
 		<input type=hidden name=MAX_FILE_SIZE value=5000000>
 		<label>Image File</label>
 		<input type=file name=file><p>

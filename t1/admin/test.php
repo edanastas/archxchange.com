@@ -36,7 +36,7 @@ echo "<form method=post>
 	
 	<input type=text name=command style='width:100%;' value='' onfocus=\"formAltered();\">
 	<textarea name=store style='width:100%;' rows=10>". 
-		stripslashes(({$_POST['store'] ? ${_POST}['store'] : null)) ."</textarea>
+		stripslashes(($_POST['store'] ? ${_POST}['store'] : null)) ."</textarea>
 	</form>";
 */
 /*

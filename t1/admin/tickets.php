@@ -28,7 +28,7 @@ define("TITLE","ADMIN: ". DOMAIN); // PAGE TITLE
 /////////////////////////////////////////////////////////////////////////////////////
 include(TEMPLATE_BASE_DIR ."_includes/inc_header_admin.php");
 
-echo "<H1>this is  ". basename({$_SERVER['PHP_SELF']) ."</H1>";
+echo "<H1>this is  ". basename($_SERVER['PHP_SELF']) ."</H1>";
 
 	
 ////////// FOOTER

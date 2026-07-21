@@ -5,15 +5,15 @@
 
 
 		function config_redirect_set() { // SET REDIRECT VALUE
-	if ( ${_SESSION}['config_redirect'] == '' || !{$_SESSION['config_redirect'] ) {
-		//{$_SESSION['redirect'] = "http://" . ${_SERVER}['HTTP_HOST'] . ${_SERVER}['REQUEST_URI'] . ({$_SERVER['QUERY_STRING'] ? "?" . ${_SERVER}['QUERY_STRING'] : NULL);
-		//{$_SESSION['redirect'] = ${_SERVER}['SCRIPT_URI'] . ({$_SERVER['QUERY_STRING'] ? "?" . ${_SERVER}['QUERY_STRING'] : NULL);
+	if ( ${_SESSION}['config_redirect'] == '' || !$_SESSION['config_redirect'] ) {
+		//$_SESSION['redirect'] = "http://" . ${_SERVER}['HTTP_HOST'] . ${_SERVER}['REQUEST_URI'] . ($_SERVER['QUERY_STRING'] ? "?" . ${_SERVER}['QUERY_STRING'] : NULL);
+		//$_SESSION['redirect'] = ${_SERVER}['SCRIPT_URI'] . ($_SERVER['QUERY_STRING'] ? "?" . ${_SERVER}['QUERY_STRING'] : NULL);
 		
 		// THIS SETTING WORKS FOR THE SERVER
 		${_SESSION}['config_redirect'] = "http://" . (LOCAL ? "concord.local" : ${_SERVER}['HTTP_HOST']) . ${_SERVER}['REQUEST_URI'];
 		//echo "setting the redirect session var to (http://" . ${_SERVER}['SERVER_NAME'] . ${_SERVER}['REQUEST_URI'] . ")<BR>";
 		
-		//echo "redirect --> " . ${_SERVER}['SCRIPT_URI'] . ({$_SERVER['QUERY_STRING'] ? "?" . ${_SERVER}['QUERY_STRING'] : NULL) . "<P>";
+		//echo "redirect --> " . ${_SERVER}['SCRIPT_URI'] . ($_SERVER['QUERY_STRING'] ? "?" . ${_SERVER}['QUERY_STRING'] : NULL) . "<P>";
 		//echo "\${_SESSION}['redirect'] --> ${_SESSION}['redirect']<P>";
 		// EXAMPLE: http://www.domain.com/path/file.php?query_string=some_value
 	}
@@ -69,12 +69,12 @@
 
 /*		function config_die($redirect,$alert=NULL,$sql=NULL) { // REDIRECTS WITH PRETTY MESSAGE
 	
-	//if ( !preg_match("/cron/i",{$_SERVER['PHP_SELF'] ) ) {
+	//if ( !preg_match("/cron/i",$_SERVER['PHP_SELF'] ) ) {
 	if ( !defined('CRON') ) {
 			
 		
 		if (!{$redirect['url']) {
-			if ( preg_match("/" . preg_quote({$_SERVER['HTTP_HOST'], "/") . "/i", ${_SERVER}['HTTP_REFERER']) ) { // IF NOT OUR WEBSITE --> DO NOT GO BACK ONE (GO TO HOME PAGE)
+			if ( preg_match("/" . preg_quote($_SERVER['HTTP_HOST'], "/") . "/i", ${_SERVER}['HTTP_REFERER']) ) { // IF NOT OUR WEBSITE --> DO NOT GO BACK ONE (GO TO HOME PAGE)
 				${redirect}['url'] = "javascript:history.back(1)";
 			} else {
 				${redirect}['url'] = "http://" . ${_SERVER}['HTTP_HOST'] . "";

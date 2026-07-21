@@ -11,7 +11,7 @@
 //html_error($redirect);
 
 if (!{$redirect['url']) {
-	if ( preg_match("/" . preg_quote({$_SERVER['HTTP_HOST'], "/") . "/i", ${_SERVER}['HTTP_REFERER']) ) { // IF NOT OUR WEBSITE --> DO NOT GO BACK ONE (GO TO HOME PAGE)
+	if ( preg_match("/" . preg_quote($_SERVER['HTTP_HOST'], "/") . "/i", ${_SERVER}['HTTP_REFERER']) ) { // IF NOT OUR WEBSITE --> DO NOT GO BACK ONE (GO TO HOME PAGE)
 		${redirect}['url'] = "javascript:history.back(1)";
 	} else {
 		${redirect}['url'] = "http://" . ${_SERVER}['HTTP_HOST'] . "";

@@ -101,7 +101,7 @@ function trans_en($en,$link = 1) { // TRANSLATE FROM english (en)
 			} else $return =  $en;
 		} else { 
 			
-			if ( preg_match("/admin/admin_/i",{$_SERVER['PHP_SELF']) ) {
+			if ( preg_match("/admin/admin_/i",$_SERVER['PHP_SELF']) ) {
 				// NOT SURE WHAT THIS SECTION IS FOR - jon
 				
 				
@@ -152,7 +152,7 @@ return $return;
 /**** END FUNCTION ****/
 
 /*
-if(!{$_SESSION['TRANSLATION_LIBRARY'] || ({$_SESSION['TRANSLATION_LANGUAGE'] != TRANS_LANG)){
+if(!$_SESSION['TRANSLATION_LIBRARY'] || ($_SESSION['TRANSLATION_LANGUAGE'] != TRANS_LANG)){
 	//set_translation_library( TRANS_LANG );
 }
 
@@ -191,7 +191,7 @@ if ( !$trans = mysqli_fetch_array(mysqli_query($db, "SELECT * FROM translations 
 	//echo "FILE " . ${_SERVER}['PHP_SELF'];
 } else {
 	
-	if ( preg_match("/admin/admin_/i",{$_SERVER['PHP_SELF']) ) {
+	if ( preg_match("/admin/admin_/i",$_SERVER['PHP_SELF']) ) {
 		${window}['anchor'] = ${trans}['TRANS_LANG'];
 		${window}['href'] = TEMPLATE_DOMAIN . "admin/admin_translate.php?en=" . ${trans}['TRANS_LANG'];
 		

@@ -96,10 +96,10 @@ if ( ${_POST}['ADD_PROJECT'] || ( ${_POST}['UPDATE_PROJECT'] && ${_GET}['CRYPT_R
 		return $return;
 	}
 	
-	If ( !{$_POST['title'] ) ${error}['title'] = "Please submit a Title for this project.";
-	If ( !{$_POST['site'] ) ${error}['site'] = "Please describe the site context for this project.";
-	If ( !{$_POST['design'] ) ${error}['design'] = "Please describe the design of this project.";
-	//If ( !{$_POST['construction'] ) ${error}['construction'] = "Please submit a description of the construction process.";
+	If ( !$_POST['title'] ) ${error}['title'] = "Please submit a Title for this project.";
+	If ( !$_POST['site'] ) ${error}['site'] = "Please describe the site context for this project.";
+	If ( !$_POST['design'] ) ${error}['design'] = "Please describe the design of this project.";
+	//If ( !$_POST['construction'] ) ${error}['construction'] = "Please submit a description of the construction process.";
 	
 	
 	////////// CHECK DATES
@@ -122,13 +122,13 @@ if ( ${_POST}['ADD_PROJECT'] || ( ${_POST}['UPDATE_PROJECT'] && ${_GET}['CRYPT_R
 	
 	////////// CHECK CLIENT
 	//////////////////////////////////////////////////
-	If ( !{$_POST['client_id'] ) {
+	If ( !$_POST['client_id'] ) {
 		${error}['client_id'] = "Please select or add a client for this project.";
 	} else {
-		if ( !$error && !is_numeric({$_POST['client_id']) ) {
+		if ( !$error && !is_numeric($_POST['client_id']) ) {
 			
-			//$values = explode(" ",{$_POST['client_id']);
-			$values = local_eval_name({$_POST['client_id']);
+			//$values = explode(" ",$_POST['client_id']);
+			$values = local_eval_name($_POST['client_id']);
 			
 			// insert client
 			$sql = "INSERT INTO template_contacts SET 
@@ -146,13 +146,13 @@ if ( ${_POST}['ADD_PROJECT'] || ( ${_POST}['UPDATE_PROJECT'] && ${_GET}['CRYPT_R
 	
 	////////// CHECK ARCHITECT
 	//////////////////////////////////////////////////
-	If ( !{$_POST['architect_id'] ) {
+	If ( !$_POST['architect_id'] ) {
 		${error}['architect_id'] = "Please select or add an architect for this project.";
 	} else {
-		if ( !$error && !is_numeric({$_POST['architect_id']) ) {
+		if ( !$error && !is_numeric($_POST['architect_id']) ) {
 			
-			//$values = explode(" ",{$_POST['architect_id']);
-			$values = local_eval_name({$_POST['architect_id']);
+			//$values = explode(" ",$_POST['architect_id']);
+			$values = local_eval_name($_POST['architect_id']);
 			
 			// insert architect
 			$sql = "INSERT INTO template_contacts SET 
@@ -170,15 +170,15 @@ if ( ${_POST}['ADD_PROJECT'] || ( ${_POST}['UPDATE_PROJECT'] && ${_GET}['CRYPT_R
 	
 	////////// CHECK CATEGORY
 	//////////////////////////////////////////////////
-	If ( !{$_POST['category_id'] ) {
+	If ( !$_POST['category_id'] ) {
 		${error}['category_id'] = "Please select or add a category for this project.";
 	} else {
-		if ( !$error && !is_numeric({$_POST['category_id']) ) {
+		if ( !$error && !is_numeric($_POST['category_id']) ) {
 			// insert categories
 			$sql = "INSERT INTO template_categories SET 
 				category_id = NULL,
 				domain_id = '". DOMAIN_ID ."',
-				category = '". query_prep({$_POST['category_id']) ."'";
+				category = '". query_prep($_POST['category_id']) ."'";
 			if ( !mysqli_query($db, $sql) ) {
 				${error}['category_id'] = "There was an error adding the new category. An administrator has been contacted to resolve the issue as quickly as possible. If you need immediate assitance please contact us using our trouble ticket system or attempt the form again.";
 				error({$error['category_id'],$sql,1);
@@ -192,7 +192,7 @@ if ( ${_POST}['ADD_PROJECT'] || ( ${_POST}['UPDATE_PROJECT'] && ${_GET}['CRYPT_R
 	if ( ${_POST}['departments']['other'] && ${_POST}['department_other'] && ${_POST}['department_other'] != ${form_default}['department_other'] ) {
 		$sql = "INSERT INTO template_departments SET 
 			department_id = NULL, 
-			department = '". query_prep({$_POST['department_other']) ."', 
+			department = '". query_prep($_POST['department_other']) ."', 
 			domain_id = '". DOMAIN_ID ."'";
 		if ( !mysqli_query($db, $sql) ) {
 			error("there was an error trying to insert the new (other) department from the project page",$sql,1);
@@ -259,15 +259,15 @@ if ( ${_POST}['ADD_PROJECT'] || ( ${_POST}['UPDATE_PROJECT'] && ${_GET}['CRYPT_R
 	}
 	
 	
-	/*If ( !{$_POST['department_id'] ) {
+	/*If ( !$_POST['department_id'] ) {
 		${error}['department_id'] = "Please select or add a department for this project.";
 	} else {
-		if ( !$error && !is_numeric({$_POST['department_id']) ) {
+		if ( !$error && !is_numeric($_POST['department_id']) ) {
 			// insert departments
 			$sql = "INSERT INTO template_departments SET 
 				department_id = NULL,
 				domain_id = '". DOMAIN_ID ."',
-				department = '". query_prep({$_POST['department_id']) ."'";
+				department = '". query_prep($_POST['department_id']) ."'";
 			if ( !mysqli_query($db, $sql) ) {
 				${error}['department_id'] = "There was an error adding the new department. An administrator has been contacted to resolve the issue as quickly as possible. If you need immediate assitance please contact us using our trouble ticket system or attempt the form again.";
 				error({$error['department_id'],$sql,1);
@@ -286,13 +286,13 @@ if ( ${_POST}['ADD_PROJECT'] || ( ${_POST}['UPDATE_PROJECT'] && ${_GET}['CRYPT_R
 			client_id = '". ( $last_client_id ? $last_client_id : ${_POST}['client_id'] ) ."',
 			architect_id = '". ( $last_architect_id ? $last_architect_id : ${_POST}['architect_id'] ) ."',
 			
-			title = '". query_prep({$_POST['title']) ."',
-			site = '". query_prep({$_POST['site']) ."',
-			design = '". query_prep({$_POST['design']) ."',
-			construction = '". query_prep({$_POST['construction']) ."',
-			date_design = ". ({$_POST['date_design'] ? "'". ${_POST}['date_design'] ."'" : "NULL") .",
-			date_construction = ". ({$_POST['date_construction'] ? "'". ${_POST}['date_construction'] ."'" : "NULL") .",
-			date_completion = ". ({$_POST['date_completion'] ? "'". ${_POST}['date_completion'] ."'" : "NULL") ." ". $where;
+			title = '". query_prep($_POST['title']) ."',
+			site = '". query_prep($_POST['site']) ."',
+			design = '". query_prep($_POST['design']) ."',
+			construction = '". query_prep($_POST['construction']) ."',
+			date_design = ". ($_POST['date_design'] ? "'". ${_POST}['date_design'] ."'" : "NULL") .",
+			date_construction = ". ($_POST['date_construction'] ? "'". ${_POST}['date_construction'] ."'" : "NULL") .",
+			date_completion = ". ($_POST['date_completion'] ? "'". ${_POST}['date_completion'] ."'" : "NULL") ." ". $where;
 		
 		
 		
@@ -358,7 +358,7 @@ echo "<FORM ACTION='". ${_SERVER}['PHP_SELF'] ."' METHOD=GET>";
 			*/
 			
 			${input}['project_id'] .= "<OPTION VALUE='". ${info}['project_id'] ."' ". 
-					({$_GET['CRYPT_REF_ID'] == ${info}['project_id'] ? " SELECTED" : NULL) .">". 
+					($_GET['CRYPT_REF_ID'] == ${info}['project_id'] ? " SELECTED" : NULL) .">". 
 				ucwords({$info['title']) ." [". ${info}['project_id'] ."]</OPTION>";
 			$previous = $info;
 		}
@@ -394,7 +394,7 @@ echo "<FORM ACTION='". ${_SERVER}['PHP_SELF'] ."' METHOD=GET>";
 	
 echo "</FORM>
 
-<form  name='projectForm' ACTION='" . ${_SERVER}['PHP_SELF'] . ({$_SERVER['QUERY_STRING'] ? "?". ${_SERVER}['QUERY_STRING'] : null) ."' method='post' onSubmit=\"\">";//return safeSubmit(this);
+<form  name='projectForm' ACTION='" . ${_SERVER}['PHP_SELF'] . ($_SERVER['QUERY_STRING'] ? "?". ${_SERVER}['QUERY_STRING'] : null) ."' method='post' onSubmit=\"\">";//return safeSubmit(this);
 
 	////////// SPACER
 	//$insert_form[] = array("-",NULL,5); // VERTICAL SPACER
@@ -444,12 +444,12 @@ echo "</FORM>
 	$query = mysqli_query($db, $sql);
 	while ( $clients = mysqli_fetch_assoc($query) ) {
 		${input}['client_id'] .= "<option value='". ${clients}['contact_id'] ."'".
-			( ($last_client_id ? $last_client_id : ({$_POST['client_id'] ? ${_POST}['client_id'] : ${edit}['client_id'])) == ${clients}['contact_id'] ? " SELECTED" : null ) .">". 
+			( ($last_client_id ? $last_client_id : ($_POST['client_id'] ? ${_POST}['client_id'] : ${edit}['client_id'])) == ${clients}['contact_id'] ? " SELECTED" : null ) .">". 
 				${clients}['contact'] ."</option>";
 	}
 	
 	// if new option is selected reenter it as selected option
-	${input}['client_id'] .= ( !$last_client_id && ${_POST}['client_id'] && !is_numeric({$_POST['client_id']) 
+	${input}['client_id'] .= ( !$last_client_id && ${_POST}['client_id'] && !is_numeric($_POST['client_id']) 
 			? "<option value='". ${_POST}['client_id'] ."' SELECTED>". ${_POST}['client_id'] ." [ADD]</option>" : null );
 	${input}['client_id'] .= "<option value=''>add client name...</option>"; // create new option
 	${input}['client_id'] .= "</select>";
@@ -477,12 +477,12 @@ echo "</FORM>
 	$query = mysqli_query($db, $sql);
 	while ( $architects = mysqli_fetch_assoc($query) ) {
 		${input}['architect_id'] .= "<option value='". ${architects}['contact_id'] ."'".
-			( ($last_architect_id ? $last_architect_id : ({$_POST['architect_id'] ? ${_POST}['architect_id'] : ${edit}['architect_id'])) == ${architects}['contact_id'] ? " SELECTED" : null ) .">". 
+			( ($last_architect_id ? $last_architect_id : ($_POST['architect_id'] ? ${_POST}['architect_id'] : ${edit}['architect_id'])) == ${architects}['contact_id'] ? " SELECTED" : null ) .">". 
 				${architects}['contact'] ."</option>";
 	}
 	
 	// if new option is selected reenter it as selected option
-	${input}['architect_id'] .= ( !$last_architect_id && ${_POST}['architect_id'] && !is_numeric({$_POST['architect_id']) 
+	${input}['architect_id'] .= ( !$last_architect_id && ${_POST}['architect_id'] && !is_numeric($_POST['architect_id']) 
 			? "<option value='". ${_POST}['architect_id'] ."' SELECTED>". ${_POST}['architect_id'] ." [ADD]</option>" : null );
 	${input}['architect_id'] .= "<option value=''>add architect name...</option>"; // create new option
 	${input}['architect_id'] .= "</select>";
@@ -506,11 +506,11 @@ echo "</FORM>
 	$query = mysqli_query($db, $sql);
 	while ( $categories = mysqli_fetch_assoc($query) ) {
 		${input}['category_id'] .= "<option value='". ${categories}['category_id'] ."'".
-			( ($last_category_id ? $last_category_id : ({$_POST['category_id'] ? ${_POST}['category_id'] : ${edit}['category_id'])) == ${categories}['category_id'] ? " SELECTED" : null ) .">". 
+			( ($last_category_id ? $last_category_id : ($_POST['category_id'] ? ${_POST}['category_id'] : ${edit}['category_id'])) == ${categories}['category_id'] ? " SELECTED" : null ) .">". 
 				${categories}['category'] ."</option>";
 	}
 	// if new option is selected reenter it as selected option
-	${input}['category_id'] .= ( !$last_category_id && ${_POST}['category_id'] && !is_numeric({$_POST['category_id']) 
+	${input}['category_id'] .= ( !$last_category_id && ${_POST}['category_id'] && !is_numeric($_POST['category_id']) 
 		? "<option value='". ${_POST}['category_id'] ."' SELECTED>". ${_POST}['category_id'] ." [ADD]</option>" : null );
 	${input}['category_id'] .= "<option value=''>create new category...</option>"; // create new option
 	${input}['category_id'] .= "</select>";
@@ -535,7 +535,7 @@ echo "</FORM>
 	}
 	
 	// if new option is selected reenter it as selected option
-	${input}['department_id'] .= ( !$last_department_id && ${_POST}['department_id'] && !is_numeric({$_POST['department_id']) 
+	${input}['department_id'] .= ( !$last_department_id && ${_POST}['department_id'] && !is_numeric($_POST['department_id']) 
 			? "<option value='". ${_POST}['department_id'] ."' SELECTED>". ${_POST}['department_id'] ." [ADD]</option>" : null );
 	${input}['department_id'] .= "<option value=''>create new department...</option>"; // create new option
 	${input}['department_id'] .= "</select>";
@@ -581,8 +581,8 @@ echo "</FORM>
 				<input type=checkbox name=departments[". ${departments}['department_id'] ."]".
 					// if departments are submitted in form --> then take $_POST variables only, not db settings unless it was just added ($last_department_id)
 					( ($_POST 
-						//? ({$_POST['departments'][{$departments['department_id']] ? ${_POST}['departments'][{$departments['department_id']] : $last_department_id) 
-						? ({$_POST['departments'][{$departments['department_id']] || $last_department_id == ${departments}['department_id'] ? true : false) 
+						//? ($_POST['departments'][{$departments['department_id']] ? ${_POST}['departments'][{$departments['department_id']] : $last_department_id) 
+						? ($_POST['departments'][{$departments['department_id']] || $last_department_id == ${departments}['department_id'] ? true : false) 
 						: ${edit}['departments'][{$departments['department_id']][project_id]) ? " CHECKED" : NULL) ." onChange=\"formAltered();\"> ". 
 					${departments}['department'] ." 
 					". ({$departments['domain_id'] ? " * " : null) ."
@@ -618,19 +618,19 @@ echo "</FORM>
 	
 	////////// DESIGN DATE
 	$insert_form[] = array("date_design", "design start date",
-		"<input name='date_design' value='". ({$_POST['date_design'] ? ${_POST}['date_design'] : ${edit}['date_design']) ."' size='11' onFocus=\"formAltered();if(self.gfPop)gfPop.fPopCalendar(document.projectForm.date_design);return false;\">",
+		"<input name='date_design' value='". ($_POST['date_design'] ? ${_POST}['date_design'] : ${edit}['date_design']) ."' size='11' onFocus=\"formAltered();if(self.gfPop)gfPop.fPopCalendar(document.projectForm.date_design);return false;\">",
 		NULL,NULL,NULL);
 	
 	
 	////////// CONSTRUCTION DATE
 	$insert_form[] = array("date_construction", "construction date",
-		"<input name='date_construction' value='". ({$_POST['date_construction'] ? ${_POST}['date_construction'] : ${edit}['date_construction']) ."' size='11' onFocus=\"formAltered();if(self.gfPop)gfPop.fPopCalendar(document.projectForm.date_construction);return false;\">",
+		"<input name='date_construction' value='". ($_POST['date_construction'] ? ${_POST}['date_construction'] : ${edit}['date_construction']) ."' size='11' onFocus=\"formAltered();if(self.gfPop)gfPop.fPopCalendar(document.projectForm.date_construction);return false;\">",
 		NULL,NULL,NULL);
 	
 	
 	////////// COMPLETION DATE
 	$insert_form[] = array("date_completion", "completion date",
-		"<input name='date_completion' value='". ({$_POST['date_completion'] ? ${_POST}['date_completion'] : ${edit}['date_completion']) ."' size='11' onFocus=\"formAltered();if(self.gfPop)gfPop.fPopCalendar(document.projectForm.date_completion);return false;\">",
+		"<input name='date_completion' value='". ($_POST['date_completion'] ? ${_POST}['date_completion'] : ${edit}['date_completion']) ."' size='11' onFocus=\"formAltered();if(self.gfPop)gfPop.fPopCalendar(document.projectForm.date_completion);return false;\">",
 		NULL,"final completion of construction",NULL);
 	
 	////////// TEST DATE

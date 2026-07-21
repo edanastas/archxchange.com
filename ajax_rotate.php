@@ -15,12 +15,12 @@ require(TEMPLATE_BASE_DIR . "config.php"); // _functions/fnc.php
 // VARIABLES ////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////// 3.0
 
-if (isset({$_GET['direction']) && ${_GET}['ref_id']) {
+if (isset($_GET['direction']) && ${_GET}['ref_id']) {
 	//$dbh = mysqli_connect("localhost", "test", "test") or die ('I cannot connect to the database because: ' . mysqli_error($db));
 	//mysqli_select_db($db, "archx_01", $dbh);
 	
 	$ref_id = ${_GET}['ref_id'];
-	//$text = addslashes(strip_tags({$_GET['vote']));
+	//$text = addslashes(strip_tags($_GET['vote']));
 	
 	
 	$file_path = (LOCAL ? TEMPLATE_BASE_DIR ."_uploads/" : "./_uploads/");
@@ -28,7 +28,7 @@ if (isset({$_GET['direction']) && ${_GET}['ref_id']) {
 	$file = $file_path . $file_name;
 	
 	
-	$command = (LOCAL ? "/usr/local/bin/convert" : "convert") ." -rotate ". ({$_GET['direction'] ? "90" : "-90" ) ." ". $file ." ". $file;
+	$command = (LOCAL ? "/usr/local/bin/convert" : "convert") ." -rotate ". ($_GET['direction'] ? "90" : "-90" ) ." ". $file ." ". $file;
 	
 	exec($command);
 	

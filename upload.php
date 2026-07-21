@@ -64,7 +64,7 @@ if ( $_FILES["file"] ) {
 	
 	// Validate extension
 	if ( !$error ) {
-		$ext = strtolower(pathinfo({$_FILES['file']['name'], PATHINFO_EXTENSION));
+		$ext = strtolower(pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION));
 		if ( !in_array($ext, $allowed_extensions) ) {
 			$error = "Invalid file extension. Allowed: " . implode(', ', $allowed_extensions);
 		}
@@ -72,7 +72,7 @@ if ( $_FILES["file"] ) {
 	
 	// Verify it's a real image
 	if ( !$error ) {
-		$imginfo = @getimagesize({$_FILES['file']['tmp_name']);
+		$imginfo = @getimagesize($_FILES['file']['tmp_name']);
 		if ( !$imginfo ) {
 			$error = "File is not a valid image.";
 		}
@@ -86,7 +86,7 @@ if ( $_FILES["file"] ) {
 		$filename = $base_img_dir . $uniq . '.' . $ext;
 		
 		// move uploaded file to destination
-		if ( move_uploaded_file({$_FILES['file']['tmp_name'], $filename) ) {
+		if ( move_uploaded_file($_FILES['file']['tmp_name'], $filename) ) {
 			dev_print($imginfo);
 			echo "\$filename --> " . htmlspecialchars($filename) . "<p>";
 		} else {

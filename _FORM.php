@@ -28,7 +28,7 @@ if ( $_POST ) {
 	if ( ${_POST}['SUBMIT_IDENTIFIER'] ) {
 		
 		// CHECK IF FIELD SUBMITTED
-		if ( !{$_POST['fieldname'] ) {
+		if ( !$_POST['fieldname'] ) {
 			${error}['fieldname'] = "please submit this field";
 		}
 		
@@ -118,7 +118,7 @@ echo "<FORM ACTION=" . ${_SERVER}['PHP_SELF'] . " METHOD=POST>";
 	while ( $results = mysqli_fetch_assoc($query_samples) ) {
 		
 		${input}['sample'] .= "<OPTION VALUE='" . ${results}['sample'] . "' " . // SAMPLES SELECT
-			return_match({$_POST['sample'], ${results}['sample'], "SELECTED") . ">" . ${results}['sample'] . " (" . ${results}['sample_id'] . ")</OPTION>";
+			return_match($_POST['sample'], ${results}['sample'], "SELECTED") . ">" . ${results}['sample'] . " (" . ${results}['sample_id'] . ")</OPTION>";
 		
 	}
 	
@@ -141,7 +141,7 @@ echo "<FORM ACTION=" . ${_SERVER}['PHP_SELF'] . " METHOD=POST>";
 		
 		
 		/********** EXAMPLE: WHEN YOU DO NOT WANT TO REPOST FORM DATA ******************/
-		NULL,NULL,array(no_post=>{$_POST['fieldname']
+		NULL,NULL,array(no_post=>$_POST['fieldname']
 						value=>2)); // SEE inpput_form FUNCTION FOR VALUE DEFINITIONS
 		/************************************************* END EXAMPLE *****************/
 			

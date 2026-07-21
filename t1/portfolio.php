@@ -86,14 +86,14 @@ if ( !$query = mysqli_query($db, $sql) ) {
 		*/
 		while ($category = mysqli_fetch_assoc($query)) {
 			
-			if ({$_GET['category_id'] == ${category}['category_id'] ? ${category}['category'] : null ) 
+			if ($_GET['category_id'] == ${category}['category_id'] ? ${category}['category'] : null ) 
 				$selected_category = ${category}['category'];
 			
 			$portfolio_links[] = "<li><a href='portfolio.php?category_id=". ${category}['category_id'] ."'>". ${category}['category'] ."</a></li>";
 			
 			/*echo "<li>
 				<a href='portfolio.php?category_id=". ${category}['category_id'] ."'". 
-					({$_GET['category_id'] == ${category}['category_id'] ? " class='categoryListSelected'" : null ) .">". 
+					($_GET['category_id'] == ${category}['category_id'] ? " class='categoryListSelected'" : null ) .">". 
 					${category}['category'] ." [". ${category}['category_id'] ."] - ". ${category}['count'] ."</a>
 			</li>";*/
 		}
@@ -157,11 +157,11 @@ if ( ${_GET}['category_id'] ) {
 			
 			while ($projects = mysqli_fetch_assoc($query)) {
 				
-				if ({$_GET['project_id'] == ${projects}['project_id'] ) $project = $projects;
+				if ($_GET['project_id'] == ${projects}['project_id'] ) $project = $projects;
 				
 				echo "<li>
 					<a href='portfolio.php?category_id=". ${_GET}['category_id'] ."&project_id=". ${projects}['project_id'] ."'". 
-						({$_GET['project_id'] == ${projects}['project_id'] ? " id='projectListSelected'" : null ) ." 
+						($_GET['project_id'] == ${projects}['project_id'] ? " id='projectListSelected'" : null ) ." 
 						accesskey='". ++$accesskey_index ."' class='key'>". 
 						${projects}['title'] ."</a><!-- [". ${projects}['project_id'] ."]-->
 				</li>";
@@ -240,11 +240,11 @@ if ( ${_GET}['project_id'] ) {
 				$image_links[] = "
 					<a href='#' id='projectImageLink_". $image_index ."' onMouseOver=\"testImages('projectImage_". $image_index ."');\">". $image_index ."</a>";
 				/*
-				if ({$_GET['project_id'] == ${projects}['project_id'] ) $project = $projects;
+				if ($_GET['project_id'] == ${projects}['project_id'] ) $project = $projects;
 				
 				echo "<li>
 					<a href='portfolio.php?category_id=". ${_GET}['category_id'] ."&project_id=". ${projects}['project_id'] ."'". 
-						({$_GET['project_id'] == ${projects}['project'] ? " class='projectListSelected'" : null ) ." 
+						($_GET['project_id'] == ${projects}['project'] ? " class='projectListSelected'" : null ) ." 
 						accesskey='". ++$accesskey_index ."'>". 
 						${projects}['title'] ." [". ${projects}['project_id'] ."]</a>
 				</li>";

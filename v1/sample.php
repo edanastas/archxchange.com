@@ -27,17 +27,17 @@ if ( $_POST ) {
 	if ( ${_POST}['SUBMIT'] ) {
 		
 		// CHECK IF FIELD SUBMITTED
-		if ( !{$_POST['fieldname'] ) ${error}['fieldname'] = "please submit the fieldname";
+		if ( !$_POST['fieldname'] ) ${error}['fieldname'] = "please submit the fieldname";
 		
 		
 		// CHECK ERROR FIELD
-		if ( !{$_POST['checkbox'] ) ${error}['checkbox'] = "please check the box";
-		if ( !{$_POST['style'] ) ${error}['style'] = "please submit a style";
-		//if ( !{$_POST['sample'] ) ${error}['sample'] = "please select an item from the menu";
+		if ( !$_POST['checkbox'] ) ${error}['checkbox'] = "please check the box";
+		if ( !$_POST['style'] ) ${error}['style'] = "please submit a style";
+		//if ( !$_POST['sample'] ) ${error}['sample'] = "please select an item from the menu";
 		
 		
 		// CHECK IF manual FIELD SUBMITTED
-		if ( !{$_POST['manual'] || ${_POST}['manual'] == "enter your [something]" ) {
+		if ( !$_POST['manual'] || ${_POST}['manual'] == "enter your [something]" ) {
 			// more complicated statements can go here
 			${error}['manual'] = "please submit a manual test field";
 		}
@@ -55,13 +55,13 @@ if ( $_POST ) {
 		////////// MODIFY DATABASE
 		$sql = "INSERT INTO `samples` SET 
 			sample_id = NULL, 
-			fieldname = '" . query_prep({$_POST['fieldname']) . "', 
-			error = '" . query_prep({$_POST['error']) . "', 
-			style = '" . query_prep({$_POST['style']) . "', 
-			checkbox = '" . query_prep({$_POST['checkbox']) . "', 
-			manual = '" . query_prep({$_POST['manual']) . "', 
-			menu = '" . query_prep({$_POST['menu']) . "', 
-			textarea = '" . query_prep({$_POST['textarea']) . "'"; // INSERT SAMPLE
+			fieldname = '" . query_prep($_POST['fieldname']) . "', 
+			error = '" . query_prep($_POST['error']) . "', 
+			style = '" . query_prep($_POST['style']) . "', 
+			checkbox = '" . query_prep($_POST['checkbox']) . "', 
+			manual = '" . query_prep($_POST['manual']) . "', 
+			menu = '" . query_prep($_POST['menu']) . "', 
+			textarea = '" . query_prep($_POST['textarea']) . "'"; // INSERT SAMPLE
 		if ( !mysqli_query($db, $sql) ) {
 			${error}['error'] = "there was an error modifying the database";
 			error({$error['error']); // LOG ALL ERRORS
@@ -181,7 +181,7 @@ echo "<FORM ACTION=" . ${_SERVER}['PHP_SELF'] . " METHOD=POST>";
 	
 	////////// CHECKBOX
 	$insert_form[] = array("checkbox", trans("checkbox"),
-		array("CHECKBOX","1","1",({$_POST['checkbox'] ? " CHECKED":NULL)), // ${input}['type'], ${input}['value'], ${input}['style'], ${input}['option']
+		array("CHECKBOX","1","1",($_POST['checkbox'] ? " CHECKED":NULL)), // ${input}['type'], ${input}['value'], ${input}['style'], ${input}['option']
 		NULL,NULL,NULL);
 	
 	// notice the predefined styles in the example above
@@ -205,7 +205,7 @@ echo "<FORM ACTION=" . ${_SERVER}['PHP_SELF'] . " METHOD=POST>";
 	
 	////////// MANUAL FORM INPUT
 	$insert_form[] = array("manual", trans("manual input"),
-		"<INPUT NAME=manual TYPE=TEXT ". form_value("enter your [something]",{$_POST['manual']) .">",
+		"<INPUT NAME=manual TYPE=TEXT ". form_value("enter your [something]",$_POST['manual']) .">",
 		NULL,"notice, no arrays in this code input value",NULL);
 	
 	
@@ -217,7 +217,7 @@ echo "<FORM ACTION=" . ${_SERVER}['PHP_SELF'] . " METHOD=POST>";
 	$query_samples = mysqli_query($db, "SELECT * FROM samples");
 	while ( $results = mysqli_fetch_assoc($query_samples) ) {
 		${input}['sample'] .= "<OPTION VALUE='" . ${results}['sample_id'] . "' " . // SAMPLES SELECT
-			return_match({$_POST['fieldname'], ${results}['fieldname'], "SELECTED") . ">" . ${results}['fieldname'] . " (" . ${results}['sample_id'] . ")</OPTION>";
+			return_match($_POST['fieldname'], ${results}['fieldname'], "SELECTED") . ">" . ${results}['fieldname'] . " (" . ${results}['sample_id'] . ")</OPTION>";
 	}
 	
 	${input}['sample'] .= "</SELECT>";

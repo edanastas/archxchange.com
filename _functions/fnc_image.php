@@ -27,7 +27,7 @@
 		if ( !preg_match("/jpeg/i", $_FILES['upload_file'. ${options}['suffix']][type]) ) ${error}['image_type'] = "please use .jpg image file format";
 		
 		////////// CHECK IF FILE IS TOO BIG
-		if ( $_FILES['upload_file'. ${options}['suffix']][size] > ({$_POST['MAX_FILE_SIZE'] ? ${_POST}['MAX_FILE_SIZE'] : 2000000) ) {
+		if ( $_FILES['upload_file'. ${options}['suffix']][size] > ($_POST['MAX_FILE_SIZE'] ? ${_POST}['MAX_FILE_SIZE'] : 2000000) ) {
 			${error}['MAX_FILE_SIZE'] = "please use files under 2MB";
 		}
 		

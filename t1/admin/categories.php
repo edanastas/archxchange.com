@@ -22,14 +22,14 @@ if ( ${_POST}['BACK'] ) {
 } elseif ( ${_POST}['ADD'] || ${_POST}['CHANGE'] ) {
 	
 	////////// CHECK IF CATEGORY WAS SUBMITTED?
-	if ( !{$_POST['category'] ) {
+	if ( !$_POST['category'] ) {
 		${error}['category'] = "Please enter a category name and submit the form again";
 	}
 	
 	////////// CHECK EXISTING CATEGORIES FOR DUPLICATES
 	$sql = "SELECT * FROM template_categories 
 		WHERE category LIKE '". ${_POST}['category'] ."' ". 
-			({$_GET['CRYPT_REF_ID'] && ${_POST}['CHANGE'] ? " AND category_id != ". ${_GET}['CRYPT_REF_ID'] : NULL) ." 
+			($_GET['CRYPT_REF_ID'] && ${_POST}['CHANGE'] ? " AND category_id != ". ${_GET}['CRYPT_REF_ID'] : NULL) ." 
 			AND domain_id = '". DOMAIN_ID ."'";
 	
 	if ( !$query = mysqli_query($db, $sql) ) {
@@ -43,8 +43,8 @@ if ( ${_POST}['BACK'] ) {
 	
 	////////// PROCESS FORM
 	if ( !$error ) {
-		//{$db['values'] = "category = '". ucwords(strtolower(query_prep({$_POST['category']))) ."', 
-		//	notes = '". query_prep({$_POST['notes']) ."', 
+		//{$db['values'] = "category = '". ucwords(strtolower(query_prep($_POST['category']))) ."', 
+		//	notes = '". query_prep($_POST['notes']) ."', 
 		//	". ( ${_POST}['inactive'] ? " inactive = 1" : " inactive = NULL" ) ."";
 		
 		if ( ${_POST}['ADD'] ) {
@@ -56,9 +56,9 @@ if ( ${_POST}['BACK'] ) {
 		
 		
 		$sql = ${db}['action'] ." template_categories SET ".
-			({$_POST['ADD'] ? "domain_id = '". DOMAIN_ID ."', " : null) .
-			"category = '". ucwords(strtolower(query_prep({$_POST['category']))) ."', 
-			notes = '". query_prep({$_POST['notes']) ."', 
+			($_POST['ADD'] ? "domain_id = '". DOMAIN_ID ."', " : null) .
+			"category = '". ucwords(strtolower(query_prep($_POST['category']))) ."', 
+			notes = '". query_prep($_POST['notes']) ."', 
 			". ( ${_POST}['inactive'] ? " inactive = 1" : " inactive = NULL" ) ." ".
 			${db}['where'];
 		
@@ -73,7 +73,7 @@ if ( ${_POST}['BACK'] ) {
 	
 } elseif ( ${_POST}['DELETE'] ) {
 	
-	if ( !{$_POST['confirm_delete'] ) {
+	if ( !$_POST['confirm_delete'] ) {
 		${error}['DELETE'] = "Please confirm that you would like to delete this category by checking the confirmation box below.";
 	}
 	
@@ -158,7 +158,7 @@ echo "<FORM ACTION='". ${_SERVER}['PHP_SELF'] ."' METHOD=GET>";
 			
 			
 			${input}['category_id'] .= "<OPTION VALUE='". ${info}['category_id'] ."' ". 
-				({$_GET['CRYPT_REF_ID'] == ${info}['category_id'] ? " SELECTED" : NULL) .">". ucwords({$info['category']) ." [". ${info}['category_id'] ."]</OPTION>";
+				($_GET['CRYPT_REF_ID'] == ${info}['category_id'] ? " SELECTED" : NULL) .">". ucwords({$info['category']) ." [". ${info}['category_id'] ."]</OPTION>";
 			$previous = $info;
 		}
 		${input}['category_id'] .= "</SELECT>";
@@ -196,7 +196,7 @@ echo "<FORM ACTION='". ${_SERVER}['PHP_SELF'] ."' METHOD=GET>";
 	////////////////////////////////////////////////////////////////////////////////
 	
 	echo "</FORM>
-		<FORM ACTION='". ${_SERVER}['PHP_SELF'] . ({$_SERVER['QUERY_STRING'] ? "?". ${_SERVER}['QUERY_STRING'] : NULL) ."' METHOD=POST>";
+		<FORM ACTION='". ${_SERVER}['PHP_SELF'] . ($_SERVER['QUERY_STRING'] ? "?". ${_SERVER}['QUERY_STRING'] : NULL) ."' METHOD=POST>";
 	
 	
 	////////// SUBTITLE

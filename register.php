@@ -24,12 +24,12 @@ if ( ${_POST}['SUBMIT'] ) {
 	
 	
 	// CHECK USERNAME
-	if ( !{$_POST['username'] ) {
+	if ( !$_POST['username'] ) {
 		${error}['username'] = "please submit a username";
-	} elseif ( strlen({$_POST['username']) < 4 ) {
+	} elseif ( strlen($_POST['username']) < 4 ) {
 		${error}['username'] = "Your username should be at least 4 characters";
 	} else {
-		$sql = "SELECT * FROM users WHERE username = '". query_prep({$_POST['username']) ."' LIMIT 1";
+		$sql = "SELECT * FROM users WHERE username = '". query_prep($_POST['username']) ."' LIMIT 1";
 		if ( !mysqli_query($db, $sql) ) {
 			error("there was an error checking if the new user exists",$sql,1);
 			${error}['username'] = "There was an error validating your information. Please contact an administrator for assistance.";
@@ -39,30 +39,30 @@ if ( ${_POST}['SUBMIT'] ) {
 	}
 	
 	// CHECK EMAIL
-	if ( !{$_POST['email'] ) {
+	if ( !$_POST['email'] ) {
 		${error}['email'] = "please submit your email address";
-	} elseif ( !email_validate({$_POST['email']) ) {
+	} elseif ( !email_validate($_POST['email']) ) {
 		${error}['email'] = "We could not validate your email address. Make sure you submitted it correctly. They usually have an @ in there somewhere, without any spaces.";
 	}
 	
 	// CHECK NAMES
-	if ( !{$_POST['firstname'] ) 
+	if ( !$_POST['firstname'] ) 
 		${error}['firstname'] = "please provide us with a contact name. You can change this name at any time from your account management.";
 	
-	if ( !{$_POST['lastname'] ) 
+	if ( !$_POST['lastname'] ) 
 		${error}['lastname'] = "please provide us with a contact name. You can change this name at any time from your account management.";
 	
-	if ( !{$_POST['company'] ) 
+	if ( !$_POST['company'] ) 
 		${error}['company'] = "Please submit a company name.";
 	
-	if ( !{$_POST['phone'] ) 
+	if ( !$_POST['phone'] ) 
 		${error}['phone'] = "Please submit a phone so we can contact you if we need any additional information.";
 	
 	
 	// CHECK PASSWORD
-	if ( !{$_POST['password'] ) {
+	if ( !$_POST['password'] ) {
 		${error}['password'] = "please submit a password";
-	} elseif ( strlen({$_POST['password']) < 6 ) {
+	} elseif ( strlen($_POST['password']) < 6 ) {
 		${error}['password'] = "Your password should be at least 6 characters";
 	} elseif ( ${_POST}['password'] != ${_POST}['password_confirm'] ) {
 		${error}['password_confirm'] = "Your passwords did not match. Make sure you got your password correct otherwise you may not be able to get access this account next time you try to login.";
@@ -70,9 +70,9 @@ if ( ${_POST}['SUBMIT'] ) {
 	
 	
 	// CHECK DOMAIN
-	if ( !{$_POST['domain'] ) {
+	if ( !$_POST['domain'] ) {
 		${error}['domain'] = "please submit your offices website domain";
-	} elseif ( !preg_match("/[a-z0-9-]+\.[a-z]{2,4}$/i",trim({$_POST['domain'])) ) { //(www\.)?
+	} elseif ( !preg_match("/[a-z0-9-]+\.[a-z]{2,4}$/i",trim($_POST['domain'])) ) { //(www\.)?
 		${error}['domain'] = "We could not validate your website domain.";
 	}
 	
@@ -94,7 +94,7 @@ if ( ${_POST}['SUBMIT'] ) {
 				$sql = "INSERT INTO members SET 
 					member_id = NULL, 
 					domain_id = '". $last_insert_id ."', 
-					username = '". strtolower({$_POST['username']) ."', 
+					username = '". strtolower($_POST['username']) ."', 
 					password = sha1('". ${_POST}['password'] ."'), 
 					email = '". ${_POST}['email'] ."', 
 					firstname = '". ${_POST}['firstname'] ."', 

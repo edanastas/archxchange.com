@@ -20,16 +20,16 @@
 				query_insert("sql",$sql,NULL) .
 				query_insert("action",$action,NULL) . // USED IN CRON FILE (BETA)
 				
-				query_insert("filename",basename({$_SERVER['PHP_SELF']),NULL) .
+				query_insert("filename",basename($_SERVER['PHP_SELF']),NULL) .
 				query_insert("file",basename({$debug['0']['file']),NULL) .
 				query_insert("line",{$debug['0']['line'],NULL) .
 				query_insert("function",{$debug['0']['function'],NULL) .
 				
 				query_insert("session_id",session_id(),NULL) .
 				
-				query_insert("http_host",{$_SERVER['HTTP_HOST'],NULL) .
-				query_insert("remote_addr",{$_SERVER['REMOTE_ADDR'],NULL) .
-				query_insert("http_user_agent",{$_SERVER['HTTP_USER_AGENT'],NULL) .
+				query_insert("http_host",$_SERVER['HTTP_HOST'],NULL) .
+				query_insert("remote_addr",$_SERVER['REMOTE_ADDR'],NULL) .
+				query_insert("http_user_agent",$_SERVER['HTTP_USER_AGENT'],NULL) .
 				
 				query_insert("debug",print_r($debug,1),NULL) .
 				query_insert("session",print_r($_SESSION,1),NULL) .
@@ -103,7 +103,7 @@
 	
 	//session_unregister("test");
 	//$test = "this is a test session variable"; //session_register("test");
-	//{$_SESSION['test'] = $test;
+	//$_SESSION['test'] = $test;
 	
 	if ( is_array($_SERVER) ) {
 		foreach ( $_SERVER AS $key => $value ) {

@@ -28,7 +28,7 @@ $description = "description goes here.";
 
 /*
 	<!--<META HTTP-EQUIV='Content-Type' CONTENT='text/html; CHARSET=iso-8859-1'>
-		<BASE HREF='http://" . ${_SERVER}['HTTP_HOST'] . dirname({$_SERVER['PHP_SELF']) . "'>
+		<BASE HREF='http://" . ${_SERVER}['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . "'>
 		<BASE HREF='http://" . TEMPLATE_DOMAIN . "'>
 		http://www.htmlhelp.com/reference/wilbur/head/base.html
 	

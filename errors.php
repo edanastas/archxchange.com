@@ -38,12 +38,12 @@ $divider = "<TR>
 			<HR SIZE=1 COLOR=DDDDDD></TD>
 	</TR>";
 
-if ( is_array({$_POST['error']) ) {
-	foreach ( array_keys({$_POST['error']) AS $sql_error_id ) {
+if ( is_array($_POST['error']) ) {
+	foreach ( array_keys($_POST['error']) AS $sql_error_id ) {
 		$sql_error_ids[] .= "template_errors.error_id = '". $sql_error_id ."'";
 	}
 	
-	//$sql_errors = implode(" OR ", $sql_error_ids) ." LIMIT ". count({$_POST['error'];
+	//$sql_errors = implode(" OR ", $sql_error_ids) ." LIMIT ". count($_POST['error'];
 	
 }
 
@@ -63,16 +63,16 @@ if ( ${_POST}['DELETE'] ) {
 	
 	if ( ${_POST}['DELETE_SELECTED'] ) {
 		$action = "DELETE FROM";
-		//$sql = "DELETE FROM template_errors WHERE ". implode(" OR ", $sql_error_ids) ." LIMIT ". count({$_POST['error']);
+		//$sql = "DELETE FROM template_errors WHERE ". implode(" OR ", $sql_error_ids) ." LIMIT ". count($_POST['error']);
 	} else {
 		$action = "UPDATE";
 		
 		$set = " SET saved = ". ( ${_POST}['SAVE_SELECTED'] ? 1 : "NULL" );
-		//$sql = "UPDATE template_errors SET saved = 1 WHERE ". implode(" OR ", $sql_error_ids) ." LIMIT ". count({$_POST['error']);
+		//$sql = "UPDATE template_errors SET saved = 1 WHERE ". implode(" OR ", $sql_error_ids) ." LIMIT ". count($_POST['error']);
 	}
 	
 	if ( is_array($sql_error_ids) ) {
-		$sql = $action ." template_errors ". $set ." WHERE ". implode(" OR ", $sql_error_ids) ." LIMIT ". count({$_POST['error']);
+		$sql = $action ." template_errors ". $set ." WHERE ". implode(" OR ", $sql_error_ids) ." LIMIT ". count($_POST['error']);
 		if ( !mysqli_query($db, $sql) ) {
 			error("could not delete error log entry",$sql,NULL);
 		}
@@ -81,7 +81,7 @@ if ( ${_POST}['DELETE'] ) {
 } elseif ( ${_POST}['DELETE_ALL'] && ${_POST}['CRYPT_REF_ID'] ) {
 	
 	//$query
-	//{$_POST['error_id']
+	//$_POST['error_id']
 	
 	$query = mysqli_query($db, "SELECT * FROM template_errors 
 		WHERE error_id = '". ${_POST}['CRYPT_REF_ID'] ."' LIMIT 1");
@@ -134,7 +134,7 @@ $query = mysqli_query($db, "SELECT template_errors.*, template_errors.error AS m
 	FROM template_errors 
 	WHERE 1 ".
 	( ${_GET}['CRYPT_REF_ID'] ? "AND template_errors.error_id = '". ${_GET}['CRYPT_REF_ID'] ."'" : NULL ) .
-		//( ${_POST}['error'] ? " WHERE ". implode(" OR ", $sql_error_ids) ." LIMIT ". count({$_POST['error']) : NULL ) ) ." ".
+		//( ${_POST}['error'] ? " WHERE ". implode(" OR ", $sql_error_ids) ." LIMIT ". count($_POST['error']) : NULL ) ) ." ".
 	( ${_SESSION}['saved'] ? "AND saved IS NOT NULL " : "AND saved IS NULL " ) .
 	"ORDER BY template_errors.error_id DESC LIMIT ". ( ${_SESSION}['limit'] ? ${_SESSION}['limit'] : 10 ));
 

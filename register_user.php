@@ -23,9 +23,9 @@ define("TITLE","Registration"); // PAGE TITLE
 if ( ${_POST}['SUBMIT'] ) {
 	
 	// CHECK USERNAME
-	if ( !{$_POST['username'] ) {
+	if ( !$_POST['username'] ) {
 		${error}['username'] = "please submit a username";
-	} elseif ( strlen({$_POST['username']) < 4 ) {
+	} elseif ( strlen($_POST['username']) < 4 ) {
 		${error}['username'] = "Your username should be at least 4 characters";
 	} else {
 		
@@ -42,9 +42,9 @@ if ( ${_POST}['SUBMIT'] ) {
 	}
 	
 	// CHECK EMAIL
-	if ( !{$_POST['email'] ) {
+	if ( !$_POST['email'] ) {
 		${error}['email'] = "please submit your email address";
-	} elseif ( !email_validate({$_POST['email']) ) {
+	} elseif ( !email_validate($_POST['email']) ) {
 		${error}['email'] = "We could not validate your email address. Make sure you submitted it correctly. They usually have an @ in there somewhere, without any spaces.";
 	} else {
 		$sql = "SELECT * FROM users WHERE email = '". ${_POST}['email'] ."' LIMIT 1";
@@ -57,21 +57,21 @@ if ( ${_POST}['SUBMIT'] ) {
 	}
 	
 	// CHECK PASSWORD
-	if ( !{$_POST['password'] ) {
+	if ( !$_POST['password'] ) {
 		${error}['password'] = "please submit a password";
-	} elseif ( strlen({$_POST['password']) < 6 ) {
+	} elseif ( strlen($_POST['password']) < 6 ) {
 		${error}['password'] = "Your password should be at least 6 characters";
 	} elseif ( ${_POST}['password'] != ${_POST}['password_confirm'] ) {
 		${error}['password_confirm'] = "Your passwords did not match. Make sure you got your password correct otherwise you may not be able to get access this account next time you try to login.";
 	}
 	
 	// CHECK FIRSTNAME
-	if ( strlen({$_POST['firstname']) < 3 ) {
+	if ( strlen($_POST['firstname']) < 3 ) {
 		${error}['firstname'] = "please submit your first name";
 	}
 	
 	// CHECK LASTNAME
-	if ( strlen({$_POST['lastname']) < 3 ) {
+	if ( strlen($_POST['lastname']) < 3 ) {
 		${error}['lastname'] = "please submit your last name";
 	}
 	
@@ -80,7 +80,7 @@ if ( ${_POST}['SUBMIT'] ) {
 		$sql = "INSERT INTO users SET 
 			username = '". ${_POST}['username'] ."',
 			email = '". ${_POST}['email'] ."',
-			password = '". sha1({$_POST['password']) ."',
+			password = '". sha1($_POST['password']) ."',
 			firstname = '". ${_POST}['firstname'] ."',
 			lastname = '". ${_POST}['lastname'] ."',
 			profession_id = '". ${_POST}['profession_id'] ."',

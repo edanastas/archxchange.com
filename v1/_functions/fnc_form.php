@@ -527,7 +527,7 @@ return $return;
 		
 		//echo "\$_POST[$fieldname] --> $_POST[$fieldname]<BR>";
 		
-		/*if ( $_REQUEST[$fieldname] return_priority(array({$_REQUEST['zone_id'],$selected)) == $results[$fieldname] ) {
+		/*if ( $_REQUEST[$fieldname] return_priority(array($_REQUEST['zone_id'],$selected)) == $results[$fieldname] ) {
 			$insert_selected_country = " SELECTED";
 		} else {
 			$insert_selected_country = NULL;
@@ -632,7 +632,7 @@ return $return;
 			$return .= "<SELECT ID=". $form_name ." NAME=". $form_name ."". ${options}['onchange'] .">";
 							
 			// CHECK IF A ZONE HAS BEEN SUBMITTED
-			//if ( !{$_REQUEST['zone_id'] ) {
+			//if ( !$_REQUEST['zone_id'] ) {
 				//$return .= "<OPTION VALUE='' DISABLED>" . trans("SELECT",1) . " ----------------> </OPTION>";
 				
 				// SET THIS TO THE zone_id VAR IN THE URL TO PASS BACK IF NOTHING WAS CHANGED (SEE admin_warehouse_priorities.php AND )
@@ -645,7 +645,7 @@ return $return;
 			
 			while ($results = mysqli_fetch_assoc($query) ) {
 				
-				/*if ( return_priority(array({$_REQUEST['zone_id'],$selected)) == ${results}['zone_id'] ) {
+				/*if ( return_priority(array($_REQUEST['zone_id'],$selected)) == ${results}['zone_id'] ) {
 					$insert_selected_zone = " SELECTED";
 				} else {
 					$insert_selected_zone = NULL;
@@ -653,7 +653,7 @@ return $return;
 				
 				//$return .= "<OPTION VALUE='{$results['zone_id']}'$insert_selected_zone>{$results['zone_name']</OPTION>";
 				$return .= "<OPTION VALUE='${results}['zone_id']'" . 
-					///return_match(return_priority(array({$_REQUEST['zone_id'],$selected)), ${results}['zone_id'], " SELECTED") . ">{$results['zone_name']</OPTION>";
+					///return_match(return_priority(array($_REQUEST['zone_id'],$selected)), ${results}['zone_id'], " SELECTED") . ">{$results['zone_name']</OPTION>";
 					( 
 						( $selected != NULL ? $selected : ${_REQUEST}['zone_id'] ) // IF NO SELECT ZONE --> MATCH TO POSTED ZONE VALUE
 					== ${results}['zone_id'] ? " SELECTED": NULL ) . ">{$results['zone_name']</OPTION>";

@@ -56,7 +56,7 @@
 	//exit();
 	
 	
-	//if ( preg_match("/checkout.php/i",{$_SERVER['PHP_SELF']) ) {
+	//if ( preg_match("/checkout.php/i",$_SERVER['PHP_SELF']) ) {
 	//	header("location:" . ${_SERVER}['PHP_SELF'] . "");
 	//} else
 	
@@ -64,7 +64,7 @@
 	//exit;
 	
 	/*if ( ${_SESSION}['redirect'] ) { // IF QUERY_STRING RETURN TO QUERY_STRING
-		//{$_SESSION['redirect'] = ${_SERVER}['QUERY_STRING'];
+		//$_SESSION['redirect'] = ${_SERVER}['QUERY_STRING'];
 		header("Location:" . ${_SESSION}['redirect'] );
 	} elseif ( preg_match("/checkout.php/i", ${_SERVER}['PHP_SELF']) ) { // IF CHECKOUT LOGIN RETURN TO CHECKOUT
 		header("Location:./checkout.php");
@@ -101,15 +101,15 @@
 	/*
 	*/
 	// DELETE SESSION INFORMATION
-	//{$_SESSION['user_id'] = NULL;
-	unset({$_SESSION['user_id']);
-	//{$_SESSION['password'] = NULL;
-	unset({$_SESSION['password']);
+	//$_SESSION['user_id'] = NULL;
+	unset($_SESSION['user_id']);
+	//$_SESSION['password'] = NULL;
+	unset($_SESSION['password']);
 	
-	//{$_SESSION['checkout'] = NULL;
-	unset({$_SESSION['checkout']);
-	//{$_SESSION['selection'] = NULL;
-	unset({$_SESSION['selection']);
+	//$_SESSION['checkout'] = NULL;
+	unset($_SESSION['checkout']);
+	//$_SESSION['selection'] = NULL;
+	unset($_SESSION['selection']);
 	
 	
 	//dev_print($_SESSION);
@@ -136,7 +136,7 @@
 	//setcookie("lang", NULL, time() + 31536000);
 	
 	if ( ${_SERVER}['QUERY_STRING'] ) { // IF QUERY_STRING RETURN TO QUERY_STRING
-		header("Location:./" . return_on({$_SERVER['QUERY_STRING'], ${_SERVER}['QUERY_STRING']) );
+		header("Location:./" . return_on($_SERVER['QUERY_STRING'], ${_SERVER}['QUERY_STRING']) );
 	} else { // RETURN TO HOMEPAGE
 		header("Location:./");
 	}

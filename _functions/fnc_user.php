@@ -72,15 +72,15 @@
 	/*
 	*/
 	// DELETE SESSION INFORMATION
-	//{$_SESSION['user_id'] = NULL;
-	unset({$_SESSION['user_id']);
-	//{$_SESSION['password'] = NULL;
-	unset({$_SESSION['password']);
+	//$_SESSION['user_id'] = NULL;
+	unset($_SESSION['user_id']);
+	//$_SESSION['password'] = NULL;
+	unset($_SESSION['password']);
 	
-	//{$_SESSION['checkout'] = NULL;
-	unset({$_SESSION['checkout']);
-	//{$_SESSION['selection'] = NULL;
-	unset({$_SESSION['selection']);
+	//$_SESSION['checkout'] = NULL;
+	unset($_SESSION['checkout']);
+	//$_SESSION['selection'] = NULL;
+	unset($_SESSION['selection']);
 	
 	
 	//dev_print($_SESSION);
@@ -107,7 +107,7 @@
 	//setcookie("lang", NULL, time() + 31536000);
 	
 	if ( ${_SERVER}['QUERY_STRING'] ) { // IF QUERY_STRING RETURN TO QUERY_STRING
-		header("Location:./" . ({$_SERVER['QUERY_STRING'] ? ${_SERVER}['QUERY_STRING'] : NULL) );
+		header("Location:./" . ($_SERVER['QUERY_STRING'] ? ${_SERVER}['QUERY_STRING'] : NULL) );
 	} else { // RETURN TO HOMEPAGE
 		header("Location:./");
 	}

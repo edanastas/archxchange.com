@@ -23,11 +23,11 @@ define("TITLE","Login"); // PAGE TITLE
 if ( ${_POST}['LOGIN'] ) {
 	
 	// CHECK USERNAME
-	if ( !{$_POST['username'] || !{$_POST['password'] ) {
+	if ( !$_POST['username'] || !$_POST['password'] ) {
 		${error}['LOGIN'] = "please submit both your username and password";
-	} elseif ( user_login(user_check_login({$_POST['password'],{$_POST['username'])) ) {
+	} elseif ( user_login(user_check_login($_POST['password'],$_POST['username'])) ) {
 		
-		//echo "logging in ". sha1(sha1({$_POST['password'])) ."<p>";
+		//echo "logging in ". sha1(sha1($_POST['password'])) ."<p>";
 		config_redirect();
 		//header("location:./");
 	} else {

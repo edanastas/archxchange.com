@@ -22,14 +22,14 @@ if ( ${_POST}['BACK'] ) {
 } elseif ( ${_POST}['ADD'] || ${_POST}['CHANGE'] ) {
 	
 	////////// CHECK IF DEPARTMENT WAS SUBMITTED?
-	if ( !{$_POST['department'] ) {
+	if ( !$_POST['department'] ) {
 		${error}['department'] = "Please enter a department name and submit the form again";
 	}
 	
 	////////// CHECK EXISTING DEPARTMENTS FOR DUPLICATES
 	$sql = "SELECT * FROM template_departments 
 		WHERE department LIKE '". ${_POST}['department'] ."' ". 
-			({$_GET['CRYPT_REF_ID'] && ${_POST}['CHANGE'] ? " AND department_id != ". ${_GET}['CRYPT_REF_ID'] : NULL) ." 
+			($_GET['CRYPT_REF_ID'] && ${_POST}['CHANGE'] ? " AND department_id != ". ${_GET}['CRYPT_REF_ID'] : NULL) ." 
 			AND domain_id = '". DOMAIN_ID ."'";
 	
 	if ( !$query = mysqli_query($db, $sql) ) {
@@ -43,8 +43,8 @@ if ( ${_POST}['BACK'] ) {
 	
 	////////// PROCESS FORM
 	if ( !$error ) {
-		//{$db['values'] = "department = '". ucwords(strtolower(query_prep({$_POST['department']))) ."', 
-		//	notes = '". query_prep({$_POST['notes']) ."', 
+		//{$db['values'] = "department = '". ucwords(strtolower(query_prep($_POST['department']))) ."', 
+		//	notes = '". query_prep($_POST['notes']) ."', 
 		//	". ( ${_POST}['inactive'] ? " inactive = 1" : " inactive = NULL" ) ."";
 		
 		if ( ${_POST}['ADD'] ) {
@@ -57,9 +57,9 @@ if ( ${_POST}['BACK'] ) {
 		
 		
 		$sql = ${db}['action'] ." template_departments SET ".
-			({$_POST['ADD'] ? "domain_id = '". DOMAIN_ID ."', " : null) .
-			"department = '". ucwords(strtolower(query_prep({$_POST['department']))) ."', 
-			notes = '". query_prep({$_POST['notes']) ."', 
+			($_POST['ADD'] ? "domain_id = '". DOMAIN_ID ."', " : null) .
+			"department = '". ucwords(strtolower(query_prep($_POST['department']))) ."', 
+			notes = '". query_prep($_POST['notes']) ."', 
 			". ( ${_POST}['inactive'] ? " inactive = 1" : " inactive = NULL" ) ." ".
 			${db}['where'];
 		
@@ -74,7 +74,7 @@ if ( ${_POST}['BACK'] ) {
 	
 } elseif ( ${_POST}['DELETE'] ) {
 	
-	if ( ${_POST}['DELETE'] && !{$_POST['confirm_delete'] ) 
+	if ( ${_POST}['DELETE'] && !$_POST['confirm_delete'] ) 
 		${error}['DELETE'] = "By deleting this department you will also delete all the associations this department may have to your projects (although the actual projects associated with this department <u>will NOT be deleted</u>).";
 		//{$error['DELETE'] = "Please be aware that by deleting this department you will also delete all the project associations to this department (although the actual projects associated with this department <u>will NOT be deleted</u>)";
 	
@@ -177,7 +177,7 @@ echo "<FORM ACTION='". ${_SERVER}['PHP_SELF'] ."' METHOD=GET>";
 			
 			
 			${input}['department_id'] .= "<OPTION VALUE='". ${info}['department_id'] ."' ". 
-				({$_GET['CRYPT_REF_ID'] == ${info}['department_id'] ? " SELECTED" : NULL) .">". ucwords({$info['department']) ." [". ${info}['department_id'] ."]</OPTION>";
+				($_GET['CRYPT_REF_ID'] == ${info}['department_id'] ? " SELECTED" : NULL) .">". ucwords({$info['department']) ." [". ${info}['department_id'] ."]</OPTION>";
 			$previous = $info;
 		}
 		${input}['department_id'] .= "</SELECT>";
@@ -215,7 +215,7 @@ echo "<FORM ACTION='". ${_SERVER}['PHP_SELF'] ."' METHOD=GET>";
 	////////////////////////////////////////////////////////////////////////////////
 	
 	echo "</FORM>
-		<FORM ACTION='". ${_SERVER}['PHP_SELF'] . ({$_SERVER['QUERY_STRING'] ? "?". ${_SERVER}['QUERY_STRING'] : NULL) ."' METHOD=POST>";
+		<FORM ACTION='". ${_SERVER}['PHP_SELF'] . ($_SERVER['QUERY_STRING'] ? "?". ${_SERVER}['QUERY_STRING'] : NULL) ."' METHOD=POST>";
 	
 	
 	////////// SUBTITLE

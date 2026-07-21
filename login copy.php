@@ -23,16 +23,16 @@ define("TITLE","Login"); // PAGE TITLE
 if ( ${_POST}['SUBMIT'] ) {
 	
 	// CHECK USERNAME
-	if ( !{$_POST['username'] || !{$_POST['password'] ) {
+	if ( !$_POST['username'] || !$_POST['password'] ) {
 		${error}['username'] = "please submit your username and password";
-	} elseif ( user_check_login($password={$_POST['password'],$username={$_POST['username']) ) {
+	} elseif ( user_check_login($password=$_POST['password'],$username=$_POST['username']) ) {
 		
 		$sql = "SELECT * FROM users 
-			WHERE password = '". sha1({$_POST['password']) ."' 
+			WHERE password = '". sha1($_POST['password']) ."' 
 				AND username = '". ${_POST}['username'] ."' LIMIT 1";
 		
 		if ( mysqli_fetch_assoc(mysqli_query($db, "SELECT * FROM users 
-			WHERE password = '". sha1({$_POST['password']) ."' 
+			WHERE password = '". sha1($_POST['password']) ."' 
 				AND username = '". ${_POST}['username'] ."' LIMIT 1")) ) {
 			user_login();
 		} else {

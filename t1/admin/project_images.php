@@ -142,11 +142,11 @@ if ( ${_POST}['BACK'] ) {
 				$sql = "INSERT INTO template_images SET 
 					image_id = NULL, 
 					domain_id = '". DOMAIN_ID ."', 
-					project_id = ". ({$_POST['project_id'] ? "'". ${_POST}['project_id'] ."'" : 
-						({$_POST['project_id'] ? "'". ${_POST}['project_id'] ."'" : "NULL")) .",
+					project_id = ". ($_POST['project_id'] ? "'". ${_POST}['project_id'] ."'" : 
+						($_POST['project_id'] ? "'". ${_POST}['project_id'] ."'" : "NULL")) .",
 					
 					type_id = ". ($_POST['type_id_'. $key] ? "'". $_POST['type_id_'. $key] ."'" : 
-						({$_POST['type_id'] ? "'". ${_POST}['type_id'] ."'" : "NULL")) .",
+						($_POST['type_id'] ? "'". ${_POST}['type_id'] ."'" : "NULL")) .",
 					contact_id = ". ({$file['type'] ? "'". ${file}['type'] ."'" : "NULL") .",
 					
 					file_type = ". ({$file['type'] ? "'". ${file}['type'] ."'" : "NULL") .",
@@ -154,13 +154,13 @@ if ( ${_POST}['BACK'] ) {
 					file_name = ". ({$file['name'] ? "'". ${file}['name'] ."'" : "NULL") .",
 					
 					title = ". ($_POST['image_title_'. $key] ? "'". $_POST['image_title_'. $key] ."'" : 
-						({$_POST['title'] ? "'". ${_POST}['title'] ."'" : "NULL")) .",
+						($_POST['title'] ? "'". ${_POST}['title'] ."'" : "NULL")) .",
 					
 					caption = ". ($_POST['image_caption_'. $key] ? "'". $_POST['image_caption_'. $key] ."'" : 
-						({$_POST['caption'] ? "'". ${_POST}['caption'] ."'" : "NULL")) .",
+						($_POST['caption'] ? "'". ${_POST}['caption'] ."'" : "NULL")) .",
 					
 					date = ". ($_POST['date_'. $key] ? "'". $_POST['date_'. $key] ."'" : 
-						({$_POST['date'] ? "'". ${_POST}['date'] ."'" : "NULL")) ."";
+						($_POST['date'] ? "'". ${_POST}['date'] ."'" : "NULL")) ."";
 				
 				$alert[] = $sql;
 				
@@ -231,18 +231,18 @@ if ( ${_POST}['BACK'] ) {
 		
 		
 		$alert[] = "image upload info --> ". ${_FILES}['update_image_file']['tmp_name'] .",". ${_GET}['image_id'] ."";
-		if ( image_upload({$_FILES['update_image_file']['tmp_name'],{$_GET['image_id']) ) {
+		if ( image_upload($_FILES['update_image_file']['tmp_name'],$_GET['image_id']) ) {
 			$alert[] = "upload was successful!";
 		}
 	}
 	
 	$sql = "UPDATE template_images SET 
-		project_id = ". ({$_POST['project_id'] ? "'". ${_POST}['project_id'] ."'" : "NULL") .",
-		type_id = ". ({$_POST['type_id'] ? "'". ${_POST}['type_id'] ."'" : "NULL") .",
-		contact_id = ". ({$_POST['contact_id'] ? "'". ${_POST}['contact_id'] ."'" : "NULL") .",
-		title = ". ({$_POST['title'] ? "'". ${_POST}['title'] ."'" : "NULL") .",
-		caption = ". ({$_POST['caption'] ? "'". ${_POST}['caption'] ."'" : "NULL") .",
-		date = ". ({$_POST['date'] ? "'". ${_POST}['date'] ."'" : "NULL") ." 
+		project_id = ". ($_POST['project_id'] ? "'". ${_POST}['project_id'] ."'" : "NULL") .",
+		type_id = ". ($_POST['type_id'] ? "'". ${_POST}['type_id'] ."'" : "NULL") .",
+		contact_id = ". ($_POST['contact_id'] ? "'". ${_POST}['contact_id'] ."'" : "NULL") .",
+		title = ". ($_POST['title'] ? "'". ${_POST}['title'] ."'" : "NULL") .",
+		caption = ". ($_POST['caption'] ? "'". ${_POST}['caption'] ."'" : "NULL") .",
+		date = ". ($_POST['date'] ? "'". ${_POST}['date'] ."'" : "NULL") ." 
 		WHERE domain_id = '". DOMAIN_ID ."' AND image_id = '". ${_GET}['image_id'] ."' LIMIT 1";
 	
 	$alert[] = $sql;
@@ -265,7 +265,7 @@ if ( ${_POST}['BACK'] ) {
 	
 } elseif ( ${_POST}['DELETE_IMAGE'] ) {
 	
-	if ( !{$_POST['delete_confirmation'] ) {
+	if ( !$_POST['delete_confirmation'] ) {
 		${error}['DELETE'] = "Please confirm that you want to delete this image and all the image information associated with it (caption, date, etc.).";
 		
 		//{$error['DELETE'] = "you are trying to delete ". ROOT_DIR ."/uploads/". ${_GET}['image_id'] .".png";
@@ -416,7 +416,7 @@ echo "<FORM ACTION='". ${_SERVER}['PHP_SELF'] ."' METHOD=GET>";
 			
 			
 			${input}['department_id'] .= "<OPTION VALUE='". ${info}['department_id'] ."' ". 
-				({$_GET['CRYPT_REF_ID'] == ${info}['department_id'] ? " SELECTED" : NULL) .">". ucwords({$info['department']) ." [". ${info}['department_id'] ."]</OPTION>";
+				($_GET['CRYPT_REF_ID'] == ${info}['department_id'] ? " SELECTED" : NULL) .">". ucwords({$info['department']) ." [". ${info}['department_id'] ."]</OPTION>";
 			$previous = $info;
 		}
 		${input}['department_id'] .= "</SELECT>";
@@ -458,7 +458,7 @@ echo "<FORM ACTION='". ${_SERVER}['PHP_SELF'] ."' METHOD=GET>";
 	*/
 	
 	echo "<FORM name=uploadForm enctype='multipart/form-data' ACTION='". ${_SERVER}['PHP_SELF'] . 
-		({$_SERVER['QUERY_STRING'] ? "?". ${_SERVER}['QUERY_STRING'] : NULL) ."' METHOD=post>
+		($_SERVER['QUERY_STRING'] ? "?". ${_SERVER}['QUERY_STRING'] : NULL) ."' METHOD=post>
 		<INPUT TYPE=HIDDEN NAME=MAX_FILE_SIZE VALUE=5000000>"; //  onSubmit=\"disableForm(this);\"
 	
 	

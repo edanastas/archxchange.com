@@ -36,13 +36,13 @@ if (!defined('ACCESS')) die(ERROR_MESSAGE);
 } else*/if ( ${_POST}['LOGIN'] ) {
 	
 	////////// CHECK EMAIL
-	if ( !preg_match("/^[a-zA-Z0-9][a-z0-9_.-]*@[a-z0-9.-]+\.[a-z]{2,4}$/i", trim({$_POST['email'])) ) {
+	if ( !preg_match("/^[a-zA-Z0-9][a-z0-9_.-]*@[a-z0-9.-]+\.[a-z]{2,4}$/i", trim($_POST['email'])) ) {
 		//{$error['email'] = TRUE;
 		//{$error['db'] = "Please submit a valid e-mail address<br>";
 		${error}['email'] = "Please submit a valid e-mail address";
 		
 	}/* else { // IF EMAIL --> CHECK IF EMAIL EXISTS
-		if ( mysqli_fetch_row(mysqli_query($db, "SELECT * FROM users WHERE user_id = '" . trim({$_POST['email']) . "' LIMIT 1")) ) {
+		if ( mysqli_fetch_row(mysqli_query($db, "SELECT * FROM users WHERE user_id = '" . trim($_POST['email']) . "' LIMIT 1")) ) {
 			${error}['email'] = "that email address already exists in our database";
 		}
 	}*/
@@ -51,7 +51,7 @@ if (!defined('ACCESS')) die(ERROR_MESSAGE);
 	// if they have a password but they haven't filled it in then error:
 	///if ( ${_POST}['have_password'] == "no" )  { // "I AM A NEW CUSTOMER" -->
 		// IF EMAIL --> CHECK IF EMAIL EXISTS
-		///if ( mysqli_fetch_assoc(mysqli_query($db, "SELECT * FROM users WHERE email = '" . trim({$_POST['email']) . "' LIMIT 1")) ) {
+		///if ( mysqli_fetch_assoc(mysqli_query($db, "SELECT * FROM users WHERE email = '" . trim($_POST['email']) . "' LIMIT 1")) ) {
 		///	${error}['email'] = "The e-mail address already exists in our records"; 
 		///	${note}['forgot'] = "Did you forget your password? <A HREF='forgot.php'>click here</A>"; // Did you forget your password // Need assistance with your password
 		///}
@@ -65,7 +65,7 @@ if (!defined('ACCESS')) die(ERROR_MESSAGE);
 		
 		
 		
-		if ( !preg_match("/^.{4,12}$/i",{$_POST['password']) ) { // !{$_POST['password'] ) { // &&  ${_POST}['have_password'] == "yes"
+		if ( !preg_match("/^.{4,12}$/i",$_POST['password']) ) { // !$_POST['password'] ) { // &&  ${_POST}['have_password'] == "yes"
 			//{$error['pwd'] = TRUE;
 			${error}['password'] = "Please enter a password (4-12 characters)";
 			//${error}['db'] .= "* Please enter a password<br>";
@@ -75,13 +75,13 @@ if (!defined('ACCESS')) die(ERROR_MESSAGE);
 			
 			// CHECK IF THE USER EXISTS
 				if ( mysqli_fetch_assoc(mysqli_query($db, "SELECT * FROM users 
-						WHERE email = '" . db_escape(trim({$_POST['email'])) . "' LIMIT 1")) ) {
+						WHERE email = '" . db_escape(trim($_POST['email'])) . "' LIMIT 1")) ) {
 				
 				
 					// CHECK IF PASSWORD MATCHES
 					if ( !$info = mysqli_fetch_assoc(mysqli_query($db, "SELECT `user_id`,`language_code`,`password` FROM `users` 
-							WHERE `email` = '" . db_escape(trim({$_POST['email'])) . "' 
-							AND `password` = sha1('" . db_escape({$_POST['password']) . "') LIMIT 1")) ) {
+							WHERE `email` = '" . db_escape(trim($_POST['email'])) . "' 
+							AND `password` = sha1('" . db_escape($_POST['password']) . "') LIMIT 1")) ) {
 					
 					${error}['password'] = "The password does not match our records";
 					${note}['forgot'] = "Did you forget your password? <A HREF='forgot.php'>click here</A>";
@@ -96,23 +96,23 @@ if (!defined('ACCESS')) die(ERROR_MESSAGE);
 					//session_destroy();
 					
 					//define('USER_ID',{$info['user_id']);
-					//{$_COOKIE['auto'] = NULL;
-					//unset({$_SESSION['auto']);
-					//echo ${info}['user_id'] . "|" . sha1({$_POST['password']);
+					//$_COOKIE['auto'] = NULL;
+					//unset($_SESSION['auto']);
+					//echo ${info}['user_id'] . "|" . sha1($_POST['password']);
 					//exit();
-					//{$_COOKIE['auto'] = ${info}['user_id'] . " | " . sha1({$_POST['password']);
+					//$_COOKIE['auto'] = ${info}['user_id'] . " | " . sha1($_POST['password']);
 					
-					//{$_SESSION['user_id'] = ${info}['user_id'];
-					//{$_SESSION['password'] = ${info}['password'];
+					//$_SESSION['user_id'] = ${info}['user_id'];
+					//$_SESSION['password'] = ${info}['password'];
 					
 					member_login($info);
 					
 					///cart_login();
 					
-					///if ( !{$_SERVER['QUERY_STRING'] && cart_qty() > 0 ) {
+					///if ( !$_SERVER['QUERY_STRING'] && cart_qty() > 0 ) {
 					///	header("Location:./cart.php");
 					///} else {
-					///	header("Location:./" . return_on({$_SERVER['QUERY_STRING'], ${_SERVER}['QUERY_STRING']) );
+					///	header("Location:./" . return_on($_SERVER['QUERY_STRING'], ${_SERVER}['QUERY_STRING']) );
 					///}
 					
 				}
@@ -125,7 +125,7 @@ if (!defined('ACCESS')) die(ERROR_MESSAGE);
 			} /* else {
 			
 				// IF EMAIL --> CHECK IF EMAIL EXISTS
-				if ( mysqli_fetch_row(mysqli_query($db, "SELECT * FROM users WHERE user_id = '" . trim({$_POST['email']) . "' LIMIT 1")) ) {
+				if ( mysqli_fetch_row(mysqli_query($db, "SELECT * FROM users WHERE user_id = '" . trim($_POST['email']) . "' LIMIT 1")) ) {
 					${error}['email'] = "That e-mail address already exists";
 					${error}['forgot'] = "Did you forget your password?";
 				} else {
@@ -138,7 +138,7 @@ if (!defined('ACCESS')) die(ERROR_MESSAGE);
 	} else { // "I AM A NEW CUSTOMER" -->
 		
 		// IF EMAIL --> CHECK IF EMAIL EXISTS
-		if ( mysqli_fetch_assoc(mysqli_query($db, "SELECT * FROM users WHERE email = '" . db_escape(trim({$_POST['email'])) . "' LIMIT 1")) ) {
+		if ( mysqli_fetch_assoc(mysqli_query($db, "SELECT * FROM users WHERE email = '" . db_escape(trim($_POST['email'])) . "' LIMIT 1")) ) {
 			${error}['email'] = "The e-mail address already exists in our records"; 
 			${note}['forgot'] = "Did you forget your password? <A HREF='forgot.php'>click here</A>"; // Did you forget your password // Need assistance with your password
 			
@@ -155,15 +155,15 @@ if (!defined('ACCESS')) die(ERROR_MESSAGE);
 } elseif ( ${_POST}['REGISTER'] ) {
 	////////// check names:
 	// check for first name:
-	if ( !{$_POST['firstname'] ) {
+	if ( !$_POST['firstname'] ) {
 		${error}['firstname'] = TRUE;
 	}
 	
 	// check for last name:
-	if ( !{$_POST['lastname'] ) {
+	if ( !$_POST['lastname'] ) {
 		${error}['lastname'] = TRUE;
 	}// else {
-		//$ln = ucfirst(strtolower(trim(addslashes({$_POST['lastname']))));
+		//$ln = ucfirst(strtolower(trim(addslashes($_POST['lastname']))));
 	//}
 	
 	//echo "\${error}['lastname'] --> ${error}['lastname']<P>";
@@ -171,7 +171,7 @@ if (!defined('ACCESS')) die(ERROR_MESSAGE);
 	////////// check emails match:
 	if ( ${_POST}['email_confirm'] && ${_POST}['email'] != ${_POST}['email_confirm'] ) {
 		${error}['email_confirm'] = "the emails do not match";
-	} elseif ( !{$_POST['email_confirm'] ) {
+	} elseif ( !$_POST['email_confirm'] ) {
 		${error}['email_confirm'] = TRUE;
 	}
 	
@@ -186,29 +186,29 @@ if (!defined('ACCESS')) die(ERROR_MESSAGE);
 	
 	////////// check dob
 	// check 'date of birth' fields have been filled in:
-	if ( !{$_POST['dob']['month'] || !{$_POST['dob']['day'] || !{$_POST['dob']['year'] ) {
+	if ( !$_POST['dob']['month'] || !$_POST['dob']['day'] || !$_POST['dob']['year'] ) {
 		${error}['dob'] = TRUE;
 	} else {
 		$dob = ${_POST}['dob']['year'] . "-" . ${_POST}['dob']['month'] . "-" . ${_POST}['dob']['day'];
 	}
 	
 	// check gender:
-	if ( !{$_POST['gender'] ) {
+	if ( !$_POST['gender'] ) {
 		${error}['gender'] = TRUE;
 	}
 	
 	////////// check passwords have been entered and they match:
 	// check for password:
-	if ( !{$_POST['password'] ) {
+	if ( !$_POST['password'] ) {
 		${error}['password'] = TRUE;
 	}// else {
-	//	$npwd = trim({$_POST['password']);
+	//	$npwd = trim($_POST['password']);
 	//}
 	
 	// check if passwords match:
 	if ( ${_POST}['password'] != ${_POST}['password_confirm'] ) {
 		${error}['password_confirm'] = "passwords do not match";
-	} elseif ( !{$_POST['password_confirm'] ) {
+	} elseif ( !$_POST['password_confirm'] ) {
 		${error}['password_confirm'] = TRUE;
 	}
 	
@@ -216,33 +216,33 @@ if (!defined('ACCESS')) die(ERROR_MESSAGE);
 	if (!$error) {
 		
 		if ( mysqli_query($db, "INSERT INTO users SET 
-					email = '" . db_escape({$_POST['email']) . "',
-					password = sha1('" . db_escape({$_POST['password']) . "'),
-					firstname = '" . db_escape(ucfirst(strtolower(trim({$_POST['firstname'])))) . "',
-					lastname = '" . db_escape(ucfirst(strtolower(trim({$_POST['lastname'])))) . "',
+					email = '" . db_escape($_POST['email']) . "',
+					password = sha1('" . db_escape($_POST['password']) . "'),
+					firstname = '" . db_escape(ucfirst(strtolower(trim($_POST['firstname'])))) . "',
+					lastname = '" . db_escape(ucfirst(strtolower(trim($_POST['lastname'])))) . "',
 					dob = '" . db_escape($dob) . "',
-					gender = '" . db_escape({$_POST['gender']) . "',
-					phone = '" . db_escape({$_POST['phone']) . "',
+					gender = '" . db_escape($_POST['gender']) . "',
+					phone = '" . db_escape($_POST['phone']) . "',
 					reg_date = NOW()") ) {
 			
 			//$$CRYPT_USER_ID = ${info}['user_id']; session_register(CRYPT_USER_ID);
 			//session_register(CRYPT_USER_ID,{$info['user_id']);
 			//session_register(id,{$info['user_id']);
-			//{$_SESSION['CRYPT_USER_ID'] = ${info}['user_id'];
+			//$_SESSION['CRYPT_USER_ID'] = ${info}['user_id'];
 			
-			//{$_SESSION['ref_id'] = mysqli_insert_id($db);
+			//$_SESSION['ref_id'] = mysqli_insert_id($db);
 			//define('USER_ID',mysqli_insert_id($db));
-			//{$_SESSION['ref_id'] = USER_ID;
-			//{$_SESSION['password'] = sha1({$_POST['password']);
-			//{$_COOKIE['auto'] = ${info}['user_id'] . " | " . sha1({$_POST['password']);
+			//$_SESSION['ref_id'] = USER_ID;
+			//$_SESSION['password'] = sha1($_POST['password']);
+			//$_COOKIE['auto'] = ${info}['user_id'] . " | " . sha1($_POST['password']);
 			
 			${info}['ref_id'] = mysqli_insert_id($db);
-			${info}['password'] = sha1({$_POST['password']);
+			${info}['password'] = sha1($_POST['password']);
 			
 			member_login($info);
 			///cart_login();
 			
-			///header("Location:./" . return_on({$_SERVER['QUERY_STRING'], ${_SERVER}['QUERY_STRING']) );
+			///header("Location:./" . return_on($_SERVER['QUERY_STRING'], ${_SERVER}['QUERY_STRING']) );
 			//header("Location:./" . return_on("?" . ${_SERVER}['QUERY_STRING'], ${_SERVER}['QUERY_STRING']) . "");
 			
 		} else {
@@ -267,10 +267,10 @@ echo "<TABLE BORDER=0 ALIGN=CENTER CELLSPACING=0 CELLPADDING=3 STYLE='color:" . 
 
 //echo "<TR><TD HEIGHT=10>" . TRANSPARENT . "</TD></TR>";
 
-if ( ({$_POST['LOGIN'] && !$error) || ${_POST}['REGISTER'] ) {// || ${_POST}['AGREE'] || ${_POST}['DISAGREE']
+if ( ($_POST['LOGIN'] && !$error) || ${_POST}['REGISTER'] ) {// || ${_POST}['AGREE'] || ${_POST}['DISAGREE']
 	
 	
-	/*if ( !{$_SESSION['AGREE'] ) {
+	/*if ( !$_SESSION['AGREE'] ) {
 		
 		echo "<TR>
 				<TD COLSPAN=2>" . html_title_text("Please Review our Conditions") . "</TD>
@@ -309,18 +309,18 @@ if ( ({$_POST['LOGIN'] && !$error) || ${_POST}['REGISTER'] ) {// || ${_POST}['AG
 				<TD><INPUT TYPE=TEXT NAME=email CLASS='form' VALUE='" . ${_POST}['email'] . "'></TD>
 			</TR><TR>
 				<TD ALIGN=RIGHT>" . error_red({$error['email_confirm'],'re-type e-mail') . "</TD>
-				<TD><INPUT TYPE=TEXT NAME=email_confirm CLASS='form' VALUE='{$_POST['email_confirm']}'></TD>
+				<TD><INPUT TYPE=TEXT NAME=email_confirm CLASS='form' VALUE='$_POST['email_confirm']}'></TD>
 			</TR><TR>
 				<TD ALIGN=RIGHT>" . error_red({$error['phone'],'phone') . "</TD>
-				<TD><INPUT TYPE=TEXT NAME=phone CLASS='form' VALUE='{$_POST['phone']}'></TD>
+				<TD><INPUT TYPE=TEXT NAME=phone CLASS='form' VALUE='$_POST['phone']}'></TD>
 			</TR><TR>
 				<TD ALIGN=RIGHT>" . error_red({$error['dob'],'date of birth') . "</TD>
 				<TD COLSPAN=2>" . date_return_drop('dob', ${_POST}['dob']['year'], ${_POST}['dob']['month'], ${_POST}['dob']['day'], array('limit' => 18, 'location' => 10)) . "</TD>
 			</TR><TR>
 				<TD ALIGN=RIGHT>" . error_red({$error['gender'],'gender') . "</TD>
 				<TD><INPUT TYPE=RADIO NAME=gender VALUE='m'" . 
-					return_match({$_POST['gender'], 'm', 'checked') . "> male &#160 <INPUT TYPE=RADIO NAME=gender VALUE='f'"  . 
-					return_match({$_POST['gender'], 'f', 'checked') . "> female </TD>
+					return_match($_POST['gender'], 'm', 'checked') . "> male &#160 <INPUT TYPE=RADIO NAME=gender VALUE='f'"  . 
+					return_match($_POST['gender'], 'f', 'checked') . "> female </TD>
 			</TR><TR>
 				<TD COLSPAN=2></TD>
 			</TR><TR>
@@ -383,13 +383,13 @@ if ( ({$_POST['LOGIN'] && !$error) || ${_POST}['REGISTER'] ) {// || ${_POST}['AG
 	echo "<TR>
 			<TD COLSPAN=2>" . html_title_text("What is your e-mail address?") . "</TD>
 		</TR><TR>
-			<TD COLSPAN=2>" . error_red({$error['email'],'e-mail address') . " <INPUT TYPE=TEXT NAME=email VALUE='{$_POST['email']}' STYLE='width:170px;'></TD>
+			<TD COLSPAN=2>" . error_red({$error['email'],'e-mail address') . " <INPUT TYPE=TEXT NAME=email VALUE='$_POST['email']}' STYLE='width:170px;'></TD>
 		</TR><TR>
 			<TD ALIGN=RIGHT><INPUT TYPE=RADIO NAME=have_password ID=have_password VALUE=no ${checked}['no']></TD>
 			<TD>I am a new member and don't have a password</TD>
 		</TR><TR>
 			<TD ALIGN=RIGHT><INPUT TYPE=RADIO NAME=have_password ID=have_password VALUE=yes ${checked}['yes']></TD>
-			<TD>" . error_red({$error['pwd'],'I have a password') . " <INPUT TYPE=PASSWORD NAME=password VALUE='{$_POST['password']}'></TD>
+			<TD>" . error_red({$error['pwd'],'I have a password') . " <INPUT TYPE=PASSWORD NAME=password VALUE='$_POST['password']}'></TD>
 		</TR>";
 	
 	
