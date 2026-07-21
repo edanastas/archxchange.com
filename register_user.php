@@ -80,7 +80,7 @@ if ( ${_POST}['SUBMIT'] ) {
 		$sql = "INSERT INTO users SET 
 			username = '". ${_POST}['username'] ."',
 			email = '". ${_POST}['email'] ."',
-			password = '". sha1($_POST['password']) ."',
+			password = '". sha1({$_POST['password']}) ."',
 			firstname = '". ${_POST}['firstname'] ."',
 			lastname = '". ${_POST}['lastname'] ."',
 			profession_id = '". ${_POST}['profession_id'] ."',
@@ -147,7 +147,7 @@ echo "<FORM ACTION=" . ${_SERVER}['PHP_SELF'] . " METHOD=POST>";
 	
 	////////// USERNAME
 	$insert_form[] = array("username", trans("username"),
-		array("TEXT",$edit['username'],NULL,"MAXLENGTH=30"),
+		array("TEXT",{$edit['username']},NULL,"MAXLENGTH=30"),
 		NULL,NULL,NULL);
 	
 	////////// EMAIL
@@ -194,7 +194,7 @@ echo "<FORM ACTION=" . ${_SERVER}['PHP_SELF'] . " METHOD=POST>";
 		<OPTION VALUE=''>SELECT --></OPTION>";
 	while ( $info = mysqli_fetch_array($query) ) {
 		${input}['profession'] .= "<OPTION VALUE='". ${info}['profession_id'] ."' ". 
-			($info['profession_id'] == ${_POST}['profession_id'] ? " SELECTED" : null).">". ucwords($info['profession']) ."</OPTION>";
+			($info['profession_id'] == ${_POST}['profession_id'] ? " SELECTED" : null).">". ucwords({$info['profession']}) ."</OPTION>";
 	}
 	${input}['profession'] .= "</SELECT>";
 	

@@ -341,16 +341,16 @@
 							if ( ${input}['0'] == "TEXTAREA" ) { // IF TEXTAREA
 								${html}['valign'] = " VALIGN=TOP";
 								$input = "<TEXTAREA NAME=\"" . $field_name ." ID=\"" . $field_name . 
-									"\" STYLE='" . ${input}['2'] . "' " . ${input}['3'] . ">" . stripslashes($input['1']) . "</TEXTAREA> ". 
+									"\" STYLE='" . ${input}['2'] . "' " . ${input}['3'] . ">" . stripslashes({$input['1']}) . "</TEXTAREA> ". 
 										( ${input}['4'] ? "<BR>". ${input}['4'] : NULL ) ."\n";
 								
 							} else { // NOT TEXTAREA
 								$input = "<INPUT TYPE=\"" . ${input}['0'] ."\"".
 									" NAME=\"" . $field_name . "\"" . 
 								    " ID=\"" . $field_name . "\"" .
-									" VALUE=\"" . stripslashes($input['1']) . "\"" . 
+									" VALUE=\"" . stripslashes({$input['1']}) . "\"" . 
 									" STYLE='" . ${input}['2'] . "' " . ${input}['3'] . "". 
-										( preg_match("/RADIO|CHECKBOX/i",$input['0']) && $_POST[$field_name] ? " CHECKED" : NULL ) ."> ". ${input}['4'] ."\n";
+										( preg_match("/RADIO|CHECKBOX/i",{$input['0']}) && $_POST[$field_name] ? " CHECKED" : NULL ) ."> ". ${input}['4'] ."\n";
 							}
 							
 						}// else {
@@ -429,7 +429,7 @@
 			$insert_selected_country = NULL;
 		}
 		
-		$return .= "<OPTION VALUE='$results['country_id']}'$insert_selected_country>$results['country_name']</OPTION>";
+		$return .= "<OPTION VALUE='{$results['country_id']}'$insert_selected_country>{$results['country_name']}</OPTION>";
 		
 	}
 		
@@ -467,7 +467,7 @@ return $return;
 		}
 		
 		if($results['country_name'] != $lastcname) $return .= "<OPTION VALUE='' DISABLED></OPTION>\n<OPTION VALUE='' DISABLED>" . ${results}['country_name']. "</OPTION>\n";
-		$return .= "<OPTION VALUE='$results['zone_id']}'$insert_selected_zone> - ${results}['zone_name']</OPTION>";
+		$return .= "<OPTION VALUE='{$results['zone_id']}'$insert_selected_zone> - ${results}['zone_name']</OPTION>";
 		$lastcname = ${results}['country_name'];
 	
 	}
@@ -504,8 +504,8 @@ return $return;
 	
 	if ( !$options['java'] ) ${options}['java'] = "onchange=\"submit()\"";
 	
-	//$return .= "<SELECT NAME=". $form_name ."". (!$options['manual'] ? " onchange=\"updateMenu(this,'". $update_zones ."')\"" : NULL ) .">";
-	$return .= "<SELECT ID=". $form_name ." NAME=". $form_name ." ". (!$options['manual'] ? ${options}['java'] : NULL ) .">";
+	//$return .= "<SELECT NAME=". $form_name ."". (!{$options['manual']} ? " onchange=\"updateMenu(this,'". $update_zones ."')\"" : NULL ) .">";
+	$return .= "<SELECT ID=". $form_name ." NAME=". $form_name ." ". (!{$options['manual']} ? ${options}['java'] : NULL ) .">";
 	
 	
 	//$query = mysqli_query($db, "SELECT * FROM countries WHERE inactive IS NULL ORDER BY country_name");
@@ -534,7 +534,7 @@ return $return;
 		}*/
 		
 		$return .= "<OPTION VALUE='". ${results}['country_id'] ."'" . 
-			//return_match(return_priority(array($_REQUEST[$fieldname],$selected)), $results[$fieldname], " SELECTED") . ">$results['country_name']</OPTION>";
+			//return_match(return_priority(array($_REQUEST[$fieldname],$selected)), $results[$fieldname], " SELECTED") . ">{$results['country_name']}</OPTION>";
 			( $selected == ${results}['country_id'] ? " SELECTED" : NULL ) . ">". ${results}['country_name'] ."</OPTION>";
 		
 	}
@@ -651,12 +651,12 @@ return $return;
 					$insert_selected_zone = NULL;
 				}*/
 				
-				//$return .= "<OPTION VALUE='$results['zone_id']}'$insert_selected_zone>$results['zone_name']</OPTION>";
+				//$return .= "<OPTION VALUE='{$results['zone_id']}'$insert_selected_zone>{$results['zone_name']}</OPTION>";
 				$return .= "<OPTION VALUE='${results}['zone_id']'" . 
-					///return_match(return_priority(array($_REQUEST['zone_id'],$selected)), ${results}['zone_id'], " SELECTED") . ">$results['zone_name']</OPTION>";
+					///return_match(return_priority(array($_REQUEST['zone_id'],$selected)), ${results}['zone_id'], " SELECTED") . ">{$results['zone_name']}</OPTION>";
 					( 
 						( $selected != NULL ? $selected : ${_REQUEST}['zone_id'] ) // IF NO SELECT ZONE --> MATCH TO POSTED ZONE VALUE
-					== ${results}['zone_id'] ? " SELECTED": NULL ) . ">$results['zone_name']</OPTION>";
+					== ${results}['zone_id'] ? " SELECTED": NULL ) . ">{$results['zone_name']}</OPTION>";
 				
 				
 				

@@ -8,8 +8,8 @@ if ( !defined('CRON') && !LOCAL ) { // IF NOT RUN BY CRONTAB CONTINUE
 	
 	// MAKE SURE THE URL HAS THE www. IN FRONT OF IT
 	//( !preg_match("/faq.php|index.php|contact.php|products.php/i",$_SERVER['PHP_SELF']) ) // DO NOT REDIRECT TO www ON THESE PAGES
-	//if ( !preg_match("/www./i",$_SERVER['HTTP_HOST']) || preg_match("/\.$|\:80$/i",$_SERVER['HTTP_HOST']) ) {
-	if ( !preg_match("/www./i",$_SERVER['HTTP_HOST']) || preg_match("/\.$|\:80$/i",$_SERVER['HTTP_HOST']) ) {
+	//if ( !preg_match("/www./i",{$_SERVER['HTTP_HOST']}) || preg_match("/\.$|\:80$/i",$_SERVER['HTTP_HOST']) ) {
+	if ( !preg_match("/www./i",{$_SERVER['HTTP_HOST']}) || preg_match("/\.$|\:80$/i",$_SERVER['HTTP_HOST']) ) {
 		header("location:http://www.". DOMAIN . ${_SERVER}['REQUEST_URI']);
 	} elseif ( defined('SSL') ) { // IS SSL REQUIRED ON THE PAGE --> define('SSL',TRUE); // ADD TO PAGE HEADER
 		if ( !$_SERVER['HTTPS'] ) header("location:https://www.". DOMAIN . ${_SERVER}['REQUEST_URI']);
@@ -104,8 +104,8 @@ dev_print($user);
 $user = mysqli_fetch_assoc(mysqli_query($db, "SELECT user_id,email,language_code,firstname,lastname,access,password FROM users WHERE username = 'anastas'"));
 dev_print($user);
 
-echo "sha1(\${user}['user_id']) --> ". sha1($user['user_id']) ."<p>";
-echo "sha1(\${user}['password']) --> ". sha1($user['password']) ."<p>";
+echo "sha1(\${user}['user_id']) --> ". sha1({$user['user_id']}) ."<p>";
+echo "sha1(\${user}['password']) --> ". sha1({$user['password']}) ."<p>";
 echo "\${user}['password'] --> ". ${user}['password'] ."<p>";
 
 dev_print($_SESSION);
@@ -113,13 +113,13 @@ dev_print($_SESSION);
 
 // SETUP USER ACCESS
 if ( @$user = mysqli_fetch_assoc(mysqli_query($db, "SELECT user_id,email,language_code,firstname,lastname,access FROM users 
-		WHERE SHA1(user_id) = '" . db_escape($_SESSION['user_id']) . "' AND SHA1(password) = '" . db_escape($_SESSION['password']) . "'")) ) { // MEMBERS --> CHECK FOR SESSION VARIABLES
+		WHERE SHA1(user_id) = '" . db_escape({$_SESSION['user_id']}) . "' AND SHA1(password) = '" . db_escape({$_SESSION['password']}) . "'")) ) { // MEMBERS --> CHECK FOR SESSION VARIABLES
 	//echo "here! 1<p>";
 	define('USER_ACCESS', ( ${user}['access'] < 3 ? 3 : ${user}['access'] )); // STATUS
 	config_user($user);
 	
 } elseif ( @$user = mysqli_fetch_assoc(mysqli_query($db, "SELECT user_id,email,language_code,firstname,lastname FROM users 
-		WHERE SHA1(user_id) = '" . db_escape($_COOKIE['id']) . "'")) ) { // MEMBERS --> CHECK FOR SESSION VARIABLES
+		WHERE SHA1(user_id) = '" . db_escape({$_COOKIE['id']}) . "'")) ) { // MEMBERS --> CHECK FOR SESSION VARIABLES
 	//echo "here! 2<p>";
 	define('USER_ACCESS', 1); // STATUS
 	config_user($user);

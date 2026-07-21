@@ -43,8 +43,8 @@ if ( ${_POST}['BACK'] ) {
 	
 	////////// PROCESS FORM
 	if ( !$error ) {
-		//$db['values'] = "category = '". ucwords(strtolower(query_prep($_POST['category']))) ."', 
-		//	notes = '". query_prep($_POST['notes']) ."', 
+		//$db['values'] = "category = '". ucwords(strtolower(query_prep({$_POST['category']}))) ."', 
+		//	notes = '". query_prep({$_POST['notes']}) ."', 
 		//	". ( ${_POST}['inactive'] ? " inactive = 1" : " inactive = NULL" ) ."";
 		
 		if ( ${_POST}['ADD'] ) {
@@ -57,8 +57,8 @@ if ( ${_POST}['BACK'] ) {
 		
 		$sql = ${db}['action'] ." template_categories SET ".
 			($_POST['ADD'] ? "domain_id = '". DOMAIN_ID ."', " : null) .
-			"category = '". ucwords(strtolower(query_prep($_POST['category']))) ."', 
-			notes = '". query_prep($_POST['notes']) ."', 
+			"category = '". ucwords(strtolower(query_prep({$_POST['category']}))) ."', 
+			notes = '". query_prep({$_POST['notes']}) ."', 
 			". ( ${_POST}['inactive'] ? " inactive = 1" : " inactive = NULL" ) ." ".
 			${db}['where'];
 		
@@ -158,7 +158,7 @@ echo "<FORM ACTION='". ${_SERVER}['PHP_SELF'] ."' METHOD=GET>";
 			
 			
 			${input}['category_id'] .= "<OPTION VALUE='". ${info}['category_id'] ."' ". 
-				($_GET['CRYPT_REF_ID'] == ${info}['category_id'] ? " SELECTED" : NULL) .">". ucwords($info['category']) ." [". ${info}['category_id'] ."]</OPTION>";
+				($_GET['CRYPT_REF_ID'] == ${info}['category_id'] ? " SELECTED" : NULL) .">". ucwords({$info['category']}) ." [". ${info}['category_id'] ."]</OPTION>";
 			$previous = $info;
 		}
 		${input}['category_id'] .= "</SELECT>";
@@ -196,7 +196,7 @@ echo "<FORM ACTION='". ${_SERVER}['PHP_SELF'] ."' METHOD=GET>";
 	////////////////////////////////////////////////////////////////////////////////
 	
 	echo "</FORM>
-		<FORM ACTION='". ${_SERVER}['PHP_SELF'] . ($_SERVER['QUERY_STRING'] ? "?". ${_SERVER}['QUERY_STRING'] : NULL) ."' METHOD=POST>";
+		<FORM ACTION='". ${_SERVER}['PHP_SELF'] . ({$_SERVER['QUERY_STRING']} ? "?". ${_SERVER}['QUERY_STRING'] : NULL) ."' METHOD=POST>";
 	
 	
 	////////// SUBTITLE
@@ -218,7 +218,7 @@ echo "<FORM ACTION='". ${_SERVER}['PHP_SELF'] ."' METHOD=GET>";
 	
 	////////// INACTIVE CHECKBOX
 	$insert_form[] = array("inactive", NULL, 
-		"<INPUT TYPE=CHECKBOX NAME=inactive VALUE=1 ". ($edit['inactive'] ? " CHECKED" : NULL) ."> check to make category inactive",
+		"<INPUT TYPE=CHECKBOX NAME=inactive VALUE=1 ". ({$edit['inactive']} ? " CHECKED" : NULL) ."> check to make category inactive",
 		NULL,NULL,NULL);
 	
 	

@@ -11,7 +11,7 @@
 //html_error($redirect);
 
 if (!$redirect['url']) {
-	if ( preg_match("/" . preg_quote($_SERVER['HTTP_HOST'], "/") . "/i", ${_SERVER}['HTTP_REFERER']) ) { // IF NOT OUR WEBSITE --> DO NOT GO BACK ONE (GO TO HOME PAGE)
+	if ( preg_match("/" . preg_quote({$_SERVER['HTTP_HOST']}, "/") . "/i", ${_SERVER}['HTTP_REFERER']) ) { // IF NOT OUR WEBSITE --> DO NOT GO BACK ONE (GO TO HOME PAGE)
 		${redirect}['url'] = "javascript:history.back(1)";
 	} else {
 		${redirect}['url'] = "http://" . ${_SERVER}['HTTP_HOST'] . "";
@@ -582,7 +582,7 @@ return " onchange=\"submit();\"";
 	
 	if ( !$interval ) $interval = 1;
 	
-	$return = "<SELECT NAME=". $identifier . ($array_identifier ? "[". $array_identifier ."]" : NULL) ."". ($options['auto'] ? " onchange=\"submit()\"" : NULL) .">";
+	$return = "<SELECT NAME=". $identifier . ($array_identifier ? "[". $array_identifier ."]" : NULL) ."". ({$options['auto']} ? " onchange=\"submit()\"" : NULL) .">";
 	// COUNT DROP DOWN TO $max VALUE
 	
 	

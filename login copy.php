@@ -28,11 +28,11 @@ if ( ${_POST}['SUBMIT'] ) {
 	} elseif ( user_check_login($password=$_POST['password'],$username=$_POST['username']) ) {
 		
 		$sql = "SELECT * FROM users 
-			WHERE password = '". sha1($_POST['password']) ."' 
+			WHERE password = '". sha1({$_POST['password']}) ."' 
 				AND username = '". ${_POST}['username'] ."' LIMIT 1";
 		
 		if ( mysqli_fetch_assoc(mysqli_query($db, "SELECT * FROM users 
-			WHERE password = '". sha1($_POST['password']) ."' 
+			WHERE password = '". sha1({$_POST['password']}) ."' 
 				AND username = '". ${_POST}['username'] ."' LIMIT 1")) ) {
 			user_login();
 		} else {
@@ -77,7 +77,7 @@ echo "<FORM ACTION=" . ${_SERVER}['PHP_SELF'] . " METHOD=POST>";
 	
 	////////// USERNAME
 	$insert_form[] = array("username", trans("username"),
-		array("TEXT",$edit['username'],NULL,"MAXLENGTH=30"),
+		array("TEXT",{$edit['username']},NULL,"MAXLENGTH=30"),
 		NULL,NULL,NULL);
 	
 	////////// PASSWORD

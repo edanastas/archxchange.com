@@ -27,7 +27,7 @@ if ( ${_POST}['LOGIN'] ) {
 		${error}['LOGIN'] = "please submit both your username and password";
 	} elseif ( user_login(user_check_login($_POST['password'],$_POST['username'])) ) {
 		
-		//echo "logging in ". sha1(sha1($_POST['password'])) ."<p>";
+		//echo "logging in ". sha1(sha1({$_POST['password']})) ."<p>";
 		config_redirect();
 		//header("location:./");
 	} else {
@@ -72,7 +72,7 @@ echo "<FORM ACTION=" . ${_SERVER}['PHP_SELF'] . " METHOD=POST>";
 	
 	////////// USERNAME
 	$insert_form[] = array("username", trans("username"),
-		array("TEXT",$edit['username'],NULL,"MAXLENGTH=30"),
+		array("TEXT",{$edit['username']},NULL,"MAXLENGTH=30"),
 		NULL,NULL,NULL);
 	
 	////////// PASSWORD

@@ -34,8 +34,8 @@ if ($_GET['vote'] && ${_GET}['ref_id']) {
 	$sql = "UPDATE projects_". ${_GET}['type'] ." SET ".
 		//projects_". ${_GET}['type'] ."_id = '". ${_GET}['ref_id'] ."', 
 		//project_id = '". ${_GET}['project_id'] ."',
-		"vote_". ${_GET}['vote'] ." = vote_". ${_GET}['vote'] ." + ". ($_GET['direction'] > 5 ? "2" : "1") .", 
-		vote_direction = vote_direction ". ($_GET['vote'] == "yes" ? " + 1" : " - 1 ") .", 
+		"vote_". ${_GET}['vote'] ." = vote_". ${_GET}['vote'] ." + ". ({$_GET['direction']} > 5 ? "2" : "1") .", 
+		vote_direction = vote_direction ". ({$_GET['vote']} == "yes" ? " + 1" : " - 1 ") .", 
 		vote_ip = '". ${_SERVER}['REMOTE_ADDR'] ."', 
 		stamp = stamp 
 		WHERE project_id = '". ${_GET}['project_id'] ."' 
@@ -59,10 +59,10 @@ if ($_GET['vote'] && ${_GET}['ref_id']) {
 			'". ${_GET}['project_id'] ."', 
 			'". ${_GET}['type'] ."', 
 			'". ${_GET}['user_id'] ."', 
-			vote_". ${_GET}['vote'] ." + ". ($_GET['direction'] > 5 ? "2" : "1") .", 
-			vote_direction ". ($_GET['vote'] == "yes" ? " + 1" : " - 1") .", 
+			vote_". ${_GET}['vote'] ." + ". ({$_GET['direction']} > 5 ? "2" : "1") .", 
+			vote_direction ". ({$_GET['vote']} == "yes" ? " + 1" : " - 1") .", 
 			'". ${_SERVER}['REMOTE_ADDR'] ."')";
-	//". ($_GET['user_id'] ? "'". ${_GET}['user_id'] ."'" : "NULL") .", 
+	//". ({$_GET['user_id']} ? "'". ${_GET}['user_id'] ."'" : "NULL") .", 
 	
 	if ( !mysqli_query($db, $sql) ) {
 		error("there was an error recording the alternative vote count",$sql,2);

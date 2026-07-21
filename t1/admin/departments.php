@@ -43,8 +43,8 @@ if ( ${_POST}['BACK'] ) {
 	
 	////////// PROCESS FORM
 	if ( !$error ) {
-		//$db['values'] = "department = '". ucwords(strtolower(query_prep($_POST['department']))) ."', 
-		//	notes = '". query_prep($_POST['notes']) ."', 
+		//$db['values'] = "department = '". ucwords(strtolower(query_prep({$_POST['department']}))) ."', 
+		//	notes = '". query_prep({$_POST['notes']}) ."', 
 		//	". ( ${_POST}['inactive'] ? " inactive = 1" : " inactive = NULL" ) ."";
 		
 		if ( ${_POST}['ADD'] ) {
@@ -58,8 +58,8 @@ if ( ${_POST}['BACK'] ) {
 		
 		$sql = ${db}['action'] ." template_departments SET ".
 			($_POST['ADD'] ? "domain_id = '". DOMAIN_ID ."', " : null) .
-			"department = '". ucwords(strtolower(query_prep($_POST['department']))) ."', 
-			notes = '". query_prep($_POST['notes']) ."', 
+			"department = '". ucwords(strtolower(query_prep({$_POST['department']}))) ."', 
+			notes = '". query_prep({$_POST['notes']}) ."', 
 			". ( ${_POST}['inactive'] ? " inactive = 1" : " inactive = NULL" ) ." ".
 			${db}['where'];
 		
@@ -177,7 +177,7 @@ echo "<FORM ACTION='". ${_SERVER}['PHP_SELF'] ."' METHOD=GET>";
 			
 			
 			${input}['department_id'] .= "<OPTION VALUE='". ${info}['department_id'] ."' ". 
-				($_GET['CRYPT_REF_ID'] == ${info}['department_id'] ? " SELECTED" : NULL) .">". ucwords($info['department']) ." [". ${info}['department_id'] ."]</OPTION>";
+				($_GET['CRYPT_REF_ID'] == ${info}['department_id'] ? " SELECTED" : NULL) .">". ucwords({$info['department']}) ." [". ${info}['department_id'] ."]</OPTION>";
 			$previous = $info;
 		}
 		${input}['department_id'] .= "</SELECT>";
@@ -215,7 +215,7 @@ echo "<FORM ACTION='". ${_SERVER}['PHP_SELF'] ."' METHOD=GET>";
 	////////////////////////////////////////////////////////////////////////////////
 	
 	echo "</FORM>
-		<FORM ACTION='". ${_SERVER}['PHP_SELF'] . ($_SERVER['QUERY_STRING'] ? "?". ${_SERVER}['QUERY_STRING'] : NULL) ."' METHOD=POST>";
+		<FORM ACTION='". ${_SERVER}['PHP_SELF'] . ({$_SERVER['QUERY_STRING']} ? "?". ${_SERVER}['QUERY_STRING'] : NULL) ."' METHOD=POST>";
 	
 	
 	////////// SUBTITLE
@@ -237,7 +237,7 @@ echo "<FORM ACTION='". ${_SERVER}['PHP_SELF'] ."' METHOD=GET>";
 	
 	////////// INACTIVE CHECKBOX
 	$insert_form[] = array("inactive", NULL, 
-		"<INPUT TYPE=CHECKBOX NAME=inactive VALUE=1 ". ($edit['inactive'] ? " CHECKED" : NULL) ."> check to make department inactive",
+		"<INPUT TYPE=CHECKBOX NAME=inactive VALUE=1 ". ({$edit['inactive']} ? " CHECKED" : NULL) ."> check to make department inactive",
 		NULL,NULL,NULL);
 	
 	
@@ -247,7 +247,7 @@ echo "<FORM ACTION='". ${_SERVER}['PHP_SELF'] ."' METHOD=GET>";
 			<INPUT TYPE=SUBMIT NAME='ADD' VALUE='ADD AS NEW'> ";
 		
 		${input}['delete'] = "<INPUT TYPE=SUBMIT NAME=DELETE VALUE='DELETE...'> 
-			". ($error['DELETE'] ? "<INPUT TYPE=CHECKBOX NAME=confirm_delete>check to confirm delete" : null);
+			". ({$error['DELETE']} ? "<INPUT TYPE=CHECKBOX NAME=confirm_delete>check to confirm delete" : null);
 		
 	} else {
 		${input}['submit'] = "<INPUT TYPE=SUBMIT NAME='ADD' VALUE='ADD DEPARTMENT'> ";

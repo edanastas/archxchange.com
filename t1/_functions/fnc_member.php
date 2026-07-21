@@ -43,7 +43,7 @@
 	${_SESSION}['user_id'] = sha1($info['user_id']);
 	${_SESSION}['password'] = ${info}['password'];
 	
-	setcookie("id", sha1($info['user_id']), time() + 31536000, "", ".".DOMAIN);
+	setcookie("id", sha1({$info['user_id']}), time() + 31536000, "", ".".DOMAIN);
 	setcookie("lang", ${info}['language_code'], time() + 31536000, "", ".".DOMAIN);
 	
 	//echo "before --> the user_id is --> [" . USER_ID . "]";

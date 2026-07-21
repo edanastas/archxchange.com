@@ -28,7 +28,7 @@ if (isset($_GET['direction']) && ${_GET}['ref_id']) {
 	$file = $file_path . $file_name;
 	
 	
-	$command = (LOCAL ? "/usr/local/bin/convert" : "convert") ." -rotate ". ($_GET['direction'] ? "90" : "-90" ) ." ". $file ." ". $file;
+	$command = (LOCAL ? "/usr/local/bin/convert" : "convert") ." -rotate ". ({$_GET['direction']} ? "90" : "-90" ) ." ". $file ." ". $file;
 	
 	exec($command);
 	

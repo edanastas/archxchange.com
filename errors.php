@@ -134,7 +134,7 @@ $query = mysqli_query($db, "SELECT template_errors.*, template_errors.error AS m
 	FROM template_errors 
 	WHERE 1 ".
 	( ${_GET}['CRYPT_REF_ID'] ? "AND template_errors.error_id = '". ${_GET}['CRYPT_REF_ID'] ."'" : NULL ) .
-		//( ${_POST}['error'] ? " WHERE ". implode(" OR ", $sql_error_ids) ." LIMIT ". count($_POST['error']) : NULL ) ) ." ".
+		//( ${_POST}['error'] ? " WHERE ". implode(" OR ", $sql_error_ids) ." LIMIT ". count({$_POST['error']}) : NULL ) ) ." ".
 	( ${_SESSION}['saved'] ? "AND saved IS NOT NULL " : "AND saved IS NULL " ) .
 	"ORDER BY template_errors.error_id DESC LIMIT ". ( ${_SESSION}['limit'] ? ${_SESSION}['limit'] : 10 ));
 
@@ -206,7 +206,7 @@ if ( ${_GET}['CRYPT_REF_ID'] ) {
 		<TD ALIGN=RIGHT VALIGN=TOP CLASS='TextGrayDark'>reference</TD>
 		<TD COLSPAN=2>
 			file: ${info}['file'] [". ${info}['line'] ."] &#160 / &#160 
-			filename: ". ($info['filename'] ? ${info}['filename'] : "- - - -" ) ." &#160 / &#160 
+			filename: ". ({$info['filename']} ? ${info}['filename'] : "- - - -" ) ." &#160 / &#160 
 			function: ". ${info}['fnc'] ."()</TD>
 	</TR>";
 	
@@ -227,12 +227,12 @@ if ( ${_GET}['CRYPT_REF_ID'] ) {
 	
 	echo "<TR>
 		<TD ALIGN=RIGHT VALIGN=TOP CLASS='TextGrayDark'>error</TD>
-		<TD COLSPAN=2>". nl2br($info['message']) ."</TD>
+		<TD COLSPAN=2>". nl2br({$info['message']}) ."</TD>
 	</TR>";
 	
 	echo "<TR>
 		<TD ALIGN=RIGHT VALIGN=TOP CLASS='TextGrayDark'>mysql_error</TD>
-		<TD COLSPAN=2>". nl2br($info['error_mysql']) ."</TD>
+		<TD COLSPAN=2>". nl2br({$info['error_mysql']}) ."</TD>
 	</TR>";
 	
 	
@@ -300,21 +300,21 @@ if ( ${_GET}['CRYPT_REF_ID'] ) {
 			
 	echo "<TR>
 		<TD ALIGN=RIGHT VALIGN=TOP CLASS='TextGrayDark'>session</TD>
-		<TD COLSPAN=2><SMALL>". nl2br($info['session']) ."</SMALL></TD>
+		<TD COLSPAN=2><SMALL>". nl2br({$info['session']}) ."</SMALL></TD>
 	</TR>";
 	echo "<TR>
 		<TD ALIGN=RIGHT VALIGN=TOP CLASS='TextGrayDark'>requested</TD>
-		<TD COLSPAN=2><SMALL>". nl2br($info['requested']) ."</SMALL></TD>
+		<TD COLSPAN=2><SMALL>". nl2br({$info['requested']}) ."</SMALL></TD>
 	</TR>";
 	
 	echo "<TR>
 		<TD ALIGN=RIGHT VALIGN=TOP CLASS='TextGrayDark'>posted</TD>
-		<TD COLSPAN=2><SMALL>". nl2br($info['posted']) ."</SMALL></TD>
+		<TD COLSPAN=2><SMALL>". nl2br({$info['posted']}) ."</SMALL></TD>
 	</TR>";
 	
 	echo "<TR>
 		<TD ALIGN=RIGHT VALIGN=TOP CLASS='TextGrayDark'>server</TD>
-		<TD COLSPAN=2><SMALL>". nl2br($info['server']) ."</SMALL></TD>
+		<TD COLSPAN=2><SMALL>". nl2br({$info['server']}) ."</SMALL></TD>
 	</TR>";
 	*/
 	

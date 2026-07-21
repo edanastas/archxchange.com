@@ -42,7 +42,7 @@ if ( !$form['style'] ) { ${form}['style'] = " STYLE='width:" . ${form}['width'] 
 if ( !$form['maxlength'] ) { ${form}['maxlength'] = 255; }
 
 if ( !defined("DB_TITLE") ) {
-	define("DB_TITLE",strtoupper(basename($_SERVER['PHP_SELF'],".php")));
+	define("DB_TITLE",strtoupper(basename({$_SERVER['PHP_SELF']},".php")));
 }
 
 define("COLOR_GUIDE","#888888");
@@ -472,7 +472,7 @@ if ( is_array($fields) ) {
 						//echo "\$form_nums --> $form_nums<BR>";
 						
 						if ( !$_GET['inactive'] ) {
-							$query = mysqli_query($db, "SELECT id FROM " . basename($_SERVER['PHP_SELF'],".php") . " 
+							$query = mysqli_query($db, "SELECT id FROM " . basename({$_SERVER['PHP_SELF']},".php") . " 
 								WHERE `inactive` IS NULL");
 							
 							$form_rows = @mysqli_num_rows($query); // GET NUM ROWS FOR COLLATE
@@ -656,7 +656,7 @@ if ( ${_POST}['SUBMIT'] ) {
 	// CHECK IF TABLE HAS CHANGED
 	////////////////////////////////////////////////////////////////////////////////
 	//$previous_field_name = $field_name;//////////////////////////////////////////////////////////// GANDHI
-	//$alter_table = "ALTER TABLE " . basename($_SERVER['PHP_SELF'],".php") . " " . $alter; ////////////////////////////// GANDHI
+	//$alter_table = "ALTER TABLE " . basename({$_SERVER['PHP_SELF']},".php") . " " . $alter; ////////////////////////////// GANDHI
 	//if ( $field_type == "TEXT" || $field_type == "TEXTAREA" || $field_type == "RADIO" || $field_type == "SELECT" || $field_type == "CHECKBOX" ) {						
 		//$enter = 0;		
 		//$table_name = basename($_SERVER['PHP_SELF'],".php");						
@@ -665,7 +665,7 @@ if ( ${_POST}['SUBMIT'] ) {
 		
 		
 		
-		$columns_query = mysqli_query($db, "SHOW COLUMNS FROM `" . basename($_SERVER['PHP_SELF'],".php") . "`");																																									
+		$columns_query = mysqli_query($db, "SHOW COLUMNS FROM `" . basename({$_SERVER['PHP_SELF']},".php") . "`");																																									
 		while ( $columns = mysqli_fetch_array($columns_query) ) {
 					
 			$new_array[$columns['0']] = ${columns}['0'];
@@ -673,10 +673,10 @@ if ( ${_POST}['SUBMIT'] ) {
 			if ( array_key_exists($columns['0'], $alter) ) {
 				$alter[$columns['0']] = NULL;
 				
-				//echo "$columns['0'] - ${columns}['1'] - ${columns}['2'] - ${columns}['3'] - ${columns}['4'] <BR>";
+				//echo "{$columns['0']} - ${columns}['1'] - ${columns}['2'] - ${columns}['3'] - ${columns}['4'] <BR>";
 			}// elseif ( ${columns}['0'] != "id" && ${columns}['0'] != "collate" && ${columns}['0'] != "inactive" && ${columns}['0'] != "stamp" ) {
 				//echo "<B>ALTER TABLE WITH ${columns}['0']</B><BR>";
-				//echo "$columns['0'] - ${columns}['1'] - ${columns}['2'] - ${columns}['3'] - ${columns}['4'] <BR>";
+				//echo "{$columns['0']} - ${columns}['1'] - ${columns}['2'] - ${columns}['3'] - ${columns}['4'] <BR>";
 			//}
 			/*
 			if ( ${find_field}['Field'] == $field_name ) {									
@@ -692,12 +692,12 @@ if ( ${_POST}['SUBMIT'] ) {
 			///	echo "DO NOTHING $value<BR>";
 			///} else {
 			if ( $value ) {
-				if ( !mysqli_query($db, "ALTER TABLE `" . basename($_SERVER['PHP_SELF'],".php") . "` " . $value) ) {
-					echo "COULD NOT ADD COLUMN TO DATABASE<BR>" . "ALTER TABLE `" . basename($_SERVER['PHP_SELF'],".php") . "` " . $value;
+				if ( !mysqli_query($db, "ALTER TABLE `" . basename({$_SERVER['PHP_SELF']},".php") . "` " . $value) ) {
+					echo "COULD NOT ADD COLUMN TO DATABASE<BR>" . "ALTER TABLE `" . basename({$_SERVER['PHP_SELF']},".php") . "` " . $value;
 					exit();
 					///html_error();
 				}
-				//echo "ALTER TABLE `" . basename($_SERVER['PHP_SELF'],".php") . "` $value<BR>";
+				//echo "ALTER TABLE `" . basename({$_SERVER['PHP_SELF']},".php") . "` $value<BR>";
 			}
 			///}
 		}
@@ -732,7 +732,7 @@ if ( ${_POST}['SUBMIT'] ) {
 		
 		${buffer}['db']['collate'] = 1; // SET THE COLLATE VALUE TO 1
 		// IF YOU WANT TO SET COLLATE VALUE TO LAST THEN USE SCRIPT BELOW FOR COLLATE
-		//$query = mysqli_query($db, "SELECT id FROM " . basename($_SERVER['PHP_SELF'],".php") . " WHERE inactive IS NULL");
+		//$query = mysqli_query($db, "SELECT id FROM " . basename({$_SERVER['PHP_SELF']},".php") . " WHERE inactive IS NULL");
 		//$form_rows = mysqli_num_rows($query); // GET NUM ROWS FOR COLLATE
 		
 	} elseif ( ${_POST}['SUBMIT'] == "DEACTIVATE" ) {
@@ -742,7 +742,7 @@ if ( ${_POST}['SUBMIT'] ) {
 	}
 	
 	// SETUP THE DB QUERY
-	$db_query = $action . " `" . basename($_SERVER['PHP_SELF'],".php") . "` SET " . 
+	$db_query = $action . " `" . basename({$_SERVER['PHP_SELF']},".php") . "` SET " . 
 			$id . 
 			${buffer}['db']['insert'] .
 			"`stamp` = NOW() " .
@@ -761,8 +761,8 @@ if ( ${_POST}['SUBMIT'] ) {
 												////////////////////////////////////////
 		//if ( ${buffer}['db']['collate'] ) {
 			
-			//$query_collate = mysqli_query($db, "SELECT id,collate,inactive FROM " . basename($_SERVER['PHP_SELF'],".php") . ""); 
-			$query_collate = mysqli_query($db, "SELECT * FROM `" . basename($_SERVER['PHP_SELF'],".php") . "` " .
+			//$query_collate = mysqli_query($db, "SELECT id,collate,inactive FROM " . basename({$_SERVER['PHP_SELF']},".php") . ""); 
+			$query_collate = mysqli_query($db, "SELECT * FROM `" . basename({$_SERVER['PHP_SELF']},".php") . "` " .
 				"WHERE `inactive` IS NULL " .
 				"ORDER BY `collate`,`inactive`");
 				//ORDER BY inactive ASC,`collate`,stamp DESC");
@@ -790,7 +790,7 @@ if ( ${_POST}['SUBMIT'] ) {
 				if ( $for == ${flush}['id'] ) { // IF $_GET ID = CURRENT ID -->
 					
 					// UPDATE $_GET ID SET TO $_POST COLLATE
-					$flush_query = "UPDATE `" . basename($_SERVER['PHP_SELF'],".php") . "` SET 
+					$flush_query = "UPDATE `" . basename({$_SERVER['PHP_SELF']},".php") . "` SET 
 						`collate` = '" . ${buffer}['db']['collate'] . "' 
 						WHERE id = '" . $for . "' LIMIT 1"; //  - collate: " . ${buffer}['db']['collate'] . " - id: " . ${_GET}['CRYPT_REF_ID']
 					mysqli_query($db, $flush_query);
@@ -805,7 +805,7 @@ if ( ${_POST}['SUBMIT'] ) {
 						++$collate_order; // GO TO NEXT COLLATE VALUE
 					}
 					
-					$flush_query = "UPDATE `" . basename($_SERVER['PHP_SELF'],".php") . "` SET 
+					$flush_query = "UPDATE `" . basename({$_SERVER['PHP_SELF']},".php") . "` SET 
 						`collate` = '" . $collate_order . "' 
 						WHERE id = '" . ${flush}['id'] . "' LIMIT 1"; //  - collate: " . ${buffer}['db']['collate'] . " - id: " . ${_GET}['CRYPT_REF_ID']
 					mysqli_query($db, $flush_query);
@@ -837,7 +837,7 @@ if ( ${_POST}['SUBMIT'] ) {
 	
 	
 	// DELETE ROW
-	if ( !mysqli_query($db, "DELETE FROM `" . basename($_SERVER['PHP_SELF'],".php") . "` WHERE id = '" . ${_POST}['DELETE_CONFIRM'] . "' LIMIT 1") ) {
+	if ( !mysqli_query($db, "DELETE FROM `" . basename({$_SERVER['PHP_SELF']},".php") . "` WHERE id = '" . ${_POST}['DELETE_CONFIRM'] . "' LIMIT 1") ) {
 		echo "ERROR: " . mysqli_error($db) . "<P>" . $db_query;
 	} else {
 		
@@ -862,11 +862,11 @@ if ( ${_POST}['SUBMIT'] ) {
 	////////////////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////////////////
 	// CHECK IF TABLE EXISTS
-	$query = mysqli_query($db, "SHOW TABLES LIKE '" . basename($_SERVER['PHP_SELF'],".php") . "'");
+	$query = mysqli_query($db, "SHOW TABLES LIKE '" . basename({$_SERVER['PHP_SELF']},".php") . "'");
 	if ( !mysqli_num_rows($query) ) { // IF TABLE DOES NOT EXIST --> CREATE TABLE
 		
 		// CREATE TABLE SQL
-		$db_query = "CREATE TABLE `" . basename($_SERVER['PHP_SELF'],".php") . "` (
+		$db_query = "CREATE TABLE `" . basename({$_SERVER['PHP_SELF']},".php") . "` (
 				`id` int(12) NOT NULL auto_increment,
 				`collate` int(12) DEFAULT NULL,
 				" . ${buffer}['db']['create'] . "
@@ -880,7 +880,7 @@ if ( ${_POST}['SUBMIT'] ) {
 			echo "ERROR: " . mysqli_error($db) . "<P>" . $db_query;
 		} else {
 			// CREATE TABLE COMPLETED NOTE
-			echo "<BR><BR> TABLE " . basename($_SERVER['PHP_SELF'],".php") . " HAS BEEN CREATED<BR>";
+			echo "<BR><BR> TABLE " . basename({$_SERVER['PHP_SELF']},".php") . " HAS BEEN CREATED<BR>";
 			echo "<META HTTP-EQUIV='REFRESH' CONTENT='2; URL=" . ${_SERVER}['PHP_SELF'] . "'>";
 			exit();
 			//echo "the database was created<BR>";
@@ -912,7 +912,7 @@ if ( ${_POST}['SUBMIT'] ) {
 			</TR>" . $divider . "";
 		
 		
-		$query = mysqli_query($db, "SELECT * FROM `" . basename($_SERVER['PHP_SELF'],".php") . "` ORDER BY `inactive`,`collate`");
+		$query = mysqli_query($db, "SELECT * FROM `" . basename({$_SERVER['PHP_SELF']},".php") . "` ORDER BY `inactive`,`collate`");
 		if ( @mysqli_num_rows($query) ) {
 			
 			
@@ -945,7 +945,7 @@ if ( ${_POST}['SUBMIT'] ) {
 						if ( !$results[$buffer['index']['handle']] ) {
 							echo "DATABASE ID: " . ${results}['id'];
 						} else {
-							echo "<B>" . $results[$buffer['index']['handle']] . "</B>"; //  ($results['collate'])
+							echo "<B>" . $results[{$buffer['index']}['handle']] . "</B>"; //  ($results['collate'])
 						}
 						
 						echo "</A>" . ${strike}['off'];
@@ -966,7 +966,7 @@ if ( ${_POST}['SUBMIT'] ) {
 						
 							//$buffer['index']['link']
 						echo "<BR>
-							" . html_links($results[$buffer['index']['text']], "LINK", 500) . "</TD>
+							" . html_links($results[{$buffer['index']}['text']], "LINK", 500) . "</TD>
 				</TR>" . $divider . "";
 				
 			}
@@ -977,7 +977,7 @@ if ( ${_POST}['SUBMIT'] ) {
 			</TR><TR>
 				<TD></TD>
 				<TD CLASS='TextGray' BGCOLOR=" . COLOR_BACKGROUND . ">
-					THE TABLE <B>" . basename($_SERVER['PHP_SELF'],".php") . "</B> IS EMPTY</TD>
+					THE TABLE <B>" . basename({$_SERVER['PHP_SELF']},".php") . "</B> IS EMPTY</TD>
 			</TR><TR>
 				<TD HEIGHT=10 BGCOLOR=" . COLOR_BACKGROUND . " COLSPAN=2></TD>
 			</TR>" . $divider . "";

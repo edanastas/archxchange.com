@@ -135,8 +135,8 @@ if ( ${_POST}['ADD_PROJECT'] || ( ${_POST}['UPDATE_PROJECT'] && ${_GET}['CRYPT_R
 				contact_id = NULL,
 				type = 'client',
 				domain_id = '". DOMAIN_ID ."',
-				contact = '". query_prep($values['contact']) ."',
-				email = '". query_prep($values['email']) ."'";
+				contact = '". query_prep({$values['contact']}) ."',
+				email = '". query_prep({$values['email']}) ."'";
 			if ( !mysqli_query($db, $sql) ) {
 				${error}['client_id'] = "There was an error adding the client. An administrator has been contacted to resolve the issue as quickly as possible. If you need immediate assitance please contact us using our trouble ticket system or attempt the form again.";
 				error($error['client_id'],$sql,1);
@@ -159,8 +159,8 @@ if ( ${_POST}['ADD_PROJECT'] || ( ${_POST}['UPDATE_PROJECT'] && ${_GET}['CRYPT_R
 				contact_id = NULL,
 				type = 'architect',
 				domain_id = '". DOMAIN_ID ."',
-				contact = '". query_prep($values['contact']) ."',
-				email = '". query_prep($values['email']) ."'";
+				contact = '". query_prep({$values['contact']}) ."',
+				email = '". query_prep({$values['email']}) ."'";
 			if ( !mysqli_query($db, $sql) ) {
 				${error}['architect_id'] = "There was an error adding the architect. An administrator has been contacted to resolve the issue as quickly as possible. If you need immediate assitance please contact us using our trouble ticket system or attempt the form again.";
 				error($error['architect_id'],$sql,1);
@@ -178,7 +178,7 @@ if ( ${_POST}['ADD_PROJECT'] || ( ${_POST}['UPDATE_PROJECT'] && ${_GET}['CRYPT_R
 			$sql = "INSERT INTO template_categories SET 
 				category_id = NULL,
 				domain_id = '". DOMAIN_ID ."',
-				category = '". query_prep($_POST['category_id']) ."'";
+				category = '". query_prep({$_POST['category_id']}) ."'";
 			if ( !mysqli_query($db, $sql) ) {
 				${error}['category_id'] = "There was an error adding the new category. An administrator has been contacted to resolve the issue as quickly as possible. If you need immediate assitance please contact us using our trouble ticket system or attempt the form again.";
 				error($error['category_id'],$sql,1);
@@ -192,7 +192,7 @@ if ( ${_POST}['ADD_PROJECT'] || ( ${_POST}['UPDATE_PROJECT'] && ${_GET}['CRYPT_R
 	if ( ${_POST}['departments']['other'] && ${_POST}['department_other'] && ${_POST}['department_other'] != ${form_default}['department_other'] ) {
 		$sql = "INSERT INTO template_departments SET 
 			department_id = NULL, 
-			department = '". query_prep($_POST['department_other']) ."', 
+			department = '". query_prep({$_POST['department_other']}) ."', 
 			domain_id = '". DOMAIN_ID ."'";
 		if ( !mysqli_query($db, $sql) ) {
 			error("there was an error trying to insert the new (other) department from the project page",$sql,1);
@@ -267,7 +267,7 @@ if ( ${_POST}['ADD_PROJECT'] || ( ${_POST}['UPDATE_PROJECT'] && ${_GET}['CRYPT_R
 			$sql = "INSERT INTO template_departments SET 
 				department_id = NULL,
 				domain_id = '". DOMAIN_ID ."',
-				department = '". query_prep($_POST['department_id']) ."'";
+				department = '". query_prep({$_POST['department_id']}) ."'";
 			if ( !mysqli_query($db, $sql) ) {
 				${error}['department_id'] = "There was an error adding the new department. An administrator has been contacted to resolve the issue as quickly as possible. If you need immediate assitance please contact us using our trouble ticket system or attempt the form again.";
 				error($error['department_id'],$sql,1);
@@ -286,13 +286,13 @@ if ( ${_POST}['ADD_PROJECT'] || ( ${_POST}['UPDATE_PROJECT'] && ${_GET}['CRYPT_R
 			client_id = '". ( $last_client_id ? $last_client_id : ${_POST}['client_id'] ) ."',
 			architect_id = '". ( $last_architect_id ? $last_architect_id : ${_POST}['architect_id'] ) ."',
 			
-			title = '". query_prep($_POST['title']) ."',
-			site = '". query_prep($_POST['site']) ."',
-			design = '". query_prep($_POST['design']) ."',
-			construction = '". query_prep($_POST['construction']) ."',
-			date_design = ". ($_POST['date_design'] ? "'". ${_POST}['date_design'] ."'" : "NULL") .",
-			date_construction = ". ($_POST['date_construction'] ? "'". ${_POST}['date_construction'] ."'" : "NULL") .",
-			date_completion = ". ($_POST['date_completion'] ? "'". ${_POST}['date_completion'] ."'" : "NULL") ." ". $where;
+			title = '". query_prep({$_POST['title']}) ."',
+			site = '". query_prep({$_POST['site']}) ."',
+			design = '". query_prep({$_POST['design']}) ."',
+			construction = '". query_prep({$_POST['construction']}) ."',
+			date_design = ". ({$_POST['date_design']} ? "'". ${_POST}['date_design'] ."'" : "NULL") .",
+			date_construction = ". ({$_POST['date_construction']} ? "'". ${_POST}['date_construction'] ."'" : "NULL") .",
+			date_completion = ". ({$_POST['date_completion']} ? "'". ${_POST}['date_completion'] ."'" : "NULL") ." ". $where;
 		
 		
 		
@@ -394,7 +394,7 @@ echo "<FORM ACTION='". ${_SERVER}['PHP_SELF'] ."' METHOD=GET>";
 	
 echo "</FORM>
 
-<form  name='projectForm' ACTION='" . ${_SERVER}['PHP_SELF'] . ($_SERVER['QUERY_STRING'] ? "?". ${_SERVER}['QUERY_STRING'] : null) ."' method='post' onSubmit=\"\">";//return safeSubmit(this);
+<form  name='projectForm' ACTION='" . ${_SERVER}['PHP_SELF'] . ({$_SERVER['QUERY_STRING']} ? "?". ${_SERVER}['QUERY_STRING'] : null) ."' method='post' onSubmit=\"\">";//return safeSubmit(this);
 
 	////////// SPACER
 	//$insert_form[] = array("-",NULL,5); // VERTICAL SPACER
@@ -424,7 +424,7 @@ echo "</FORM>
 	
 	////////// TITLE
 	$insert_form[] = array("title", trans("project title"),
-		array("TEXT",$edit['title'],NULL," onFocus=\"formAltered();\""),//safeSubmit(this.form);
+		array("TEXT",{$edit['title']},NULL," onFocus=\"formAltered();\""),//safeSubmit(this.form);
 		NULL,NULL,NULL);
 	
 	////////// owner
@@ -585,7 +585,7 @@ echo "</FORM>
 						? ($_POST['departments'][$departments['department_id']] || $last_department_id == ${departments}['department_id'] ? true : false) 
 						: ${edit}['departments'][$departments['department_id']][project_id]) ? " CHECKED" : NULL) ." onChange=\"formAltered();\"> ". 
 					${departments}['department'] ." 
-					". ($departments['domain_id'] ? " * " : null) ."
+					". ({$departments['domain_id']} ? " * " : null) ."
 					[". ${departments}['department_id'] ."]"."";
 			
 			$cell++;
@@ -618,19 +618,19 @@ echo "</FORM>
 	
 	////////// DESIGN DATE
 	$insert_form[] = array("date_design", "design start date",
-		"<input name='date_design' value='". ($_POST['date_design'] ? ${_POST}['date_design'] : ${edit}['date_design']) ."' size='11' onFocus=\"formAltered();if(self.gfPop)gfPop.fPopCalendar(document.projectForm.date_design);return false;\">",
+		"<input name='date_design' value='". ({$_POST['date_design']} ? ${_POST}['date_design'] : ${edit}['date_design']) ."' size='11' onFocus=\"formAltered();if(self.gfPop)gfPop.fPopCalendar(document.projectForm.date_design);return false;\">",
 		NULL,NULL,NULL);
 	
 	
 	////////// CONSTRUCTION DATE
 	$insert_form[] = array("date_construction", "construction date",
-		"<input name='date_construction' value='". ($_POST['date_construction'] ? ${_POST}['date_construction'] : ${edit}['date_construction']) ."' size='11' onFocus=\"formAltered();if(self.gfPop)gfPop.fPopCalendar(document.projectForm.date_construction);return false;\">",
+		"<input name='date_construction' value='". ({$_POST['date_construction']} ? ${_POST}['date_construction'] : ${edit}['date_construction']) ."' size='11' onFocus=\"formAltered();if(self.gfPop)gfPop.fPopCalendar(document.projectForm.date_construction);return false;\">",
 		NULL,NULL,NULL);
 	
 	
 	////////// COMPLETION DATE
 	$insert_form[] = array("date_completion", "completion date",
-		"<input name='date_completion' value='". ($_POST['date_completion'] ? ${_POST}['date_completion'] : ${edit}['date_completion']) ."' size='11' onFocus=\"formAltered();if(self.gfPop)gfPop.fPopCalendar(document.projectForm.date_completion);return false;\">",
+		"<input name='date_completion' value='". ({$_POST['date_completion']} ? ${_POST}['date_completion'] : ${edit}['date_completion']) ."' size='11' onFocus=\"formAltered();if(self.gfPop)gfPop.fPopCalendar(document.projectForm.date_completion);return false;\">",
 		NULL,"final completion of construction",NULL);
 	
 	////////// TEST DATE
@@ -652,7 +652,7 @@ echo "</FORM>
 	${edit}['design'] = ( ${_POST}['design'] ? ${_POST}['design'] : ${edit}['design'] );
 	$insert_form[] = array("design", "design",
 		"<div id='projectDesignSample' onclick=\"new Effect.BlindUp('projectDesignSample',{ afterFinish: new Effect.BlindDown('projectDesign',{ afterFinish: setTimeout('setCaretToEnd(document.projectForm.design)',1200) }) })\" style='width:". $form_width .";'>
-			". nl2br((strlen($edit['design']) > $max_length ? substr($edit['design'],0,$max_length) : ${edit}['design'])) ."... (click to edit)
+			". nl2br((strlen({$edit['design']}) > $max_length ? substr({$edit['design']},0,$max_length) : ${edit}['design'])) ."... (click to edit)
 		</div>
 		<div id='wrapper'>
 			<div id='projectDesign' style='display:none;'>
@@ -668,7 +668,7 @@ echo "</FORM>
 	${edit}['site'] = ( ${_POST}['site'] ? ${_POST}['site'] : ${edit}['site'] );
 	$insert_form[] = array("site", "site",
 		"<div id='projectSiteSample' onclick=\"new Effect.BlindUp('projectSiteSample',{ afterFinish: new Effect.BlindDown('projectSite',{ afterFinish: setTimeout('setCaretToEnd(document.projectForm.site)',1200) }) })\" style='width:". $form_width .";'>
-			". nl2br((strlen($edit['site']) > $max_length ? substr($edit['site'],0,$max_length) : ${edit}['site'])) ."... (click to edit)
+			". nl2br((strlen({$edit['site']}) > $max_length ? substr({$edit['site']},0,$max_length) : ${edit}['site'])) ."... (click to edit)
 		</div>
 		<div id='wrapper'>
 			<div id='projectSite' style='display:none;'>
@@ -684,7 +684,7 @@ echo "</FORM>
 	${edit}['construction'] = ( ${_POST}['construction'] ? ${_POST}['construction'] : ${edit}['construction'] );
 	$insert_form[] = array("construction", "construction",
 		"<div id='projectConstructionSample' onclick=\"new Effect.BlindUp('projectConstructionSample',{ afterFinish: new Effect.BlindDown('projectConstruction',{ afterFinish: setTimeout('setCaretToEnd(document.projectForm.construction)',1200) }) })\" style='width:". $form_width .";'>
-			". nl2br((strlen($edit['construction']) > $max_length ? substr($edit['construction'],0,$max_length) : ${edit}['construction'])) ."... (click to edit)
+			". nl2br((strlen({$edit['construction']}) > $max_length ? substr({$edit['construction']},0,$max_length) : ${edit}['construction'])) ."... (click to edit)
 		</div>
 		<div id='wrapper'>
 			<div id='projectConstruction' style='display:none;'>
@@ -698,17 +698,17 @@ echo "</FORM>
 	/*
 	////////// SITE
 	$insert_form[] = array("site", "site",
-		array("TEXTAREA",$edit['site'],NULL,"ROWS=5"),
+		array("TEXTAREA",{$edit['site']},NULL,"ROWS=5"),
 		NULL,NULL,NULL);
 	
 	////////// DESIGN
 	$insert_form[] = array("design", "design",
-		array("TEXTAREA",$edit['design'],NULL,"ROWS=10"),
+		array("TEXTAREA",{$edit['design']},NULL,"ROWS=10"),
 		NULL,NULL,NULL);
 	
 	////////// CONSTRUCTION
 	$insert_form[] = array("construction", "construction",
-		array("TEXTAREA",$edit['construction'],NULL,"ROWS=5"), 
+		array("TEXTAREA",{$edit['construction']},NULL,"ROWS=5"), 
 		NULL,NULL,NULL);
 	*/
 	

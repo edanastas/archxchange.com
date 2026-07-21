@@ -29,7 +29,7 @@ if ( ${_POST}['SUBMIT'] ) {
 	} elseif ( strlen($_POST['username']) < 4 ) {
 		${error}['username'] = "Your username should be at least 4 characters";
 	} else {
-		$sql = "SELECT * FROM users WHERE username = '". query_prep($_POST['username']) ."' LIMIT 1";
+		$sql = "SELECT * FROM users WHERE username = '". query_prep({$_POST['username']}) ."' LIMIT 1";
 		if ( !mysqli_query($db, $sql) ) {
 			error("there was an error checking if the new user exists",$sql,1);
 			${error}['username'] = "There was an error validating your information. Please contact an administrator for assistance.";
@@ -176,7 +176,7 @@ echo "<FORM ACTION=" . ${_SERVER}['PHP_SELF'] . " METHOD=POST>";
 	
 	////////// USERNAME
 	$insert_form[] = array("username", trans("username"),
-		array("TEXT",$edit['username'],NULL,"MAXLENGTH=30"),
+		array("TEXT",{$edit['username']},NULL,"MAXLENGTH=30"),
 		NULL,NULL,NULL);
 	
 	////////// EMAIL

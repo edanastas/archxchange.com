@@ -82,7 +82,7 @@ if ( ${_POST}['SUBMIT'] && $disabled) {
 		$sql = "INSERT INTO users SET 
 			username = '". ${_POST}['username'] ."',
 			email = '". ${_POST}['email'] ."',
-			password = '". sha1($_POST['password']) ."',
+			password = '". sha1({$_POST['password']}) ."',
 			firstname = '". ${_POST}['firstname'] ."',
 			lastname = '". ${_POST}['lastname'] ."',
 			profession_id = '". ${_POST}['profession_id'] ."',
@@ -372,7 +372,7 @@ echo "<FORM NAME='NEW_PROJECT' ACTION=" . ${_SERVER}['PHP_SELF'] . " METHOD=POST
 			while ($info = mysqli_fetch_assoc($query)) {
 				${input}['project_id'] .= "<INPUT TYPE=RADIO NAME='project_id' VALUE='". ${info}['project_id'] ."'".
 					(($_POST['project_id'] ? ${_POST}['project_id'] : ${_SESSION}['project']['project_id']) == ${info}['project_id'] 
-						? " CHECKED" : NULL) ."> ". ucwords($info['title']) ."</br>";
+						? " CHECKED" : NULL) ."> ". ucwords({$info['title']}) ."</br>";
 			}
 			
 			////////// QUESTION

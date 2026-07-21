@@ -8,8 +8,8 @@ if ( !defined('CRON') && !LOCAL ) { // IF NOT RUN BY CRONTAB CONTINUE
 	
 	// MAKE SURE THE URL HAS THE www. IN FRONT OF IT
 	//( !preg_match("/faq.php|index.php|contact.php|products.php/i",$_SERVER['PHP_SELF']) ) // DO NOT REDIRECT TO www ON THESE PAGES
-	//if ( !preg_match("/www./i",$_SERVER['HTTP_HOST']) || preg_match("/\.$|\:80$/i",$_SERVER['HTTP_HOST']) ) {
-	if ( !preg_match("/www./i",$_SERVER['HTTP_HOST']) || preg_match("/\.$|\:80$/i",$_SERVER['HTTP_HOST']) ) {
+	//if ( !preg_match("/www./i",{$_SERVER['HTTP_HOST']}) || preg_match("/\.$|\:80$/i",$_SERVER['HTTP_HOST']) ) {
+	if ( !preg_match("/www./i",{$_SERVER['HTTP_HOST']}) || preg_match("/\.$|\:80$/i",$_SERVER['HTTP_HOST']) ) {
 		header("location:http://www.". DOMAIN . ${_SERVER}['REQUEST_URI']);
 	} elseif ( defined('SSL') ) { // IS SSL REQUIRED ON THE PAGE --> define('SSL',TRUE); // ADD TO PAGE HEADER
 		if ( !$_SERVER['HTTPS'] ) header("location:https://www.". DOMAIN . ${_SERVER}['REQUEST_URI']);
