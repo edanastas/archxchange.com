@@ -35,7 +35,7 @@ define('SITE_ACCESS', '0'); // SITE DEVELOPMENT STATE
 // GLOBAL //
 // define LOCAL — loaded from config_global.php below
 // Load secure config early so LOCAL is available
-$secure_path = "../secure/archxchange.com/";
+$secure_path = "secure/";
 require($secure_path . "config_global.php");
 
 ////////// SET DEVELOPMENT STATE

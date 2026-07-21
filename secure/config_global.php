@@ -9,15 +9,7 @@ define('LOCAL', ( preg_match("/^(concord\.local|192\.168\.)/i", $_SERVER['HTTP_H
 
 if (!defined('ACCESS')) die("access temporarily restricted");
 
-if ( !defined('CRON') && LOCAL == FALSE ) { // IF NOT RUN BY CRONTAB OR LOCAL CONTINUE
-	// MAKE SURE THE URL HAS THE www. IN FRONT OF IT
-	if ( !preg_match("/www\./i", $_SERVER['HTTP_HOST']) || preg_match("/\.$|\:/", $_SERVER['HTTP_HOST']) ) {
-		header("location:http://www.". DOMAIN . $_SERVER['REQUEST_URI']);
-	} elseif ( defined('SSL') ) { // IS SSL REQUIRED ON THE PAGE --> define('SSL',TRUE); // ADD TO PAGE HEADER
-		if ( !$_SERVER['HTTPS'] ) header("location:https://www.". DOMAIN . $_SERVER['REQUEST_URI']);
-	}
-}
-
+// www redirect handled by Cloudflare — removed server-side redirect
 
 // SESSION //////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////// 2.0
