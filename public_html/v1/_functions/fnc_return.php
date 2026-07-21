@@ -242,7 +242,7 @@ return $return['host'];
 
 
 /*		function return_email($email) { // CHECK IF AN EMAIL ADDRESS IS OF VALID FORM
-	if ( eregi("^[[:alnum:]][a-z0-9_.-]*@[a-z0-9.-]+\.[a-z]{2,4}$", trim($email)) ) {
+	if ( preg_match("/^[a-zA-Z0-9][a-z0-9_.-]*@[a-z0-9.-]+\.[a-z]{2,4}$/i", trim($email)) ) {
 		return $email; // RETURN THE EMAIL ADDRESS
 	} else {
 		return FALSE;
@@ -299,7 +299,7 @@ return $return['host'];
 
 
 		function return_implode_assoc($inner_glue, $outer_glue, $array) {
-/* This isn't really DB function, but it's general...Ê This will */
+/* This isn't really DB function, but it's general... This will */
 /* act like the PHP implode() function, but for assoc. arrays... */
 	$output = array();
 	foreach ( $array as $key => $item )

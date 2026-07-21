@@ -78,7 +78,7 @@ echo "<html>
 	
 	<title>" . (defined('TITLE') ? TITLE : DEFAULT_TITLE) . "</title>
 	
-	". (eregi("/admin/",$_SERVER[PHP_SELF]) 
+	". (preg_match("//admin//i",$_SERVER[PHP_SELF]) 
 		? "<link rel=stylesheet href='". TEMPLATE_DOMAIN ."_styles/styles.css' type='text/css'>"
 		: "<link rel=stylesheet href='". BASE_DIR ."_styles/styles.css' type='text/css'>" ) ."
 	<!--<link rel=stylesheet href='". TEMPLATE_DOMAIN ."_styles/styles.css' type='text/css'>-->

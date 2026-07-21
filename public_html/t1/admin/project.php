@@ -82,9 +82,9 @@ if ( $_POST[ADD_PROJECT] || ( $_POST[UPDATE_PROJECT] && $_GET[CRYPT_REF_ID] ) ) 
 		$name = eregi_replace(",","",trim($name));
 		$values = explode(" ",$name);
 		foreach($values AS $key => $value) {
-			if ( $value && !eregi("@",$value) ) {
+			if ( $value && !preg_match("/@/i",$value) ) {
 				$return[contact] .= ($return[contact] ? " ". $value : $value );
-			} elseif ( eregi("@",$value) ) {
+			} elseif ( preg_match("/@/i",$value) ) {
 				$return[email] = $value;
 			}
 		}

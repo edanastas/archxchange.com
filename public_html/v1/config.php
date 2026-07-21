@@ -7,9 +7,9 @@ if (!defined('ACCESS')) die("access temporarily restricted");
 if ( !defined('CRON') && !LOCAL ) { // IF NOT RUN BY CRONTAB CONTINUE
 	
 	// MAKE SURE THE URL HAS THE www. IN FRONT OF IT
-	//( !eregi("faq.php|index.php|contact.php|products.php",$_SERVER[PHP_SELF]) ) // DO NOT REDIRECT TO www ON THESE PAGES
-	//if ( !eregi("www.",$_SERVER[HTTP_HOST]) || eregi("\.$|\:80$",$_SERVER[HTTP_HOST]) ) {
-	if ( !eregi("www.",$_SERVER[HTTP_HOST]) || eregi("\.$|\:80$",$_SERVER[HTTP_HOST]) ) {
+	//( !preg_match("/faq.php|index.php|contact.php|products.php/i",$_SERVER[PHP_SELF]) ) // DO NOT REDIRECT TO www ON THESE PAGES
+	//if ( !preg_match("/www./i",$_SERVER[HTTP_HOST]) || preg_match("/\.$|\:80$/i",$_SERVER[HTTP_HOST]) ) {
+	if ( !preg_match("/www./i",$_SERVER[HTTP_HOST]) || preg_match("/\.$|\:80$/i",$_SERVER[HTTP_HOST]) ) {
 		header("location:http://www.". DOMAIN . $_SERVER[REQUEST_URI]);
 	} elseif ( defined('SSL') ) { // IS SSL REQUIRED ON THE PAGE --> define('SSL',TRUE); // ADD TO PAGE HEADER
 		if ( !$_SERVER[HTTPS] ) header("location:https://www.". DOMAIN . $_SERVER[REQUEST_URI]);
@@ -32,7 +32,7 @@ if ( !defined('CRON') && !LOCAL ) { // IF NOT RUN BY CRONTAB CONTINUE
 define('SITE_ACCESS', '0'); // SITE DEVELOPMENT STATE
 	// 0 (NORMAL), 1 (NO VIEWING), 2 (NO LOGIN), 3 (NO ACCOUNT CHANGES)
 
-// GLOBAL // define('LOCAL', ( eregi("^(concord.local|192\.168\.)",$_SERVER[HTTP_HOST]) ? TRUE : FALSE )); // LOCAL DEV SERVER
+// GLOBAL // define('LOCAL', ( preg_match("/^(concord.local|192\.168\.)/i",$_SERVER[HTTP_HOST]) ? TRUE : FALSE )); // LOCAL DEV SERVER
 
 ////////// SET DEVELOPMENT STATE
 define('DEV_TRANS', TRUE); // DEVELOPER TRANSLATION STATE

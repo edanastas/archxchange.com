@@ -299,7 +299,7 @@ if ( is_array($fields) ) {
 								// INDEX ////////////////////
 								
 								// LINK ////////////////////$field_text
-								//if ( eregi("^http\:\/\/",trim($field_value)) && !$buffer[index][link] ) {
+								//if ( preg_match("/^http\:\/\//i",trim($field_value)) && !$buffer[index][link] ) {
 								//echo "( $field_type_value AS $field_value => $field_text )<BR>";
 								//echo "\$field_text --> $field_text<BR>";
 								//echo "\$field_name --> $field_name<BR>";
@@ -308,8 +308,8 @@ if ( is_array($fields) ) {
 								//echo "\$form_value[$field_name] --> " . $form_value[$field_name] . "<BR>";
 								
 								//echo "\$field_type_value --> $field_type_value<BR>";
-								//if ( eregi("http",trim($field_value)) && !$buffer[index][link] ) {
-								//if ( eregi("http",trim($field_value)) ) {
+								//if ( preg_match("/http/i",trim($field_value)) && !$buffer[index][link] ) {
+								//if ( preg_match("/http/i",trim($field_value)) ) {
 									//echo "HERE!<BR>";
 									//$buffer[index][link] = trim($field_value);
 									//$buffer[index][link] = $field_name;
@@ -952,8 +952,8 @@ if ( $_POST[SUBMIT] ) {
 						
 						//
 						foreach ( $results AS $key => $link ) {
-							//if ( eregi("^http://",$link) && !$link_inserted ) {
-							if ( eregi("^http://",$link) ) {
+							//if ( preg_match("/^http:///i",$link) && !$link_inserted ) {
+							if ( preg_match("/^http:///i",$link) ) {
 							//if ( $results[link] ) {
 							
 								echo " - <A TARGET=LINK HREF='" . $link . "'>

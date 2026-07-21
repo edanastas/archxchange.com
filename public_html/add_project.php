@@ -18,7 +18,7 @@ require(TEMPLATE_BASE_DIR . "config.php"); // _functions/fnc.php
 define("TITLE","Add New project Form"); // PAGE TITLE
 $form[no_match] = "<span style='color:#777;'>No, These do not match...</span>";
 
-if ( eregi("start",$_SERVER[QUERY_STRING]) ) unset($_SESSION['project']['title']);
+if ( preg_match("/start/i",$_SERVER[QUERY_STRING]) ) unset($_SESSION['project']['title']);
 
 // DATABASE /////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////// 4.0
@@ -104,7 +104,7 @@ if ( $_POST['CONTINUE'] ) {
 	////////////////////////////////////////////////// CHECK REQUIRED FIELDS
 	
 	////////// CHECK TITLE
-	if ( !eregi("[a-z]{3}",$_POST['title']) ) {
+	if ( !preg_match("/[a-z]{3}/i",$_POST['title']) ) {
 		$error[title] = "Please submit a project title to continue";
 	}
 	
@@ -303,7 +303,7 @@ echo "<FORM NAME='NEW_PROJECT' ACTION=" . $_SERVER['PHP_SELF'] . " METHOD=POST>"
 		NULL,NULL,NULL);
 	
 	////////// IF TITLE WAS SUBMITTED --> CHECK IF IT EXISTS
-	if ( eregi("[a-z]{3}",$_POST['title']) || $_SESSION['project']['title'][$_GET[p_title_selected]]  ) {
+	if ( preg_match("/[a-z]{3}/i",$_POST['title']) || $_SESSION['project']['title'][$_GET[p_title_selected]]  ) {
 		
 		// 
 		if ( is_array($_SESSION['project']['title']) ) {
@@ -334,7 +334,7 @@ echo "<FORM NAME='NEW_PROJECT' ACTION=" . $_SERVER['PHP_SELF'] . " METHOD=POST>"
 			}
 			
 		} else {
-		//} elseif ( eregi("start",$_SERVER[QUERY_STRING]) ) {
+		//} elseif ( preg_match("/start/i",$_SERVER[QUERY_STRING]) ) {
 			
 			//echo "here";
 			

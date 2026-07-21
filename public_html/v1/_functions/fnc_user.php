@@ -19,7 +19,7 @@
 	//if ( USER_ACCESS != NULL && USER_ACCESS >= $access ) {
 	//if ( defined('USER_ACCESS') && USER_ACCESS >= ( is_numeric($access) ? $access : ACCESS ) ) {
 	if ( defined('USER_ACCESS') && USER_ACCESS != NULL && (int) USER_ACCESS >= (int) $access ) {
-	//if ( defined('USER_ACCESS') && USER_ACCESS >= ( $access ? $access : ACCESS ) || eregi("concord.local|demessi.com", $_SERVER[HTTP_HOST]) ) {
+	//if ( defined('USER_ACCESS') && USER_ACCESS >= ( $access ? $access : ACCESS ) || preg_match("/concord.local|demessi.com/i", $_SERVER[HTTP_HOST]) ) {
 		return TRUE;
 	} else {
 		//header("location:login.php" . return_value("?" . $_SERVER[PHP_SELF] . "?" . $_SERVER[QUERY_STRING],NULL) );

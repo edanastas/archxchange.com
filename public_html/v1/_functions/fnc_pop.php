@@ -35,7 +35,7 @@ return "<A HREF=\"javascript:OpenWin('help.php?faq_id=$faq_id#FAQ','HELP','450',
 	
 	list($width, $height) = getimagesize($src);
 	if ( !$options[target] ) $options[target] = basename($src); //"POP_IMAGE";
-	if ( !$options[margin] ) $options[margin] = (eregi("Firefox|Safari",$_SERVER[HTTP_USER_AGENT]) ? 1 : 20 );
+	if ( !$options[margin] ) $options[margin] = (preg_match("/Firefox|Safari/i",$_SERVER[HTTP_USER_AGENT]) ? 1 : 20 );
 	
 	
 	if ( $src ) {

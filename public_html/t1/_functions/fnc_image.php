@@ -24,7 +24,7 @@
 		
 		
 		////////// CHECK IF JPG FORMAT 
-		if ( !eregi("jpeg", $_FILES['upload_file'. $options[suffix]][type]) ) $error[image_type] = "please use .jpg image file format";
+		if ( !preg_match("/jpeg/i", $_FILES['upload_file'. $options[suffix]][type]) ) $error[image_type] = "please use .jpg image file format";
 		
 		////////// CHECK IF FILE IS TOO BIG
 		if ( $_FILES['upload_file'. $options[suffix]][size] > ($_POST[MAX_FILE_SIZE] ? $_POST[MAX_FILE_SIZE] : 2000000) ) {
@@ -200,7 +200,7 @@
 	////////// CHECK IF IMAGE EXISTS
 	if ( image_exists($src) ) {
 		
-		if ( $options[max] && !eregi("WIDTH|HEIGHT",$options[html])) {
+		if ( $options[max] && !preg_match("/WIDTH|HEIGHT/i",$options[html])) {
 			
 			list($width, $height) = getimagesize($src);
 			

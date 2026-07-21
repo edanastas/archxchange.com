@@ -36,7 +36,7 @@ if (!defined('ACCESS')) die(ERROR_MESSAGE);
 } else*/if ( $_POST[LOGIN] ) {
 	
 	////////// CHECK EMAIL
-	if ( !eregi("^[[:alnum:]][a-z0-9_.-]*@[a-z0-9.-]+\.[a-z]{2,4}$", trim($_POST[email])) ) {
+	if ( !preg_match("/^[a-zA-Z0-9][a-z0-9_.-]*@[a-z0-9.-]+\.[a-z]{2,4}$/i", trim($_POST[email])) ) {
 		//$error[email] = TRUE;
 		//$error[db] = "Please submit a valid e-mail address<br>";
 		$error[email] = "Please submit a valid e-mail address";
@@ -65,7 +65,7 @@ if (!defined('ACCESS')) die(ERROR_MESSAGE);
 		
 		
 		
-		if ( !eregi("^.{4,12}$",$_POST[password]) ) { // !$_POST[password] ) { // &&  $_POST[have_password] == "yes"
+		if ( !preg_match("/^.{4,12}$/i",$_POST[password]) ) { // !$_POST[password] ) { // &&  $_POST[have_password] == "yes"
 			//$error[pwd] = TRUE;
 			$error[password] = "Please enter a password (4-12 characters)";
 			//$error[db] .= "* Please enter a password<br>";
@@ -177,9 +177,9 @@ if (!defined('ACCESS')) die(ERROR_MESSAGE);
 	
 	////////// check something was entered and that no letters crept into the phone field:
 	
-	if ( eregi("[a-zA-Z]", $_POST[phone]) ) {
+	if ( preg_match("/[a-zA-Z]/i", $_POST[phone]) ) {
 		$error[phone] = "please check the phone number";
-	} elseif ( !eregi(".{10,}", $_POST[phone]) ) {
+	} elseif ( !preg_match("/.{10,}/i", $_POST[phone]) ) {
 		$error[phone] = TRUE;
 		
 	}

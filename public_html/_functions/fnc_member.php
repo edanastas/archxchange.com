@@ -19,7 +19,7 @@
 	//if ( USER_ACCESS != NULL && USER_ACCESS >= $access ) {
 	//if ( defined('USER_ACCESS') && USER_ACCESS >= ( is_numeric($access) ? $access : ACCESS ) ) {
 	if ( defined('USER_ACCESS') && USER_ACCESS != NULL && (int) USER_ACCESS >= (int) $access ) {
-	//if ( defined('USER_ACCESS') && USER_ACCESS >= ( $access ? $access : ACCESS ) || eregi("concord.local|demessi.com", $_SERVER[HTTP_HOST]) ) {
+	//if ( defined('USER_ACCESS') && USER_ACCESS >= ( $access ? $access : ACCESS ) || preg_match("/concord.local|demessi.com/i", $_SERVER[HTTP_HOST]) ) {
 		return TRUE;
 	} else {
 		//header("location:login.php" . return_value("?" . $_SERVER[PHP_SELF] . "?" . $_SERVER[QUERY_STRING],NULL) );
@@ -56,7 +56,7 @@
 	//exit();
 	
 	
-	//if ( eregi("checkout.php",$_SERVER[PHP_SELF]) ) {
+	//if ( preg_match("/checkout.php/i",$_SERVER[PHP_SELF]) ) {
 	//	header("location:" . $_SERVER[PHP_SELF] . "");
 	//} else
 	
@@ -66,7 +66,7 @@
 	/*if ( $_SESSION[redirect] ) { // IF QUERY_STRING RETURN TO QUERY_STRING
 		//$_SESSION[redirect] = $_SERVER[QUERY_STRING];
 		header("Location:" . $_SESSION[redirect] );
-	} elseif ( eregi("checkout.php", $_SERVER[PHP_SELF]) ) { // IF CHECKOUT LOGIN RETURN TO CHECKOUT
+	} elseif ( preg_match("/checkout.php/i", $_SERVER[PHP_SELF]) ) { // IF CHECKOUT LOGIN RETURN TO CHECKOUT
 		header("Location:./checkout.php");
 	} else*/
 	

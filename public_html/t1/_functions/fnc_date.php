@@ -196,7 +196,7 @@ return $return;
 		function date_format_custom($date, $options) { // 2.1 //  FIRST ARRAY VARIABLE IS THE SEPARATOR
 
 if ( !is_array($date) ) {
-	if ( eregi("-", $date) ) {
+	if ( preg_match("/-/i", $date) ) {
 		$format = explode("-", $date);
 		$date = NULL;
 		$date[year] = $format[0];
@@ -226,7 +226,7 @@ return $return;
 
 
 /*		function date_format($date, $separator) { // 2.1
-if ( eregi("-", $date) ) {
+if ( preg_match("/-/i", $date) ) {
 	$format = explode("-", $date);
 	$year = $format[0];
 	$month = $format[1];
@@ -246,7 +246,7 @@ return $new_date;
 
 
 		function date_split($date) { // 2.2 USE THIS ONE
-if ( eregi("-", $date) ) {
+if ( preg_match("/-/i", $date) ) {
 	$format = explode("-", $date);
 	$d[year] = $format[0];
 	$d[month] = $format[1];

@@ -72,7 +72,7 @@ if ( $_POST[SUBMIT] ) {
 	// CHECK DOMAIN
 	if ( !$_POST[domain] ) {
 		$error[domain] = "please submit your offices website domain";
-	} elseif ( !eregi("[a-z0-9-]+\.[a-z]{2,4}$",trim($_POST[domain])) ) { //(www\.)?
+	} elseif ( !preg_match("/[a-z0-9-]+\.[a-z]{2,4}$/i",trim($_POST[domain])) ) { //(www\.)?
 		$error[domain] = "We could not validate your website domain.";
 	}
 	

@@ -262,7 +262,7 @@
 							
 							//background-color:#FFFFCC
 							//if ( is_array( $input ) ) { // MOVED BELOW
-								//if ( !eregi("background-color", $input[2]) ) $input[2] .= "background-color:#FFF6AA;";
+								//if ( !preg_match("/background-color/i", $input[2]) ) $input[2] .= "background-color:#FFF6AA;";
 							//}
 							
 							//if ( $field_name == "error" ) {
@@ -300,8 +300,8 @@
 								//$input[2] = "width:240px;";
 							//}
 							
-							if ( !eregi("width", $input[2]) && eregi("TEXT|TEXTAREA|PASSWORD", $input[0]) ) $input[2] .= "width:". FORM_WIDTH ."px;";
-							//if ( !eregi("background-color", $input[2]) ) $input[2] .= "background-color:#FFFCC4;"; //FFF6AA
+							if ( !preg_match("/width/i", $input[2]) && preg_match("/TEXT|TEXTAREA|PASSWORD/i", $input[0]) ) $input[2] .= "width:". FORM_WIDTH ."px;";
+							//if ( !preg_match("/background-color/i", $input[2]) ) $input[2] .= "background-color:#FFFCC4;"; //FFF6AA
 							
 							////////// SET FORM VALUES
 							////////////////////////////////////////////////////////////////////////////////
@@ -350,7 +350,7 @@
 								    " ID=\"" . $field_name . "\"" .
 									" VALUE=\"" . stripslashes($input[1]) . "\"" . 
 									" STYLE='" . $input[2] . "' " . $input[3] . "". 
-										( eregi("RADIO|CHECKBOX",$input[0]) && $_POST[$field_name] ? " CHECKED" : NULL ) ."> ". $input[4] ."\n";
+										( preg_match("/RADIO|CHECKBOX/i",$input[0]) && $_POST[$field_name] ? " CHECKED" : NULL ) ."> ". $input[4] ."\n";
 							}
 							
 						}// else {
@@ -360,13 +360,13 @@
 						
 						
 						// ADD THE PADDING TO THE DISPLAY CELL
-						//if ( !eregi("padding-top", $styles[1]) ) $styles[1] .= "padding-top:5px;";
+						//if ( !preg_match("/padding-top/i", $styles[1]) ) $styles[1] .= "padding-top:5px;";
 						//if ( is_array($styles) )
-							if ( !eregi("padding-right", $styles[1]) ) $styles[1] .= "padding-right:5px;";
-							if ( !eregi("padding-top", $styles[1]) ) $styles[1] .= "padding-top:5px;";
+							if ( !preg_match("/padding-right/i", $styles[1]) ) $styles[1] .= "padding-right:5px;";
+							if ( !preg_match("/padding-top/i", $styles[1]) ) $styles[1] .= "padding-top:5px;";
 							// REMOVED NEXT LINE BECAUSE OF DISPLAY ALIGNMENT OF ADMIN MANAGER (firstname, lastname)
-							//if ( !eregi("padding-top", $styles[1]) ) $styles[1] .= "padding-top:5px;";
-							if ( !eregi("width", $styles[1]) ) $styles[1] .= $style[width];
+							//if ( !preg_match("/padding-top/i", $styles[1]) ) $styles[1] .= "padding-top:5px;";
+							if ( !preg_match("/width/i", $styles[1]) ) $styles[1] .= $style[width];
 						
 						
 						
