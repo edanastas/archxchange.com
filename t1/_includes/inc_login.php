@@ -37,8 +37,8 @@ if (!defined('ACCESS')) die(ERROR_MESSAGE);
 	
 	////////// CHECK EMAIL
 	if ( !preg_match("/^[a-zA-Z0-9][a-z0-9_.-]*@[a-z0-9.-]+\.[a-z]{2,4}$/i", trim($_POST['email'])) ) {
-		//{$error['email'] = TRUE;
-		//{$error['db'] = "Please submit a valid e-mail address<br>";
+		//$error['email'] = TRUE;
+		//$error['db'] = "Please submit a valid e-mail address<br>";
 		${error}['email'] = "Please submit a valid e-mail address";
 		
 	}/* else { // IF EMAIL --> CHECK IF EMAIL EXISTS
@@ -66,7 +66,7 @@ if (!defined('ACCESS')) die(ERROR_MESSAGE);
 		
 		
 		if ( !preg_match("/^.{4,12}$/i",$_POST['password']) ) { // !$_POST['password'] ) { // &&  ${_POST}['have_password'] == "yes"
-			//{$error['pwd'] = TRUE;
+			//$error['pwd'] = TRUE;
 			${error}['password'] = "Please enter a password (4-12 characters)";
 			//${error}['db'] .= "* Please enter a password<br>";
 		} else {
@@ -95,7 +95,7 @@ if (!defined('ACCESS')) die(ERROR_MESSAGE);
 					//session_unset();
 					//session_destroy();
 					
-					//define('USER_ID',{$info['user_id']);
+					//define('USER_ID',$info['user_id']);
 					//$_COOKIE['auto'] = NULL;
 					//unset($_SESSION['auto']);
 					//echo ${info}['user_id'] . "|" . sha1($_POST['password']);
@@ -226,8 +226,8 @@ if (!defined('ACCESS')) die(ERROR_MESSAGE);
 				reg_date = NOW()") ) {
 			
 			//$$CRYPT_USER_ID = ${info}['user_id']; session_register(CRYPT_USER_ID);
-			//session_register(CRYPT_USER_ID,{$info['user_id']);
-			//session_register(id,{$info['user_id']);
+			//session_register(CRYPT_USER_ID,$info['user_id']);
+			//session_register(id,$info['user_id']);
 			//$_SESSION['CRYPT_USER_ID'] = ${info}['user_id'];
 			
 			//$_SESSION['ref_id'] = mysqli_insert_id($db);
@@ -299,25 +299,25 @@ if ( ($_POST['LOGIN'] && !$error) || ${_POST}['REGISTER'] ) {// || ${_POST}['AGR
 		echo "<TR>
 				<TD COLSPAN=2>" . html_title_text("Please take a moment to register") . "</TD>
 			</TR><TR>
-				<TD ALIGN=RIGHT>" . error_red({$error['firstname'],'first name') . "</TD>
+				<TD ALIGN=RIGHT>" . error_red($error['firstname'],'first name') . "</TD>
 				<TD><INPUT TYPE=TEXT NAME=firstname CLASS='form' VALUE=" . ${_POST}['firstname'] . "></TD>
 			</TR><TR>
-				<TD ALIGN=RIGHT>" . error_red({$error['lastname'],'last name') . "</TD>
+				<TD ALIGN=RIGHT>" . error_red($error['lastname'],'last name') . "</TD>
 				<TD><INPUT TYPE=TEXT NAME=lastname CLASS='form' VALUE=" . ${_POST}['lastname'] . "></TD>
 			</TR><TR>
 				<TD ALIGN=RIGHT>e-mail address</TD>
 				<TD><INPUT TYPE=TEXT NAME=email CLASS='form' VALUE='" . ${_POST}['email'] . "'></TD>
 			</TR><TR>
-				<TD ALIGN=RIGHT>" . error_red({$error['email_confirm'],'re-type e-mail') . "</TD>
+				<TD ALIGN=RIGHT>" . error_red($error['email_confirm'],'re-type e-mail') . "</TD>
 				<TD><INPUT TYPE=TEXT NAME=email_confirm CLASS='form' VALUE='$_POST['email_confirm']}'></TD>
 			</TR><TR>
-				<TD ALIGN=RIGHT>" . error_red({$error['phone'],'phone') . "</TD>
+				<TD ALIGN=RIGHT>" . error_red($error['phone'],'phone') . "</TD>
 				<TD><INPUT TYPE=TEXT NAME=phone CLASS='form' VALUE='$_POST['phone']}'></TD>
 			</TR><TR>
-				<TD ALIGN=RIGHT>" . error_red({$error['dob'],'date of birth') . "</TD>
+				<TD ALIGN=RIGHT>" . error_red($error['dob'],'date of birth') . "</TD>
 				<TD COLSPAN=2>" . date_return_drop('dob', ${_POST}['dob']['year'], ${_POST}['dob']['month'], ${_POST}['dob']['day'], array('limit' => 18, 'location' => 10)) . "</TD>
 			</TR><TR>
-				<TD ALIGN=RIGHT>" . error_red({$error['gender'],'gender') . "</TD>
+				<TD ALIGN=RIGHT>" . error_red($error['gender'],'gender') . "</TD>
 				<TD><INPUT TYPE=RADIO NAME=gender VALUE='m'" . 
 					return_match($_POST['gender'], 'm', 'checked') . "> male &#160 <INPUT TYPE=RADIO NAME=gender VALUE='f'"  . 
 					return_match($_POST['gender'], 'f', 'checked') . "> female </TD>
@@ -326,12 +326,12 @@ if ( ($_POST['LOGIN'] && !$error) || ${_POST}['REGISTER'] ) {// || ${_POST}['AGR
 			</TR><TR>
 				<TD COLSPAN=2>" . html_title_text("Secure your account with a password") . "</TD>
 			</TR><TR>
-				<TD ALIGN=RIGHT>" . error_red({$error['password'],'enter a new password') . "</TD>
+				<TD ALIGN=RIGHT>" . error_red($error['password'],'enter a new password') . "</TD>
 				<TD><INPUT TYPE=PASSWORD NAME=password CLASS='form' VALUE='" . ${_POST}['password'] . "'></TD>
 			</TR><TR>
-				<TD ALIGN=RIGHT>" . error_red({$error['password_confirm'],'re-type password') . "</TD>
+				<TD ALIGN=RIGHT>" . error_red($error['password_confirm'],'re-type password') . "</TD>
 				<TD><INPUT TYPE=PASSWORD NAME=password_confirm CLASS='form' VALUE='" . 
-					({$error['password_confirm'] ? null : ${_POST}['password_confirm']) . "'></TD>
+					($error['password_confirm'] ? null : ${_POST}['password_confirm']) . "'></TD>
 			</TR><TR>
 				<TD COLSPAN=2> </TD>
 			</TR>";
@@ -342,7 +342,7 @@ if ( ($_POST['LOGIN'] && !$error) || ${_POST}['REGISTER'] ) {// || ${_POST}['AGR
 			</TR><TR>
 				<TD BGCOLOR=" . COLOR_GRAY_LIGHT . " COLSPAN=2 STYLE='padding-left:20px;border-top:thin solid;border-left:thin solid;border-right:thin solid;'>If you have a discount code, please enter it now</TD>
 			</TR><TR>
-				<TD ALIGN=RIGHT BGCOLOR=" . COLOR_GRAY_LIGHT . " STYLE='border-bottom:thin solid;border-left:thin solid;'>" . error_red({$error['password'],'discount code') . "</TD>
+				<TD ALIGN=RIGHT BGCOLOR=" . COLOR_GRAY_LIGHT . " STYLE='border-bottom:thin solid;border-left:thin solid;'>" . error_red($error['password'],'discount code') . "</TD>
 				<TD ALIGN=LEFT BGCOLOR=" . COLOR_GRAY_LIGHT . " STYLE='padding-top:4px;padding-bottom:4px;border-bottom:thin solid;border-right:thin solid;'>
 					<INPUT TYPE=TEXT NAME=code CLASS='form' VALUE='" . ${_POST}['code'] . "'></TD>
 			</TR>
@@ -369,7 +369,7 @@ if ( ($_POST['LOGIN'] && !$error) || ${_POST}['REGISTER'] ) {// || ${_POST}['AGR
 } else {
 	
 	// IF DEFAULT RADIO CHECKED SETTING HAS NOT BEEN DEFINED ABOVE --> SET IT HERE
-	if ( !{$checked['no'] && !{$checked['yes'] ) {
+	if ( !$checked['no'] && !$checked['yes'] ) {
 		
 		if ( ${_POST}['have_password'] == "no" ) {
 			
@@ -383,13 +383,13 @@ if ( ($_POST['LOGIN'] && !$error) || ${_POST}['REGISTER'] ) {// || ${_POST}['AGR
 	echo "<TR>
 			<TD COLSPAN=2>" . html_title_text("What is your e-mail address?") . "</TD>
 		</TR><TR>
-			<TD COLSPAN=2>" . error_red({$error['email'],'e-mail address') . " <INPUT TYPE=TEXT NAME=email VALUE='$_POST['email']}' STYLE='width:170px;'></TD>
+			<TD COLSPAN=2>" . error_red($error['email'],'e-mail address') . " <INPUT TYPE=TEXT NAME=email VALUE='$_POST['email']}' STYLE='width:170px;'></TD>
 		</TR><TR>
 			<TD ALIGN=RIGHT><INPUT TYPE=RADIO NAME=have_password ID=have_password VALUE=no ${checked}['no']></TD>
 			<TD>I am a new member and don't have a password</TD>
 		</TR><TR>
 			<TD ALIGN=RIGHT><INPUT TYPE=RADIO NAME=have_password ID=have_password VALUE=yes ${checked}['yes']></TD>
-			<TD>" . error_red({$error['pwd'],'I have a password') . " <INPUT TYPE=PASSWORD NAME=password VALUE='$_POST['password']}'></TD>
+			<TD>" . error_red($error['pwd'],'I have a password') . " <INPUT TYPE=PASSWORD NAME=password VALUE='$_POST['password']}'></TD>
 		</TR>";
 	
 	

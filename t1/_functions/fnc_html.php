@@ -10,7 +10,7 @@
 //	"url" => $redirect_url); // IF NO LOCATION SPECIFIED THEN GOES BACK ONE
 //html_error($redirect);
 
-if (!{$redirect['url']) {
+if (!$redirect['url']) {
 	if ( preg_match("/" . preg_quote($_SERVER['HTTP_HOST'], "/") . "/i", ${_SERVER}['HTTP_REFERER']) ) { // IF NOT OUR WEBSITE --> DO NOT GO BACK ONE (GO TO HOME PAGE)
 		${redirect}['url'] = "javascript:history.back(1)";
 	} else {
@@ -18,9 +18,9 @@ if (!{$redirect['url']) {
 	}
 }
 
-if (!{$redirect['timer']) ${redirect}['timer'] = "0";
+if (!$redirect['timer']) ${redirect}['timer'] = "0";
 
-if (!{$redirect['redirecting']) {
+if (!$redirect['redirecting']) {
 	${redirect}['redirecting'] = "redirecting...";
 } else {
 	${redirect}['redirecting'] .= "...";
@@ -172,17 +172,17 @@ return " onchange=\"submit();\"";
 		function html_grid($content, $columns, $options) {
 	
 	// RETURN A TABLE $columns COLUMNS WIDE CONTAINING $content ARRAY VALUES
-	if (!{$options['border']) { ${options}['border'] = " border=0"; } else { ${options}['border'] = " border=" . ${options}['border']; } // TABLE BORDER
+	if (!$options['border']) { ${options}['border'] = " border=0"; } else { ${options}['border'] = " border=" . ${options}['border']; } // TABLE BORDER
 	if (!$columns) { $columns = 1; }
 	
-	if (!{$options['align']) { ${options}['align'] = " align=center"; } else { ${options}['align'] = " align=" . ${options}['align']; } // TABLE ALIGN
-	if ({$options['valign']) { ${options}['valign'] = " valign=" . ${options}['valign']; } // TABLE VALIGN
+	if (!$options['align']) { ${options}['align'] = " align=center"; } else { ${options}['align'] = " align=" . ${options}['align']; } // TABLE ALIGN
+	if ($options['valign']) { ${options}['valign'] = " valign=" . ${options}['valign']; } // TABLE VALIGN
 	
-	if ({$options['cellpadding']) { ${options}['cellpadding'] = " cellpadding=" . ${options}['cellpadding']; } // CELLPADDING
-	if ({$options['cellspacing']) { ${options}['cellspacing'] = " cellspacing=" . ${options}['cellspacing']; } // CELLSPACING
-	if ({$options['width']) { ${options}['width'] = " width=" . ${options}['width']; } // TABLE WIDTH
-	if ({$options['height']) { ${options}['height'] = " height=" . ${options}['height']; } // TABLE HEIGHT
-	if ({$options['style']) { ${options}['style'] = " style='" . ${options}['style'] . "'"; } // STYLES
+	if ($options['cellpadding']) { ${options}['cellpadding'] = " cellpadding=" . ${options}['cellpadding']; } // CELLPADDING
+	if ($options['cellspacing']) { ${options}['cellspacing'] = " cellspacing=" . ${options}['cellspacing']; } // CELLSPACING
+	if ($options['width']) { ${options}['width'] = " width=" . ${options}['width']; } // TABLE WIDTH
+	if ($options['height']) { ${options}['height'] = " height=" . ${options}['height']; } // TABLE HEIGHT
+	if ($options['style']) { ${options}['style'] = " style='" . ${options}['style'] . "'"; } // STYLES
 	
 	$return = "<table" . ${options}['border'] . ${options}['align'] . ${options}['valign'] . ${options}['width'] . ${options}['cellspacing'] . ${options}['cellpadding'] . ${options}['style'] . ">
 		<tr>";
@@ -542,12 +542,12 @@ return " onchange=\"submit();\"";
 
 		function html_default_table($options=null) { // 
 	
-	if (!{$options['border']) ${options}['border'] = 0;
-	if (!{$options['width']) ${options}['width'] = "100%";
-	if (!{$options['cellpadding']) ${options}['cellpadding'] = 2;
-	if (!{$options['cellspacing']) ${options}['cellspacing'] = 1;
-	//if (!{$options['bgcolor']) ${options}['bgcolor'] = "#cccccc";
-	if (!{$options['class']) ${options}['class'] = "defaultTable";
+	if (!$options['border']) ${options}['border'] = 0;
+	if (!$options['width']) ${options}['width'] = "100%";
+	if (!$options['cellpadding']) ${options}['cellpadding'] = 2;
+	if (!$options['cellspacing']) ${options}['cellspacing'] = 1;
+	//if (!$options['bgcolor']) ${options}['bgcolor'] = "#cccccc";
+	if (!$options['class']) ${options}['class'] = "defaultTable";
 	
 	return "<table border='". ${options}['border'] ."' width='". ${options}['width'] ."' cellpadding='". ${options}['cellpadding'] ."' cellspacing='". ${options}['cellspacing'] ."' bgcolor='". ${options}['bgcolor'] ."' class='". ${options}['class'] ."'>";
 }
@@ -582,7 +582,7 @@ return " onchange=\"submit();\"";
 	
 	if ( !$interval ) $interval = 1;
 	
-	$return = "<SELECT NAME=". $identifier . ($array_identifier ? "[". $array_identifier ."]" : NULL) ."". ({$options['auto'] ? " onchange=\"submit()\"" : NULL) .">";
+	$return = "<SELECT NAME=". $identifier . ($array_identifier ? "[". $array_identifier ."]" : NULL) ."". ($options['auto'] ? " onchange=\"submit()\"" : NULL) .">";
 	// COUNT DROP DOWN TO $max VALUE
 	
 	
@@ -638,7 +638,7 @@ return " onchange=\"submit();\"";
 				
 				foreach($filters AS $filter => $logo) {
 					
-					if ( !{$options['display'] || ( ${options}['display'] && $count++ < ${options}['display'] ) ) {
+					if ( !$options['display'] || ( ${options}['display'] && $count++ < ${options}['display'] ) ) {
 						$return .= $divider ."<TR>
 							<TD ALIGN=CENTER>
 								<A TARGET=FILTERS HREF='http://www.". $filter ."'>
@@ -682,8 +682,8 @@ return " onchange=\"submit();\"";
 	
 	if ( $rank ) {
 		
-		if ( !{$options['color'] ) ${options}['color'] = "#FFCB11"; // FFCB11 519BD4
-		if ( !{$options['height'] ) ${options}['height'] = 5; // FFCB11 519BD4
+		if ( !$options['color'] ) ${options}['color'] = "#FFCB11"; // FFCB11 519BD4
+		if ( !$options['height'] ) ${options}['height'] = 5; // FFCB11 519BD4
 		
 		$rank_width = ($size * ($rank / $rank_total));
 		

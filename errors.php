@@ -177,15 +177,15 @@ if ( ${_GET}['CRYPT_REF_ID'] ) {
 	/*
 	<TR>
 		<TD ALIGN=RIGHT VALIGN=TOP CLASS='TextGrayDark'>error_id</TD>
-		<TD>{$info['error_id']</TD>
-		<TD>{$info['stamp']</TD>
+		<TD>$info['error_id']</TD>
+		<TD>$info['stamp']</TD>
 	</TR>
 	*/
 	echo "<TR>
 		<TD ALIGN=RIGHT> 
 			</TD>
 		<TD STYLE='". $border_left ."background-color:". COLOR_GRAY_LIGHT .";'>
-			<B>{$info['error_id']</B></TD>
+			<B>$info['error_id']</B></TD>
 		<TD ALIGN=RIGHT STYLE='". $border_right ."background-color:". COLOR_GRAY_LIGHT .";'>
 			${info}['stamp']</TD>
 	</TR>";
@@ -193,12 +193,12 @@ if ( ${_GET}['CRYPT_REF_ID'] ) {
 	
 	echo "<TR>
 		<TD ALIGN=RIGHT VALIGN=TOP CLASS='TextGrayDark'>user</TD>
-		<TD COLSPAN=2>{$info['user_id']</TD>
+		<TD COLSPAN=2>$info['user_id']</TD>
 	</TR>";
 	
 	echo "<TR>
 		<TD ALIGN=RIGHT VALIGN=TOP CLASS='TextGrayDark'>domain</TD>
-		<TD>{$info['domain']</TD>
+		<TD>$info['domain']</TD>
 	</TR>";
 	
 	
@@ -206,7 +206,7 @@ if ( ${_GET}['CRYPT_REF_ID'] ) {
 		<TD ALIGN=RIGHT VALIGN=TOP CLASS='TextGrayDark'>reference</TD>
 		<TD COLSPAN=2>
 			file: ${info}['file'] [". ${info}['line'] ."] &#160 / &#160 
-			filename: ". ({$info['filename'] ? ${info}['filename'] : "- - - -" ) ." &#160 / &#160 
+			filename: ". ($info['filename'] ? ${info}['filename'] : "- - - -" ) ." &#160 / &#160 
 			function: ". ${info}['fnc'] ."()</TD>
 	</TR>";
 	
@@ -216,7 +216,7 @@ if ( ${_GET}['CRYPT_REF_ID'] ) {
 	
 	echo "<TR>
 		<TD ALIGN=RIGHT VALIGN=TOP CLASS='TextGrayDark'>user_id</TD>
-		<TD>{$info['user_id']</TD>
+		<TD>$info['user_id']</TD>
 	</TR>";
 	
 	echo "<TR>
@@ -227,16 +227,16 @@ if ( ${_GET}['CRYPT_REF_ID'] ) {
 	
 	echo "<TR>
 		<TD ALIGN=RIGHT VALIGN=TOP CLASS='TextGrayDark'>error</TD>
-		<TD COLSPAN=2>". nl2br({$info['message']) ."</TD>
+		<TD COLSPAN=2>". nl2br($info['message']) ."</TD>
 	</TR>";
 	
 	echo "<TR>
 		<TD ALIGN=RIGHT VALIGN=TOP CLASS='TextGrayDark'>mysql_error</TD>
-		<TD COLSPAN=2>". nl2br({$info['error_mysql']) ."</TD>
+		<TD COLSPAN=2>". nl2br($info['error_mysql']) ."</TD>
 	</TR>";
 	
 	
-	$rows = ceil(strlen({$info['sql'])/40);
+	$rows = ceil(strlen($info['sql'])/40);
 	echo "<TR>
 		<TD ALIGN=RIGHT VALIGN=TOP CLASS='TextGrayDark'>sql</TD>
 		<TD CLASS='TextGrayDark' COLSPAN=2>
@@ -300,21 +300,21 @@ if ( ${_GET}['CRYPT_REF_ID'] ) {
 			
 	echo "<TR>
 		<TD ALIGN=RIGHT VALIGN=TOP CLASS='TextGrayDark'>session</TD>
-		<TD COLSPAN=2><SMALL>". nl2br({$info['session']) ."</SMALL></TD>
+		<TD COLSPAN=2><SMALL>". nl2br($info['session']) ."</SMALL></TD>
 	</TR>";
 	echo "<TR>
 		<TD ALIGN=RIGHT VALIGN=TOP CLASS='TextGrayDark'>requested</TD>
-		<TD COLSPAN=2><SMALL>". nl2br({$info['requested']) ."</SMALL></TD>
+		<TD COLSPAN=2><SMALL>". nl2br($info['requested']) ."</SMALL></TD>
 	</TR>";
 	
 	echo "<TR>
 		<TD ALIGN=RIGHT VALIGN=TOP CLASS='TextGrayDark'>posted</TD>
-		<TD COLSPAN=2><SMALL>". nl2br({$info['posted']) ."</SMALL></TD>
+		<TD COLSPAN=2><SMALL>". nl2br($info['posted']) ."</SMALL></TD>
 	</TR>";
 	
 	echo "<TR>
 		<TD ALIGN=RIGHT VALIGN=TOP CLASS='TextGrayDark'>server</TD>
-		<TD COLSPAN=2><SMALL>". nl2br({$info['server']) ."</SMALL></TD>
+		<TD COLSPAN=2><SMALL>". nl2br($info['server']) ."</SMALL></TD>
 	</TR>";
 	*/
 	
@@ -390,32 +390,32 @@ if ( ${_GET}['CRYPT_REF_ID'] ) {
 			
 			echo "<TR>
 				<TD ALIGN=RIGHT STYLE='background-color:". $level[(int) ${info}['level']] .";'> 
-					<INPUT TYPE=CHECKBOX NAME=error[{$info['error_id']]></TD>
+					<INPUT TYPE=CHECKBOX NAME=error[$info['error_id']]></TD>
 				<TD STYLE='". $border_left ."background-color:". COLOR_GRAY_LIGHT .";'>
-					${info}['error_id'] - ${info}['file'] ({$info['line'])</TD>
+					${info}['error_id'] - ${info}['file'] ($info['line'])</TD>
 				<TD ALIGN=RIGHT STYLE='". $border_right ."background-color:". COLOR_GRAY_LIGHT .";'>
 					${info}['stamp']</TD>
 			</TR><TR>
 				<TD></TD>
 				<TD COLSPAN=2>
-					<A HREF='". ${_SERVER}['PHP_SELF'] ."?". CRYPT_REF_ID ."={$info['error_id']}'>{$info['message']</A></TD>
+					<A HREF='". ${_SERVER}['PHP_SELF'] ."?". CRYPT_REF_ID ."=$info['error_id']}'>$info['message']</A></TD>
 			</TR>";
 			
 			/*
 			echo "<TR>
 				<TD>
-					<INPUT TYPE=CHECKBOX NAME=error[{$info['error_id']]></TD>
+					<INPUT TYPE=CHECKBOX NAME=error[$info['error_id']]></TD>
 				<TD COLSPAN=2>
-					<A HREF='". ${_SERVER}['PHP_SELF'] ."?". CRYPT_REF_ID ."={$info['error_id']}'>{$info['error_id'] - ${info}['message']</A></TD>
+					<A HREF='". ${_SERVER}['PHP_SELF'] ."?". CRYPT_REF_ID ."=$info['error_id']}'>$info['error_id'] - ${info}['message']</A></TD>
 			</TR><TR CLASS='TextGrayDark'>
 				<TD ALIGN=RIGHT></TD>
-				<TD>{$info['file'] ({$info['line'])</TD>
-				<TD ALIGN=RIGHT>{$info['stamp']</TD>
+				<TD>$info['file'] ($info['line'])</TD>
+				<TD ALIGN=RIGHT>$info['stamp']</TD>
 			</TR>";
 			*/
 			
 			if ( ${info}['sql'] ) {
-				$rows = ceil(strlen({$info['sql'])/40);
+				$rows = ceil(strlen($info['sql'])/40);
 				echo "<TR>
 					<TD></TD>
 					<TD COLSPAN=2 CLASS='TextGray'>

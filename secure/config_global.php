@@ -79,7 +79,7 @@ require(dirname(__FILE__) . "/db.php"); // CONNECT TO DB — always relative to 
 // SITE ACCESS
 /*if ( $config = mysqli_fetch_array(mysqli_query($db, "SELECT * FROM config LIMIT 1") ));
 if ( ${config}['status'] > 0 ) {
-	define('SITE_ACCESS', '{$config['status']}'); // SITE ACCESS FROM SITE DB
+	define('SITE_ACCESS', '$config['status']}'); // SITE ACCESS FROM SITE DB
 } else {
 	define('SITE_ACCESS', '0'); // 
 }*/

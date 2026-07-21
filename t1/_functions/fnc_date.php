@@ -15,20 +15,20 @@ if (!$return_month) { ////////// CHECK IF THE MONTH IS SELECTED
 }
 
 echo "<SELECT NAME=month$event>";
-echo "<OPTION VALUE=01{$month_selected['01']>January</OPTIONS>\n";
-echo "<OPTION VALUE=02{$month_selected['02']>February</OPTIONS>\n";
-echo "<OPTION VALUE=03{$month_selected['03']>March</OPTIONS>\n";
-echo "<OPTION VALUE=04{$month_selected['04']>April</OPTIONS>\n";
-echo "<OPTION VALUE=05{$month_selected['05']>May</OPTIONS>\n";
-echo "<OPTION VALUE=06{$month_selected['06']>June</OPTIONS>\n";
+echo "<OPTION VALUE=01$month_selected['01']>January</OPTIONS>\n";
+echo "<OPTION VALUE=02$month_selected['02']>February</OPTIONS>\n";
+echo "<OPTION VALUE=03$month_selected['03']>March</OPTIONS>\n";
+echo "<OPTION VALUE=04$month_selected['04']>April</OPTIONS>\n";
+echo "<OPTION VALUE=05$month_selected['05']>May</OPTIONS>\n";
+echo "<OPTION VALUE=06$month_selected['06']>June</OPTIONS>\n";
 //if (!$return_month) { $no_month_selected = " SELECTED"; }
 echo "$no_month_selected";
-echo "<OPTION VALUE=07{$month_selected['07']>July</OPTIONS>\n";
-echo "<OPTION VALUE=08{$month_selected['08']>August</OPTIONS>\n";
-echo "<OPTION VALUE=09{$month_selected['09']>September</OPTIONS>\n";
-echo "<OPTION VALUE=10{$month_selected['10']>October</OPTIONS>\n";
-echo "<OPTION VALUE=11{$month_selected['11']>November</OPTIONS>\n";
-echo "<OPTION VALUE=12{$month_selected['12']>December</OPTIONS>\n";
+echo "<OPTION VALUE=07$month_selected['07']>July</OPTIONS>\n";
+echo "<OPTION VALUE=08$month_selected['08']>August</OPTIONS>\n";
+echo "<OPTION VALUE=09$month_selected['09']>September</OPTIONS>\n";
+echo "<OPTION VALUE=10$month_selected['10']>October</OPTIONS>\n";
+echo "<OPTION VALUE=11$month_selected['11']>November</OPTIONS>\n";
+echo "<OPTION VALUE=12$month_selected['12']>December</OPTIONS>\n";
 echo "</SELECT>&nbsp";
 
 
@@ -105,21 +105,21 @@ if (!$return_month || $return_month == "00" ) { ////////// CHECK IF THE MONTH IS
 }
 
 $return .= "<SELECT NAME=" . $event . "[month]>";
-//$return .= "<OPTION VALUE=01{$month_selected['01']>January</OPTIONS>\n";
-$return .= "<OPTION VALUE=01{$month_selected['01']>" . ucfirst(trans("january")) . "</OPTIONS>\n";
-$return .= "<OPTION VALUE=02{$month_selected['02']>" . ucfirst(trans("february")) . "</OPTIONS>\n";
-$return .= "<OPTION VALUE=03{$month_selected['03']>" . ucfirst(trans("march")) . "</OPTIONS>\n";
-$return .= "<OPTION VALUE=04{$month_selected['04']>" . ucfirst(trans("april")) . "</OPTIONS>\n";
-$return .= "<OPTION VALUE=05{$month_selected['05']>" . ucfirst(trans("may")) . "</OPTIONS>\n";
-$return .= "<OPTION VALUE=06{$month_selected['06']>" . ucfirst(trans("june")) . "</OPTIONS>\n";
+//$return .= "<OPTION VALUE=01$month_selected['01']>January</OPTIONS>\n";
+$return .= "<OPTION VALUE=01$month_selected['01']>" . ucfirst(trans("january")) . "</OPTIONS>\n";
+$return .= "<OPTION VALUE=02$month_selected['02']>" . ucfirst(trans("february")) . "</OPTIONS>\n";
+$return .= "<OPTION VALUE=03$month_selected['03']>" . ucfirst(trans("march")) . "</OPTIONS>\n";
+$return .= "<OPTION VALUE=04$month_selected['04']>" . ucfirst(trans("april")) . "</OPTIONS>\n";
+$return .= "<OPTION VALUE=05$month_selected['05']>" . ucfirst(trans("may")) . "</OPTIONS>\n";
+$return .= "<OPTION VALUE=06$month_selected['06']>" . ucfirst(trans("june")) . "</OPTIONS>\n";
 //if (!$return_month) { $no_month_selected = " SELECTED"; }
 $return .= "$no_month_selected";
-$return .= "<OPTION VALUE=07{$month_selected['07']>" . ucfirst(trans("july")) . "</OPTIONS>\n";
-$return .= "<OPTION VALUE=08{$month_selected['08']>" . ucfirst(trans("august")) . "</OPTIONS>\n";
-$return .= "<OPTION VALUE=09{$month_selected['09']>" . ucfirst(trans("september")) . "</OPTIONS>\n";
-$return .= "<OPTION VALUE=10{$month_selected['10']>" . ucfirst(trans("october")) . "</OPTIONS>\n";
-$return .= "<OPTION VALUE=11{$month_selected['11']>" . ucfirst(trans("november")) . "</OPTIONS>\n";
-$return .= "<OPTION VALUE=12{$month_selected['12']>" . ucfirst(trans("december")) . "</OPTIONS>\n";
+$return .= "<OPTION VALUE=07$month_selected['07']>" . ucfirst(trans("july")) . "</OPTIONS>\n";
+$return .= "<OPTION VALUE=08$month_selected['08']>" . ucfirst(trans("august")) . "</OPTIONS>\n";
+$return .= "<OPTION VALUE=09$month_selected['09']>" . ucfirst(trans("september")) . "</OPTIONS>\n";
+$return .= "<OPTION VALUE=10$month_selected['10']>" . ucfirst(trans("october")) . "</OPTIONS>\n";
+$return .= "<OPTION VALUE=11$month_selected['11']>" . ucfirst(trans("november")) . "</OPTIONS>\n";
+$return .= "<OPTION VALUE=12$month_selected['12']>" . ucfirst(trans("december")) . "</OPTIONS>\n";
 $return .= "</SELECT>&nbsp";
 
 
@@ -204,12 +204,12 @@ if ( !is_array($date) ) {
 		${date}['day'] = ${format}['2'];
 	}
 } else {
-	if ( !{$date['year'] ) { ${date}['year'] = "0000"; }
-	if ( !{$date['month'] ) { ${date}['month'] = "00"; }
-	if ( !{$date['day'] ) { ${date}['day'] = "00"; }
+	if ( !$date['year'] ) { ${date}['year'] = "0000"; }
+	if ( !$date['month'] ) { ${date}['month'] = "00"; }
+	if ( !$date['day'] ) { ${date}['day'] = "00"; }
 }
 
-if ( !{$options['0'] ) {
+if ( !$options['0'] ) {
 	${options}['0'] = "-";
 }
 
@@ -257,7 +257,7 @@ if ( preg_match("/-/i", $date) ) {
 	${d}['day'] = substr($date, 6, 2);
 }
 
-/*{$d['year'] = substr($date, 0, 4);
+/*$d['year'] = substr($date, 0, 4);
 ${d}['month'] = substr($date, 5, 2);
 ${d}['day'] = substr($date, 8, 2);*/
 
@@ -303,20 +303,20 @@ if (!$return_day && !$option) { ////////// CHECK IF THE MONTH IS SELECTED
 
 $return .= "<SELECT NAME=month$event>";
 $return .= "$select_month\n";
-$return .= "<OPTION VALUE=01{$month_selected['01']>January</OPTIONS>\n";
-$return .= "<OPTION VALUE=02{$month_selected['02']>February</OPTIONS>\n";
-$return .= "<OPTION VALUE=03{$month_selected['03']>March</OPTIONS>\n";
-$return .= "<OPTION VALUE=04{$month_selected['04']>April</OPTIONS>\n";
-$return .= "<OPTION VALUE=05{$month_selected['05']>May</OPTIONS>\n";
-$return .= "<OPTION VALUE=06{$month_selected['06']>June</OPTIONS>\n";
+$return .= "<OPTION VALUE=01$month_selected['01']>January</OPTIONS>\n";
+$return .= "<OPTION VALUE=02$month_selected['02']>February</OPTIONS>\n";
+$return .= "<OPTION VALUE=03$month_selected['03']>March</OPTIONS>\n";
+$return .= "<OPTION VALUE=04$month_selected['04']>April</OPTIONS>\n";
+$return .= "<OPTION VALUE=05$month_selected['05']>May</OPTIONS>\n";
+$return .= "<OPTION VALUE=06$month_selected['06']>June</OPTIONS>\n";
 //if (!$return_month) { $no_month_selected = " SELECTED"; }
 $return .= "$no_month_selected";
-$return .= "<OPTION VALUE=07{$month_selected['07']>July</OPTIONS>\n";
-$return .= "<OPTION VALUE=08{$month_selected['08']>August</OPTIONS>\n";
-$return .= "<OPTION VALUE=09{$month_selected['09']>September</OPTIONS>\n";
-$return .= "<OPTION VALUE=10{$month_selected['10']>October</OPTIONS>\n";
-$return .= "<OPTION VALUE=11{$month_selected['11']>November</OPTIONS>\n";
-$return .= "<OPTION VALUE=12{$month_selected['12']>December</OPTIONS>\n";
+$return .= "<OPTION VALUE=07$month_selected['07']>July</OPTIONS>\n";
+$return .= "<OPTION VALUE=08$month_selected['08']>August</OPTIONS>\n";
+$return .= "<OPTION VALUE=09$month_selected['09']>September</OPTIONS>\n";
+$return .= "<OPTION VALUE=10$month_selected['10']>October</OPTIONS>\n";
+$return .= "<OPTION VALUE=11$month_selected['11']>November</OPTIONS>\n";
+$return .= "<OPTION VALUE=12$month_selected['12']>December</OPTIONS>\n";
 $return .= "</SELECT>&nbsp";
 
 
@@ -455,21 +455,21 @@ if (!$return_month || $return_month == "00" ) { ////////// CHECK IF THE MONTH IS
 }
 
 $return .= "<SELECT NAME=" . $event . "[month]>";
-//$return .= "<OPTION VALUE=01{$month_selected['01']>January</OPTIONS>\n";
-$return .= "<OPTION VALUE=01{$month_selected['01']>" . ucfirst(trans("january")) . " (1)</OPTIONS>\n";
-$return .= "<OPTION VALUE=02{$month_selected['02']>" . ucfirst(trans("february")) . " (2)</OPTIONS>\n";
-$return .= "<OPTION VALUE=03{$month_selected['03']>" . ucfirst(trans("march")) . " (3)</OPTIONS>\n";
-$return .= "<OPTION VALUE=04{$month_selected['04']>" . ucfirst(trans("april")) . " (4)</OPTIONS>\n";
-$return .= "<OPTION VALUE=05{$month_selected['05']>" . ucfirst(trans("may")) . " (5)</OPTIONS>\n";
-$return .= "<OPTION VALUE=06{$month_selected['06']>" . ucfirst(trans("june")) . " (6)</OPTIONS>\n";
+//$return .= "<OPTION VALUE=01$month_selected['01']>January</OPTIONS>\n";
+$return .= "<OPTION VALUE=01$month_selected['01']>" . ucfirst(trans("january")) . " (1)</OPTIONS>\n";
+$return .= "<OPTION VALUE=02$month_selected['02']>" . ucfirst(trans("february")) . " (2)</OPTIONS>\n";
+$return .= "<OPTION VALUE=03$month_selected['03']>" . ucfirst(trans("march")) . " (3)</OPTIONS>\n";
+$return .= "<OPTION VALUE=04$month_selected['04']>" . ucfirst(trans("april")) . " (4)</OPTIONS>\n";
+$return .= "<OPTION VALUE=05$month_selected['05']>" . ucfirst(trans("may")) . " (5)</OPTIONS>\n";
+$return .= "<OPTION VALUE=06$month_selected['06']>" . ucfirst(trans("june")) . " (6)</OPTIONS>\n";
 //if (!$return_month) { $no_month_selected = " SELECTED"; }
 $return .= "$no_month_selected";
-$return .= "<OPTION VALUE=07{$month_selected['07']>" . ucfirst(trans("july")) . " (7)</OPTIONS>\n";
-$return .= "<OPTION VALUE=08{$month_selected['08']>" . ucfirst(trans("august")) . " (8)</OPTIONS>\n";
-$return .= "<OPTION VALUE=09{$month_selected['09']>" . ucfirst(trans("september")) . " (9)</OPTIONS>\n";
-$return .= "<OPTION VALUE=10{$month_selected['10']>" . ucfirst(trans("october")) . " (10)</OPTIONS>\n";
-$return .= "<OPTION VALUE=11{$month_selected['11']>" . ucfirst(trans("november")) . " (11)</OPTIONS>\n";
-$return .= "<OPTION VALUE=12{$month_selected['12']>" . ucfirst(trans("december")) . " (12)</OPTIONS>\n";
+$return .= "<OPTION VALUE=07$month_selected['07']>" . ucfirst(trans("july")) . " (7)</OPTIONS>\n";
+$return .= "<OPTION VALUE=08$month_selected['08']>" . ucfirst(trans("august")) . " (8)</OPTIONS>\n";
+$return .= "<OPTION VALUE=09$month_selected['09']>" . ucfirst(trans("september")) . " (9)</OPTIONS>\n";
+$return .= "<OPTION VALUE=10$month_selected['10']>" . ucfirst(trans("october")) . " (10)</OPTIONS>\n";
+$return .= "<OPTION VALUE=11$month_selected['11']>" . ucfirst(trans("november")) . " (11)</OPTIONS>\n";
+$return .= "<OPTION VALUE=12$month_selected['12']>" . ucfirst(trans("december")) . " (12)</OPTIONS>\n";
 $return .= "</SELECT>&nbsp";
 
 		

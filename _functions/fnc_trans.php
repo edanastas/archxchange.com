@@ -20,7 +20,7 @@ function trans($value,$flag = 1)  {
 
 /*
 function trans_id($value,$link = 1) { // TRANSLATE FROM ID (trans_id)
-	if({$GLOBALS['trans'][$value] != "") return ${GLOBALS}['trans'][$value];
+	if($GLOBALS['trans'][$value] != "") return ${GLOBALS}['trans'][$value];
 	else { // NOT IN ARRAY, CHECK DATABASE
 		$trans_id_sql  = "SELECT trans_id, en, " . TRANS_LANG . " FROM translations WHERE trans_id = '" . $value . "' LIMIT 1";
 		$trans_id_res = mysqli_query($db, $trans_id_sql);
@@ -28,12 +28,12 @@ function trans_id($value,$link = 1) { // TRANSLATE FROM ID (trans_id)
 		if ( !$trans = mysqli_fetch_array($trans_id_res) ) {
 			return "<FONT COLOR=RED> no record in table (id: $value)</FONT>";
 		} else {
-			if ({$trans['TRANS_LANG'] != "") { // TRANSLATION EXISTS IN DATABASE
+			if ($trans['TRANS_LANG'] != "") { // TRANSLATION EXISTS IN DATABASE
 				if(defined('DEV_TRANS')){ // IN DEV MODE
 					if ( $link  ) { // LINK IT
-						if (strlen({$trans['TRANS_LANG']) > 50) ${window}['height'] = ceil(((strlen({$trans['TRANS_LANG'])/50)+1)*50)+300;//500;
+						if (strlen($trans['TRANS_LANG']) > 50) ${window}['height'] = ceil(((strlen($trans['TRANS_LANG'])/50)+1)*50)+300;//500;
 						${window}['css_class'] = "CLASS='clean'";
-						//{$window['css_style'] = "STYLE='color: " . COLOR_HIGHLIGHT_DARK . ";text-decoration: none;'";
+						//$window['css_style'] = "STYLE='color: " . COLOR_HIGHLIGHT_DARK . ";text-decoration: none;'";
 						${window}['anchor'] = ${trans}['TRANS_LANG'];
 						${window}['href'] = TEMPLATE_DOMAIN . "admin/admin_translate.php?id=" . $value;
 						
@@ -46,9 +46,9 @@ function trans_id($value,$link = 1) { // TRANSLATE FROM ID (trans_id)
 			} else { // NO TRANSLATION EXISTS IN DATABASE
 				if(defined('DEV_TRANS')){
 					if($link){
-						if (strlen({$trans['en']) > 50) ${window}['height'] = ceil(((strlen({$trans['TRANS_LANG'])/50)+1)*50)+250;//500;
+						if (strlen($trans['en']) > 50) ${window}['height'] = ceil(((strlen($trans['TRANS_LANG'])/50)+1)*50)+250;//500;
 						${window}['css_class'] = "CLASS='clean'";
-						//{$window['css_style'] = "STYLE='color: " . COLOR_HIGHLIGHT_DARK . ";text-decoration: none;'";
+						//$window['css_style'] = "STYLE='color: " . COLOR_HIGHLIGHT_DARK . ";text-decoration: none;'";
 						${window}['anchor'] = ${trans}['en'] . " [click to translate: $value]";
 						${window}['href'] = TEMPLATE_DOMAIN . "admin/admin_translate.php?en=" . ${trans}['en'];
 						
@@ -91,7 +91,7 @@ function trans_en($en,$link = 1) { // TRANSLATE FROM english (en)
 			if(defined('DEV_TRANS')){
 				if($link){ // LINK IT
 					${window}['anchor'] = "<FONT COLOR=EF5C47> $en</FONT>";
-					//{$window['anchor'] = "[click to translate: $en]";
+					//$window['anchor'] = "[click to translate: $en]";
 					${window}['href'] = TEMPLATE_DOMAIN . "admin/admin_translate.php?en=$en";
 				
 					$return = pop_window($window);
@@ -126,7 +126,7 @@ return $return;
 	$trans_data_sql = "SELECT trans_id, " . TRANS_LANG . " FROM translations WHERE type = '" . $types . "'";
 	$trans_data_res = mysqli_query($db, $trans_data_sql);
 	while($trans = mysqli_fetch_array($trans_data_res)){
-		$trans_data[{$trans['trans_id']] = ${trans}['TRANS_LANG'];
+		$trans_data[$trans['trans_id']] = ${trans}['TRANS_LANG'];
 	}
 	${GLOBALS}['trans'] = $trans_data;
 }
@@ -141,7 +141,7 @@ return $return;
 	$trans_lib_res = mysqli_query($db, $trans_lib_sql);
 	$translation_library = array();
 	while($translation_data = mysqli_fetch_array($trans_lib_res)){
-		if($translation_data[$language] != "") $translation_library[{$translation_data['en']] = $translation_data[$language];
+		if($translation_data[$language] != "") $translation_library[$translation_data['en']] = $translation_data[$language];
 	}
 	
 	${_SESSION}['TRANSLATION_LIBRARY'] = $translation_library;
@@ -220,7 +220,7 @@ return $return;
 	if ( !$trans = mysqli_fetch_array($trans_id_res) ) {
 		return "<FONT COLOR=RED>no record in table (id: $trans_id)</FONT>";
 	} else {
-		if({$trans['TRANS_LANG'] != "") return ${trans}['TRANS_LANG'];
+		if($trans['TRANS_LANG'] != "") return ${trans}['TRANS_LANG'];
 		else return ${trans}['en'];
 	}
 	

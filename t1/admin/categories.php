@@ -43,7 +43,7 @@ if ( ${_POST}['BACK'] ) {
 	
 	////////// PROCESS FORM
 	if ( !$error ) {
-		//{$db['values'] = "category = '". ucwords(strtolower(query_prep($_POST['category']))) ."', 
+		//$db['values'] = "category = '". ucwords(strtolower(query_prep($_POST['category']))) ."', 
 		//	notes = '". query_prep($_POST['notes']) ."', 
 		//	". ( ${_POST}['inactive'] ? " inactive = 1" : " inactive = NULL" ) ."";
 		
@@ -152,13 +152,13 @@ echo "<FORM ACTION='". ${_SERVER}['PHP_SELF'] ."' METHOD=GET>";
 				if ( ${previous}['category_id'] ) ${adjacent}['previous'] = ${previous}['category_id'];
 				$insert_next = TRUE;
 				
-			} elseif ( $insert_next && !{$adjacent['next'] ) {
+			} elseif ( $insert_next && !$adjacent['next'] ) {
 				${adjacent}['next'] = ${info}['category_id'];
 			}
 			
 			
 			${input}['category_id'] .= "<OPTION VALUE='". ${info}['category_id'] ."' ". 
-				($_GET['CRYPT_REF_ID'] == ${info}['category_id'] ? " SELECTED" : NULL) .">". ucwords({$info['category']) ." [". ${info}['category_id'] ."]</OPTION>";
+				($_GET['CRYPT_REF_ID'] == ${info}['category_id'] ? " SELECTED" : NULL) .">". ucwords($info['category']) ." [". ${info}['category_id'] ."]</OPTION>";
 			$previous = $info;
 		}
 		${input}['category_id'] .= "</SELECT>";
@@ -173,10 +173,10 @@ echo "<FORM ACTION='". ${_SERVER}['PHP_SELF'] ."' METHOD=GET>";
 	if ( ${_GET}['CRYPT_REF_ID'] ) {
 		////////// ADJACENT - NEXT / PREVIOUS
 		$insert_form[] = array("adjacent", NULL, 
-			({$adjacent['previous'] ? 
+			($adjacent['previous'] ? 
 				"<A HREF='". ${_SERVER}['PHP_SELF']."?". CRYPT_REF_ID ."=". ${adjacent}['previous'] ."'><SMALL><< PREVIOUS</SMALL></A>" : NULL) .
-			({$adjacent['previous'] && ${adjacent}['next'] ? " | " : NULL) .
-			({$adjacent['next'] ? 
+			($adjacent['previous'] && ${adjacent}['next'] ? " | " : NULL) .
+			($adjacent['next'] ? 
 				"<A HREF='". ${_SERVER}['PHP_SELF']."?". CRYPT_REF_ID ."=". ${adjacent}['next'] ."'><SMALL>NEXT >></SMALL></A>" : NULL),
 			array(NULL,NULL,"padding-left:40px;"),NULL,NULL);
 	}
@@ -205,20 +205,20 @@ echo "<FORM ACTION='". ${_SERVER}['PHP_SELF'] ."' METHOD=GET>";
 	
 	////////// CATEGORY
 	$insert_form[] = array("category", "category", // $field_name // WITH TRANSLATION FUNCTION
-		array("TEXT",{$edit['category'],NULL,NULL), // ${input}['type'], ${input}['value'], ${input}['style'], ${input}['option']
+		array("TEXT",$edit['category'],NULL,NULL), // ${input}['type'], ${input}['value'], ${input}['style'], ${input}['option']
 		NULL,NULL,array(value=>1)); // $styles,$trailer,$options
 	
 	
 	
 	////////// CATEGORY NOTES
 	$insert_form[] = array("notes", "notes",
-		array("TEXTAREA",{$edit['notes'],NULL,NULL),
+		array("TEXTAREA",$edit['notes'],NULL,NULL),
 		NULL,NULL,array(value=>1));
 	
 	
 	////////// INACTIVE CHECKBOX
 	$insert_form[] = array("inactive", NULL, 
-		"<INPUT TYPE=CHECKBOX NAME=inactive VALUE=1 ". ({$edit['inactive'] ? " CHECKED" : NULL) ."> check to make category inactive",
+		"<INPUT TYPE=CHECKBOX NAME=inactive VALUE=1 ". ($edit['inactive'] ? " CHECKED" : NULL) ."> check to make category inactive",
 		NULL,NULL,NULL);
 	
 	

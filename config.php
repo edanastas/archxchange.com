@@ -43,8 +43,8 @@ define('DEV_TRANS', TRUE); // DEVELOPER TRANSLATION STATE
 define('DEV', (LOCAL ? TRUE : FALSE)); // DEVELOPER STATE
 
 // we may possibly change these to less security risk config variables
-//{$config['dev'] = TRUE; // DEVELOPER STATE
-//{$config['dev_trans'] = TRUE; // DEVELOPER STATE
+//$config['dev'] = TRUE; // DEVELOPER STATE
+//$config['dev_trans'] = TRUE; // DEVELOPER STATE
 
 
 ////////// DEVELOPMENT STATE
@@ -104,8 +104,8 @@ dev_print($user);
 $user = mysqli_fetch_assoc(mysqli_query($db, "SELECT user_id,email,language_code,firstname,lastname,access,password FROM users WHERE username = 'anastas'"));
 dev_print($user);
 
-echo "sha1(\${user}['user_id']) --> ". sha1({$user['user_id']) ."<p>";
-echo "sha1(\${user}['password']) --> ". sha1({$user['password']) ."<p>";
+echo "sha1(\${user}['user_id']) --> ". sha1($user['user_id']) ."<p>";
+echo "sha1(\${user}['password']) --> ". sha1($user['password']) ."<p>";
 echo "\${user}['password'] --> ". ${user}['password'] ."<p>";
 
 dev_print($_SESSION);

@@ -37,9 +37,9 @@
 // VARIABLES ////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////// 3.0
-if ( !{$form['width'] ) { ${form}['width'] = 300; }
-if ( !{$form['style'] ) { ${form}['style'] = " STYLE='width:" . ${form}['width'] . "px;'"; }
-if ( !{$form['maxlength'] ) { ${form}['maxlength'] = 255; }
+if ( !$form['width'] ) { ${form}['width'] = 300; }
+if ( !$form['style'] ) { ${form}['style'] = " STYLE='width:" . ${form}['width'] . "px;'"; }
+if ( !$form['maxlength'] ) { ${form}['maxlength'] = 255; }
 
 if ( !defined("DB_TITLE") ) {
 	define("DB_TITLE",strtoupper(basename($_SERVER['PHP_SELF'],".php")));
@@ -277,7 +277,7 @@ if ( is_array($fields) ) {
 							
 							
 							// SET THE FIRST TEXTAREA FIELD AS THE DISPLAY TEXT
-							if ( !{$buffer['index']['text'] ) {
+							if ( !$buffer['index']['text'] ) {
 								//$list[$field_name][text] = $field_name;
 								${buffer}['index']['text'] = $field_name;
 							}
@@ -299,7 +299,7 @@ if ( is_array($fields) ) {
 								// INDEX ////////////////////
 								
 								// LINK ////////////////////$field_text
-								//if ( preg_match("/^http\:\/\//i",trim($field_value)) && !{$buffer['index']['link'] ) {
+								//if ( preg_match("/^http\:\/\//i",trim($field_value)) && !$buffer['index']['link'] ) {
 								//echo "( $field_type_value AS $field_value => $field_text )<BR>";
 								//echo "\$field_text --> $field_text<BR>";
 								//echo "\$field_name --> $field_name<BR>";
@@ -308,15 +308,15 @@ if ( is_array($fields) ) {
 								//echo "\$form_value[$field_name] --> " . $form_value[$field_name] . "<BR>";
 								
 								//echo "\$field_type_value --> $field_type_value<BR>";
-								//if ( preg_match("/http/i",trim($field_value)) && !{$buffer['index']['link'] ) {
+								//if ( preg_match("/http/i",trim($field_value)) && !$buffer['index']['link'] ) {
 								//if ( preg_match("/http/i",trim($field_value)) ) {
 									//echo "HERE!<BR>";
-									//{$buffer['index']['link'] = trim($field_value);
-									//{$buffer['index']['link'] = $field_name;
+									//$buffer['index']['link'] = trim($field_value);
+									//$buffer['index']['link'] = $field_name;
 								//}
 								
 								// SET THE FIRST TEXT FIELD AS THE DISPLAY INDEX LINK
-								if ( !{$buffer['index']['handle'] ) {
+								if ( !$buffer['index']['handle'] ) {
 									//$list[$field_name][handle] = $field_name;
 									${buffer}['index']['handle'] = $field_name;
 									//$list[$field_name][handle] = $field_value;
@@ -382,7 +382,7 @@ if ( is_array($fields) ) {
 						
 						if ( ${_GET}['CRYPT_REF_ID'] ) {
 							
-							if ( !{$form_value['inactive'] ) {
+							if ( !$form_value['inactive'] ) {
 								$insert_inactive = "deactivate";
 							} else {
 								$insert_inactive = "activate";
@@ -483,7 +483,7 @@ if ( is_array($fields) ) {
 							for($n = 1; $n <= $form_rows; $n++) {
 								// CHECK SELECTED ORDER NUMBER
 								
-								//{$form_value['collate'] == 
+								//$form_value['collate'] == 
 								if ( $form_value[$field_name] == $n || !$_GET['CRYPT_REF_ID'] ) {
 								//echo "( $form_value[$field_name] == $n )<BR>";
 								//if ( $form_value[$field_name] == $n ) {
@@ -511,7 +511,7 @@ if ( is_array($fields) ) {
 						//$create[$field_name][content] .= "`$field_name` int(12) DEFAULT NULL,";
 						
 						// THIS IS THE CODE FROM WISHCENTRAL - CAN ERASE WHEN DONE
-						/*if ( ($row_nums >= 1 && ({$row['inactive'] || ${_POST}['ADD_FORM'] )) || ($row_nums > 1 && !{$row['inactive']) ) {
+						/*if ( ($row_nums >= 1 && ($row['inactive'] || ${_POST}['ADD_FORM'] )) || ($row_nums > 1 && !$row['inactive']) ) {
 							$row_nums = $row_nums + $add;
 							$html[$field_name][content] .= "<SELECT NAME=$value>";
 							for($n = 1; $n < $row_nums; $n++) {
@@ -561,8 +561,8 @@ if ( is_array($fields) ) {
 				//$db[$field_name][end] = $comma . "";
 				
 				//if ( $db[$field_name][content] ) { $db[$field_name][content] = "'" . $db[$field_name][content] . "'"; } else { $db[$field_name][content] = "NULL"; }
-				//{$buffer['db']['insert'] .= $db[$field_name][start] . $db[$field_name][content] . $db[$field_name][end] . "\n";
-				//{$buffer['db']['insert'] .= $db[$field_name] . "\n";
+				//$buffer['db']['insert'] .= $db[$field_name][start] . $db[$field_name][content] . $db[$field_name][end] . "\n";
+				//$buffer['db']['insert'] .= $db[$field_name] . "\n";
 			} elseif ( $db[$field_name][collate] ) {
 				${buffer}['db']['collate'] .= $db[$field_name][collate]; // SET BUFFER COLLATE VALUE TO SORT BELOW
 			}
@@ -668,15 +668,15 @@ if ( ${_POST}['SUBMIT'] ) {
 		$columns_query = mysqli_query($db, "SHOW COLUMNS FROM `" . basename($_SERVER['PHP_SELF'],".php") . "`");																																									
 		while ( $columns = mysqli_fetch_array($columns_query) ) {
 					
-			$new_array[{$columns['0']] = ${columns}['0'];
+			$new_array[$columns['0']] = ${columns}['0'];
 			
-			if ( array_key_exists({$columns['0'], $alter) ) {
-				$alter[{$columns['0']] = NULL;
+			if ( array_key_exists($columns['0'], $alter) ) {
+				$alter[$columns['0']] = NULL;
 				
-				//echo "{$columns['0'] - ${columns}['1'] - ${columns}['2'] - ${columns}['3'] - ${columns}['4'] <BR>";
+				//echo "$columns['0'] - ${columns}['1'] - ${columns}['2'] - ${columns}['3'] - ${columns}['4'] <BR>";
 			}// elseif ( ${columns}['0'] != "id" && ${columns}['0'] != "collate" && ${columns}['0'] != "inactive" && ${columns}['0'] != "stamp" ) {
 				//echo "<B>ALTER TABLE WITH ${columns}['0']</B><BR>";
-				//echo "{$columns['0'] - ${columns}['1'] - ${columns}['2'] - ${columns}['3'] - ${columns}['4'] <BR>";
+				//echo "$columns['0'] - ${columns}['1'] - ${columns}['2'] - ${columns}['3'] - ${columns}['4'] <BR>";
 			//}
 			/*
 			if ( ${find_field}['Field'] == $field_name ) {									
@@ -723,7 +723,7 @@ if ( ${_POST}['SUBMIT'] ) {
 	} else { // INSERT NEW
 		$action = "INSERT INTO";
 		$id = "`id` = NULL,";
-		//{$buffer['db']['insert'] .= "collate = '" . ${buffer}['db']['collate'] . "',\n"; // 
+		//$buffer['db']['insert'] .= "collate = '" . ${buffer}['db']['collate'] . "',\n"; // 
 	}
 	
 	//if ( ${form_values}['deactivate'] ) {
@@ -930,7 +930,7 @@ if ( ${_POST}['SUBMIT'] ) {
 					$insert_inactive = "&inactive=1"; // IDENTIFY THAT THE ITEM IS INACTIVE TO PREVENT INSERTING COLLATE MENU
 					
 					$divider = NULL;
-					$results[{$buffer['index']['text']] = NULL;
+					$results[$buffer['index']['text']] = NULL;
 					
 				} else {
 					$insert_index = ++$list_index . ".";
@@ -942,10 +942,10 @@ if ( ${_POST}['SUBMIT'] ) {
 					<TD ALIGN=RIGHT VALIGN=TOP CLASS='TextGray' BGCOLOR=" . COLOR_BACKGROUND . " STYLE='padding-right:5px;'>" . $insert_index . "</TD>
 					<TD CLASS='TextGray' BGCOLOR=" . COLOR_BACKGROUND . " STYLE='padding-right:5px;padding-left:5px;'>
 						" . ${strike}['on'] . "<A HREF='" . ${_SERVER}['PHP_SELF'] . "?" . CRYPT_REF_ID . "=" . ${results}['id'] . $insert_inactive . "'>";
-						if ( !$results[{$buffer['index']['handle']] ) {
+						if ( !$results[$buffer['index']['handle']] ) {
 							echo "DATABASE ID: " . ${results}['id'];
 						} else {
-							echo "<B>" . $results[{$buffer['index']['handle']] . "</B>"; //  ({$results['collate'])
+							echo "<B>" . $results[$buffer['index']['handle']] . "</B>"; //  ($results['collate'])
 						}
 						
 						echo "</A>" . ${strike}['off'];
@@ -958,15 +958,15 @@ if ( ${_POST}['SUBMIT'] ) {
 							
 								echo " - <A TARGET=LINK HREF='" . $link . "'>
 									<FONT CLASS='TextRed'>" . html_link_domain($link) . "</FONT></A>";
-								//dev_print(html_link_domain({$results['link']));
+								//dev_print(html_link_domain($results['link']));
 								break;
 							}
 						}
 						
 						
-							//{$buffer['index']['link']
+							//$buffer['index']['link']
 						echo "<BR>
-							" . html_links($results[{$buffer['index']['text']], "LINK", 500) . "</TD>
+							" . html_links($results[$buffer['index']['text']], "LINK", 500) . "</TD>
 				</TR>" . $divider . "";
 				
 			}

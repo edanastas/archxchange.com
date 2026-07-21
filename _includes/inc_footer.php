@@ -16,9 +16,9 @@ if (!defined('ACCESS')) die(ERROR_MESSAGE);
 /////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////// 3.0
 
-//{$load_time['end'] = getMicrotime();
-//{$load_time['time']  = ${load_time}['end'] - ${load_time}['start'];
-//{$load_time['display'] = "this page took <B>". number_format({$load_time['time'],4) ."</B> sec(s) to load\n";
+//$load_time['end'] = getMicrotime();
+//$load_time['time']  = ${load_time}['end'] - ${load_time}['start'];
+//$load_time['display'] = "this page took <B>". number_format($load_time['time'],4) ."</B> sec(s) to load\n";
 
 // DATABASE /////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////

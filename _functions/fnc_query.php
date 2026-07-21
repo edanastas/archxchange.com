@@ -29,7 +29,7 @@ RETURNS --> 	`key1` = 'value1' / `key1` = NULL
 	//if ( ${options}['on'] ) {
 		//if ( $field && $value ) {
 			//return $pre_comma . "`$field` = '" . addslashes($value) . "'" . $post_comma . " "; // INSERT DB FIELD AND VALUE
-		//} elseif ( !{$options['not_null'] ) {
+		//} elseif ( !$options['not_null'] ) {
 		//} else {
 			//return $pre_comma . "`$field` = NULL" . $post_comma . " "; // INSERT DB FIELD AND VALUE
 		//}
@@ -45,8 +45,8 @@ RETURNS --> 	`key1` = 'value1' / `key1` = NULL
 		function query_prep($value,$reverse=NULL) { // TRIM AND ADD SLASHES
 	
 	return ( $reverse 
-		? html_entity_decode({$info['name']) 
-		//? html_entity_decode(stripslashes({$info['name']),ENT_QUOTES) 
+		? html_entity_decode($info['name']) 
+		//? html_entity_decode(stripslashes($info['name']),ENT_QUOTES) 
 		: htmlentities(trim(eregi_replace("<(.*)>?","",$value)),ENT_QUOTES) ); // this will strip all html code tags
 		//: addslashes(trim($value)) );
 }

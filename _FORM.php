@@ -136,7 +136,7 @@ echo "<FORM ACTION=" . ${_SERVER}['PHP_SELF'] . " METHOD=POST>";
 
 	////////// FIELDNAME
 	$insert_form[] = array("fieldname", trans("fieldname"), // $field_name // WITH TRANSLATION FUNCTION
-		array("TEXT",{$edit['fieldname'],NULL,NULL), // ${input}['type'], ${input}['value'], ${input}['style'], ${input}['option']
+		array("TEXT",$edit['fieldname'],NULL,NULL), // ${input}['type'], ${input}['value'], ${input}['style'], ${input}['option']
 		NULL,NULL,array("no_post" => ${_POST}['fieldname'])); // $styles,$trailer,$options
 		
 		

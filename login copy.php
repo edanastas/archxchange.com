@@ -77,12 +77,12 @@ echo "<FORM ACTION=" . ${_SERVER}['PHP_SELF'] . " METHOD=POST>";
 	
 	////////// USERNAME
 	$insert_form[] = array("username", trans("username"),
-		array("TEXT",{$edit['username'],NULL,"MAXLENGTH=30"),
+		array("TEXT",$edit['username'],NULL,"MAXLENGTH=30"),
 		NULL,NULL,NULL);
 	
 	////////// PASSWORD
 	$insert_form[] = array("password", trans("password"),
-		array("PASSWORD",{$edit['password'],NULL,NULL),
+		array("PASSWORD",$edit['password'],NULL,NULL),
 		NULL,NULL,NULL);
 	
 	////////// SUBMIT

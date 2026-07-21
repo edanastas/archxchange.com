@@ -64,7 +64,7 @@ if ( $_POST ) {
 			textarea = '" . query_prep($_POST['textarea']) . "'"; // INSERT SAMPLE
 		if ( !mysqli_query($db, $sql) ) {
 			${error}['error'] = "there was an error modifying the database";
-			error({$error['error']); // LOG ALL ERRORS
+			error($error['error']); // LOG ALL ERRORS
 			
 			echo mysqli_error($db);
 		} else {
@@ -145,7 +145,7 @@ echo "<FORM ACTION=" . ${_SERVER}['PHP_SELF'] . " METHOD=POST>";
 	////////// FIELDNAME
 	$insert_form[] = array("fieldname", trans("fieldname"), // $field_name // WITH TRANSLATION FUNCTION
 			// by the way, the translation function translates all text from english to any othe language in our database (tbd)
-		array("TEXT",{$edit['fieldname'],NULL,NULL), // ${input}['type'], ${input}['value'], ${input}['style'], ${input}['option']
+		array("TEXT",$edit['fieldname'],NULL,NULL), // ${input}['type'], ${input}['value'], ${input}['style'], ${input}['option']
 		NULL,NULL,NULL); // $styles,$trailer,$options
 	
 	////////// TEXT NOTE
@@ -164,7 +164,7 @@ echo "<FORM ACTION=" . ${_SERVER}['PHP_SELF'] . " METHOD=POST>";
 	
 	////////// FIELDNAME
 	$insert_form[] = array("error", trans("error"),
-		array("TEXT",{$edit['error'],NULL,NULL),
+		array("TEXT",$edit['error'],NULL,NULL),
 		NULL,"OH! almost forgot about the trailer!",NULL); // $styles,$trailer,$options
 	
 	
@@ -173,7 +173,7 @@ echo "<FORM ACTION=" . ${_SERVER}['PHP_SELF'] . " METHOD=POST>";
 	
 	////////// STYLE EXAMPLE
 	$insert_form[] = array("style", trans("style sample"),
-		array("TEXT",{$edit['style'],NULL,NULL),
+		array("TEXT",$edit['style'],NULL,NULL),
 		array(null,"background-color:lightgreen;","background-color:lightgreen;"),"optional",NULL); // $styles,$trailer,$options
 	
 	////////// TEXT NOTE

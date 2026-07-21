@@ -35,7 +35,7 @@ if ( !$query = mysqli_query($db, $sql) ) {
 	echo mysqli_error($db);
 } else {
 	while ($info = mysqli_fetch_assoc($query)) {
-		echo "{$info['firstname']<P>";
+		echo "$info['firstname']<P>";
 	}
 }
 */
@@ -67,7 +67,7 @@ if ( !$query = mysqli_query($db, $sql) ) {
 			
 			if ( ${value}['0'] == "_" ) {
 				
-				if ( is_numeric({$value['1']) ) { // VERTICAL SPACE
+				if ( is_numeric($value['1']) ) { // VERTICAL SPACE
 					$return .= "<TR>
 						<TD COLSPAN=$colspan BGCOLOR=#FFFFFF HEIGHT=". ${value}['1'] ."></TD>
 					</TR>";
@@ -91,7 +91,7 @@ if ( !$query = mysqli_query($db, $sql) ) {
 				
 			} elseif ( ${value}['0'] == "-" ) {
 				
-				if ( is_numeric({$value['1']) ) { // DIVIDER LINE (PERCENTAGE OF WIDTH)
+				if ( is_numeric($value['1']) ) { // DIVIDER LINE (PERCENTAGE OF WIDTH)
 					$return .= "<TR>
 						<TD COLSPAN=$colspan BGCOLOR=#FFFFFF>
 							<HR WIDTH=". ${value}['1'] ."% NOSHADE SIZE=1 COLOR=#DDDDDD></TD>

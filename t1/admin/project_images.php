@@ -31,7 +31,7 @@ function local_project_menu($name="project_id",$default_id=null) {
 	$query = mysqli_query($db, $sql);
 	while ( $projects = mysqli_fetch_assoc($query) ) {
 		$return .= "<option value='". ${projects}['project_id'] ."' ". 
-			(( $_POST[$name] ? $_POST[$name] : ( $default_id ? $default_id : ${_REQUEST}['CRYPT_REF_ID'])) == ${projects}['project_id'] ? " SELECTED" : NULL) .">". substr({$projects['title'],0,50) ."</option>";
+			(( $_POST[$name] ? $_POST[$name] : ( $default_id ? $default_id : ${_REQUEST}['CRYPT_REF_ID'])) == ${projects}['project_id'] ? " SELECTED" : NULL) .">". substr($projects['title'],0,50) ."</option>";
 	}
 	$return .= "</select>";
 	
@@ -42,10 +42,10 @@ function local_project_menu($name="project_id",$default_id=null) {
 // insert image type_id menu
 function local_type_id_menu($prefix="type_id_",$index=null,$default_type_id=null,$options=null) {
 	global $config;
-	//{$config['image']['types']
-	$return = "<select name='". $prefix . $index ."'>". ({$options['optional'] ? "<option value=''>Select Type --></options>":null);
-		if ( is_array({$config['image']['types']) ) {
-			foreach ({$config['image']['types'] AS $key => $value) {
+	//$config['image']['types']
+	$return = "<select name='". $prefix . $index ."'>". ($options['optional'] ? "<option value=''>Select Type --></options>":null);
+		if ( is_array($config['image']['types']) ) {
+			foreach ($config['image']['types'] AS $key => $value) {
 				if ( is_array($value)) {
 					$return .= "<optgroup label='". $key ."'>";
 					/*if ( $key == "photographers") {
@@ -53,10 +53,10 @@ function local_type_id_menu($prefix="type_id_",$index=null,$default_type_id=null
 						$query = mysqli_query($db, $sql);
 						while ($info = mysqli_fetch_assoc($query)) {
 							
-							//$types[{$info['type']][{$info['contact_id']] = ${info}['contact'];
-								//{$types['photographers'][{$info['contact_id']] = ${info}['contact'];
+							//$types[$info['type']][$info['contact_id']] = ${info}['contact'];
+								//$types['photographers'][$info['contact_id']] = ${info}['contact'];
 							
-							$types[{$info['type']] .= "<option value='". ${info}['contact_id'] ."'>". ucwords({$info['contact']) ."</option>\n";
+							$types[$info['type']] .= "<option value='". ${info}['contact_id'] ."'>". ucwords($info['contact']) ."</option>\n";
 							
 							if ( is_array($types) ) {
 							
@@ -65,10 +65,10 @@ function local_type_id_menu($prefix="type_id_",$index=null,$default_type_id=null
 								foreach ($types AS $key => $value ) {
 									
 									if ( $key == "photographer" ) {
-										//{$menu['photographers'] = "<optgroup label='". $key ."s'>". $value ."</optgroup>";
+										//$menu['photographers'] = "<optgroup label='". $key ."s'>". $value ."</optgroup>";
 										${menu}['photographers'] .= $value;
 									} else {
-										//{$menu['others'] = "<optgroup label='". $key ."s'>". $value ."</optgroup>";
+										//$menu['others'] = "<optgroup label='". $key ."s'>". $value ."</optgroup>";
 										${menu}['others'] .= $value;
 									}
 								}
@@ -147,11 +147,11 @@ if ( ${_POST}['BACK'] ) {
 					
 					type_id = ". ($_POST['type_id_'. $key] ? "'". $_POST['type_id_'. $key] ."'" : 
 						($_POST['type_id'] ? "'". ${_POST}['type_id'] ."'" : "NULL")) .",
-					contact_id = ". ({$file['type'] ? "'". ${file}['type'] ."'" : "NULL") .",
+					contact_id = ". ($file['type'] ? "'". ${file}['type'] ."'" : "NULL") .",
 					
-					file_type = ". ({$file['type'] ? "'". ${file}['type'] ."'" : "NULL") .",
-					file_size = ". ({$file['size'] ? "'". ${file}['size'] ."'" : "NULL") .",
-					file_name = ". ({$file['name'] ? "'". ${file}['name'] ."'" : "NULL") .",
+					file_type = ". ($file['type'] ? "'". ${file}['type'] ."'" : "NULL") .",
+					file_size = ". ($file['size'] ? "'". ${file}['size'] ."'" : "NULL") .",
+					file_name = ". ($file['name'] ? "'". ${file}['name'] ."'" : "NULL") .",
 					
 					title = ". ($_POST['image_title_'. $key] ? "'". $_POST['image_title_'. $key] ."'" : 
 						($_POST['title'] ? "'". ${_POST}['title'] ."'" : "NULL")) .",
@@ -253,7 +253,7 @@ if ( ${_POST}['BACK'] ) {
 		$alert[] = mysqli_error($db);
 		
 		${error}['SUBMIT'] = "There was an error updating your file information. An administrator has been contacted to resolve the issues. If you need immediate assistance please submit a trouble ticket.";
-		error({$error['SUBMIT'],$sql,1);
+		error($error['SUBMIT'],$sql,1);
 	} else {
 		
 		$alert[] = "location:project.php?". CRYPT_REF_ID ."=". ${_POST}['project_id'];
@@ -268,7 +268,7 @@ if ( ${_POST}['BACK'] ) {
 	if ( !$_POST['delete_confirmation'] ) {
 		${error}['DELETE'] = "Please confirm that you want to delete this image and all the image information associated with it (caption, date, etc.).";
 		
-		//{$error['DELETE'] = "you are trying to delete ". ROOT_DIR ."/uploads/". ${_GET}['image_id'] .".png";
+		//$error['DELETE'] = "you are trying to delete ". ROOT_DIR ."/uploads/". ${_GET}['image_id'] .".png";
 		
 		
 	} else {
@@ -277,7 +277,7 @@ if ( ${_POST}['BACK'] ) {
 			WHERE domain_id = '". DOMAIN_ID ."' AND image_id = '". ${_GET}['image_id'] ."' LIMIT 1";
 		if ( !mysqli_query($db, $sql) ) {
 			${error}['DELETE'] = "There was an error deleting this image. An administrator has been contacted to resolve the issues. If you need immediate assistance please submit a trouble ticket.";
-			error({$error['DELETE'],$sql,1);
+			error($error['DELETE'],$sql,1);
 		} else {
 			$file_loc = ROOT_DIR ."/uploads/". ${_GET}['image_id'] .".png";
 			if ( !unlink($file_loc) ) error("the file (". $file_loc .") could not be removed",3,null,"manually remove the file, the member was not informed of the error");
@@ -410,13 +410,13 @@ echo "<FORM ACTION='". ${_SERVER}['PHP_SELF'] ."' METHOD=GET>";
 				if ( ${previous}['department_id'] ) ${adjacent}['previous'] = ${previous}['department_id'];
 				$insert_next = TRUE;
 				
-			} elseif ( $insert_next && !{$adjacent['next'] ) {
+			} elseif ( $insert_next && !$adjacent['next'] ) {
 				${adjacent}['next'] = ${info}['department_id'];
 			}
 			
 			
 			${input}['department_id'] .= "<OPTION VALUE='". ${info}['department_id'] ."' ". 
-				($_GET['CRYPT_REF_ID'] == ${info}['department_id'] ? " SELECTED" : NULL) .">". ucwords({$info['department']) ." [". ${info}['department_id'] ."]</OPTION>";
+				($_GET['CRYPT_REF_ID'] == ${info}['department_id'] ? " SELECTED" : NULL) .">". ucwords($info['department']) ." [". ${info}['department_id'] ."]</OPTION>";
 			$previous = $info;
 		}
 		${input}['department_id'] .= "</SELECT>";
@@ -431,10 +431,10 @@ echo "<FORM ACTION='". ${_SERVER}['PHP_SELF'] ."' METHOD=GET>";
 	if ( ${_GET}['CRYPT_REF_ID'] ) {
 		////////// ADJACENT - NEXT / PREVIOUS
 		$insert_form[] = array("adjacent", NULL, 
-			({$adjacent['previous'] ? 
+			($adjacent['previous'] ? 
 				"<A HREF='". ${_SERVER}['PHP_SELF']."?". CRYPT_REF_ID ."=". ${adjacent}['previous'] ."'><SMALL><< PREVIOUS</SMALL></A>" : NULL) .
-			({$adjacent['previous'] && ${adjacent}['next'] ? " | " : NULL) .
-			({$adjacent['next'] ? 
+			($adjacent['previous'] && ${adjacent}['next'] ? " | " : NULL) .
+			($adjacent['next'] ? 
 				"<A HREF='". ${_SERVER}['PHP_SELF']."?". CRYPT_REF_ID ."=". ${adjacent}['next'] ."'><SMALL>NEXT >></SMALL></A>" : NULL),
 			array(NULL,NULL,"padding-left:40px;"),NULL,NULL);
 	}
@@ -580,41 +580,41 @@ echo "<FORM ACTION='". ${_SERVER}['PHP_SELF'] ."' METHOD=GET>";
 	
 	////////// DEPARTMENT
 	//$insert_form[] = array("tags", "tags", // $field_name // WITH TRANSLATION FUNCTION
-	//	array("TEXT",{$edit['department'],NULL,NULL), // ${input}['type'], ${input}['value'], ${input}['style'], ${input}['option']
+	//	array("TEXT",$edit['department'],NULL,NULL), // ${input}['type'], ${input}['value'], ${input}['style'], ${input}['option']
 	//	NULL,NULL,array(value=>1)); // $styles,$trailer,$options
 	
 
 	
 	////////// IMAGE TITLE
 	$insert_form[] = array("title", "title",
-		array("TEXT",{$edit['title'],"","id='imageTitle'"),
+		array("TEXT",$edit['title'],"","id='imageTitle'"),
 		NULL,NULL,array(value=>1));
 	
 	////////// DEFAULT IMAGE TYPES
 	$insert_form[] = array("project_id", "project",
-		local_project_menu("project_id",{$edit['project_id']),
+		local_project_menu("project_id",$edit['project_id']),
 		NULL,NULL,array(value=>1));
 		
 	
 	
 	////////// DEFAULT IMAGE TYPES
 	$insert_form[] = array("type_id", "image type",
-		local_type_id_menu($prefix="type_id",null,{$edit['type_id']),
+		local_type_id_menu($prefix="type_id",null,$edit['type_id']),
 		NULL,NULL,array(value=>1));
 	////////// IMAGE CAPTION
 	$insert_form[] = array("caption", "caption",
-		array("TEXTAREA",{$edit['caption'],NULL,"ROWS=5 id='imageCaption'"),
+		array("TEXTAREA",$edit['caption'],NULL,"ROWS=5 id='imageCaption'"),
 		NULL,NULL,array(value=>1));
 	
 	
 	////////// INACTIVE CHECKBOX
 	//$insert_form[] = array("inactive", NULL, 
-	//	"<INPUT TYPE=CHECKBOX NAME=inactive VALUE=1 ". ({$edit['inactive'] ? " CHECKED" : NULL) ."> check to make department inactive",
+	//	"<INPUT TYPE=CHECKBOX NAME=inactive VALUE=1 ". ($edit['inactive'] ? " CHECKED" : NULL) ."> check to make department inactive",
 	//	NULL,NULL,NULL);
 	
 	////////// DEFAULT DATE
 	$insert_form[] = array("date", "date",
-		"<script>DateInput('date',false,'YYYY-MM-DD'". ({$edit['date'] ? ",'". ${edit}['date'] ."'" : null) .")</script>",
+		"<script>DateInput('date',false,'YYYY-MM-DD'". ($edit['date'] ? ",'". ${edit}['date'] ."'" : null) .")</script>",
 		NULL,NULL,NULL);
 	
 	
@@ -624,10 +624,10 @@ echo "<FORM ACTION='". ${_SERVER}['PHP_SELF'] ."' METHOD=GET>";
 			<INPUT TYPE=SUBMIT NAME='ADD' VALUE='ADD AS NEW'> ";
 		
 		${input}['delete'] = "<INPUT TYPE=SUBMIT NAME=DELETE VALUE='DELETE...'> 
-			". ({$error['DELETE'] ? "<INPUT TYPE=CHECKBOX NAME=confirm_delete>check to confirm delete" : null);
+			". ($error['DELETE'] ? "<INPUT TYPE=CHECKBOX NAME=confirm_delete>check to confirm delete" : null);
 		
 	} else {*/
-		//{$input['submit'] = "<INPUT TYPE=SUBMIT NAME='ADD' VALUE='UPLOAD IMAGES' onClick=\"uploadingImages();return safeSubmit(this);\">"; // onMouseUp=\"this.disabled=true;\"
+		//$input['submit'] = "<INPUT TYPE=SUBMIT NAME='ADD' VALUE='UPLOAD IMAGES' onClick=\"uploadingImages();return safeSubmit(this);\">"; // onMouseUp=\"this.disabled=true;\"
 	//}
 	
 	if ( ${_GET}['image_id'] ) {

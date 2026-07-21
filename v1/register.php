@@ -176,12 +176,12 @@ echo "<FORM ACTION=" . ${_SERVER}['PHP_SELF'] . " METHOD=POST>";
 	
 	////////// USERNAME
 	$insert_form[] = array("username", trans("username"),
-		array("TEXT",{$edit['username'],NULL,"MAXLENGTH=30"),
+		array("TEXT",$edit['username'],NULL,"MAXLENGTH=30"),
 		NULL,NULL,NULL);
 	
 	////////// EMAIL
 	$insert_form[] = array("email", trans("email"), // $field_name // WITH TRANSLATION FUNCTION
-		array("TEXT",{$edit['email'],null,NULL), // ${input}['type'], ${input}['value'], ${input}['style'], ${input}['option']
+		array("TEXT",$edit['email'],null,NULL), // ${input}['type'], ${input}['value'], ${input}['style'], ${input}['option']
 		NULL,"email@example.com",NULL); // $styles,$trailer,$options
 	//"<div class='formNote'>we treat your personal privacy just as we would our own. So you can be assured that we will not share your email address with anyone. Simple as that!</div>"
 	
@@ -195,35 +195,35 @@ echo "<FORM ACTION=" . ${_SERVER}['PHP_SELF'] . " METHOD=POST>";
 	/*
 	////////// EMAIL CONFIRM
 	$insert_form[] = array("email_confirm", trans("confirm email"),
-		array("TEXT",{$edit['email_confirm'],NULL,NULL),
+		array("TEXT",$edit['email_confirm'],NULL,NULL),
 		NULL,NULL,NULL);
 	*/
 	
 	////////// PASSWORD
 	$insert_form[] = array("password", "password",
-		array("PASSWORD",{$edit['password'],NULL,NULL),
+		array("PASSWORD",$edit['password'],NULL,NULL),
 		NULL,"6-18 characters",NULL);
 		
 	////////// PASSWORD CONFIRM
 	$insert_form[] = array("password_confirm", "confirm password",
-		array("PASSWORD",{$edit['password_confirm'],NULL,NULL),
+		array("PASSWORD",$edit['password_confirm'],NULL,NULL),
 		NULL,NULL,NULL);
 	
 	
 	/*
 	////////// FIRSTNAME
 	$insert_form[] = array("firstname", "firstname",
-		array("TEXT",{$edit['firstname'],NULL,NULL),
+		array("TEXT",$edit['firstname'],NULL,NULL),
 		NULL,NULL,NULL);
 	
 	////////// AGREE
 	$insert_form[] = array("agree", null,
-		array("CHECKBOX",{$edit['agree'],NULL,NULL),
+		array("CHECKBOX",$edit['agree'],NULL,NULL),
 		NULL,NULL,NULL);
 	
 	/////////// test
 	$insert_form[] = array("comments", "comments",
-		array("TEXTAREA",{$edit['comments'],NULL,NULL),
+		array("TEXTAREA",$edit['comments'],NULL,NULL),
 		NULL,NULL,NULL);
 	*/
 	
@@ -233,12 +233,12 @@ echo "<FORM ACTION=" . ${_SERVER}['PHP_SELF'] . " METHOD=POST>";
 	
 	////////// FIRSTNAME
 	$insert_form[] = array("firstname", "firstname",
-		array("TEXT",{$edit['firstname'],NULL,NULL),
+		array("TEXT",$edit['firstname'],NULL,NULL),
 		NULL,NULL,NULL);
 	
 	////////// LASTNAME
 	$insert_form[] = array("lastname", "lastname",
-		array("TEXT",{$edit['lastname'],NULL,NULL),
+		array("TEXT",$edit['lastname'],NULL,NULL),
 		NULL,NULL,NULL);
 	
 	
@@ -249,7 +249,7 @@ echo "<FORM ACTION=" . ${_SERVER}['PHP_SELF'] . " METHOD=POST>";
 	
 	////////// COMPANY
 	$insert_form[] = array("domain", "website domain",
-		array("TEXT",{$edit['domain'],NULL,NULL),
+		array("TEXT",$edit['domain'],NULL,NULL),
 		NULL,"your-company-name.com",NULL);
 	
 	////////// NOTE
@@ -258,18 +258,18 @@ echo "<FORM ACTION=" . ${_SERVER}['PHP_SELF'] . " METHOD=POST>";
 	
 	////////// COMPANY
 	$insert_form[] = array("company", "company name",
-		array("TEXT",{$edit['company'],NULL,NULL),
+		array("TEXT",$edit['company'],NULL,NULL),
 		NULL,NULL,NULL);
 	
 	////////// PHONE
 	$insert_form[] = array("phone", "office phone",
-		array("TEXT",{$edit['phone'],NULL,NULL),
+		array("TEXT",$edit['phone'],NULL,NULL),
 		NULL,NULL,NULL);
 	
 	/*
 	////////// FAX
 	$insert_form[] = array("fax", "office fax",
-		array("TEXT",{$edit['fax'],NULL,NULL),
+		array("TEXT",$edit['fax'],NULL,NULL),
 		NULL,NULL,NULL);
 	
 	

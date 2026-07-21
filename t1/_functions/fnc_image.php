@@ -200,11 +200,11 @@
 	////////// CHECK IF IMAGE EXISTS
 	if ( image_exists($src) ) {
 		
-		if ( ${options}['max'] && !preg_match("/WIDTH|HEIGHT/i",{$options['html'])) {
+		if ( ${options}['max'] && !preg_match("/WIDTH|HEIGHT/i",$options['html'])) {
 			
 			list($width, $height) = getimagesize($src);
 			
-			if ( $width >= $height || ${options}['width'] && !{$options['height'] ) {
+			if ( $width >= $height || ${options}['width'] && !$options['height'] ) {
 				${options}['html'] .= " WIDTH=". ${options}['max'];
 			} else {
 				${options}['html'] .= " HEIGHT=". ${options}['max'];

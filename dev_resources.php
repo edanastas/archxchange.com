@@ -55,15 +55,15 @@ include(TEMPLATE_BASE_DIR . "_includes/inc_header.php");
 ////////// FORM FIELDS 
 /////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////// 11.0
-//{$fields['name']['TYPE'][value] = title;
+//$fields['name']['TYPE'][value] = title;
 
 $fields[] = "Resource Log";
 $fields[] = 2;
 
 ${fields}['current_date']['TODAY'] = "date";
 
-/*{$fields['priority']['SELECT']['-'] = trans("priority");
-//{$fields['priority']['SELECT'][JAVA] = " onchange=\"submit()\"";
+/*$fields['priority']['SELECT']['-'] = trans("priority");
+//$fields['priority']['SELECT'][JAVA] = " onchange=\"submit()\"";
 ${fields}['priority']['SELECT'][none] = "none";
 ${fields}['priority']['SELECT'][low] = "low";
 ${fields}['priority']['SELECT'][medium] = "medium";
@@ -71,16 +71,16 @@ ${fields}['priority']['SELECT'][high] = "high";
 ${fields}['priority']['SELECT'][urgent] = "urgent";*/
 
 
-${fields}['item']['TEXT'][{$form_value['item']] = trans("resource");
-${fields}['website']['TEXT'][{$form_value['website']] = trans("website");
+${fields}['item']['TEXT'][$form_value['item']] = trans("resource");
+${fields}['website']['TEXT'][$form_value['website']] = trans("website");
 
-${fields}['description']['TEXTAREA'][{$form_value['description']] = trans("description");
+${fields}['description']['TEXTAREA'][$form_value['description']] = trans("description");
 
-${fields}['notes']['TEXTAREA'][{$form_value['notes']] = trans("notes");
+${fields}['notes']['TEXTAREA'][$form_value['notes']] = trans("notes");
 
-//{$fields['completed']['TEXT'][{$form_value['completed']] = trans("completed") . " " . trans("by");
+//$fields['completed']['TEXT'][$form_value['completed']] = trans("completed") . " " . trans("by");
 
-/*{$fields['difficulty']['RADIO']['-'] = "level of difficulty";
+/*$fields['difficulty']['RADIO']['-'] = "level of difficulty";
 ${fields}['difficulty']['RADIO'][advanced] = trans("advanced");
 ${fields}['difficulty']['RADIO'][difficult] = trans("difficult");
 ${fields}['difficulty']['RADIO'][intermediate] = trans("intermediate");

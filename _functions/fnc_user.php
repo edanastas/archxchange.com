@@ -54,10 +54,10 @@
 		
 		//echo "registering session variables <p>";
 		//echo "\${info}['password'] --> ". ${info}['password'] ."<p>";
-		//echo "sha1(\${info}['password']) --> ". sha1({$info['password']) ."<p>";
-		${_SESSION}['user_id'] = sha1({$info['user_id']);
-		${_SESSION}['password'] = sha1({$info['password']);
-		setcookie("id", sha1({$info['user_id']), time() + 31536000, "", ".". DOMAIN);
+		//echo "sha1(\${info}['password']) --> ". sha1($info['password']) ."<p>";
+		${_SESSION}['user_id'] = sha1($info['user_id']);
+		${_SESSION}['password'] = sha1($info['password']);
+		setcookie("id", sha1($info['user_id']), time() + 31536000, "", ".". DOMAIN);
 		return true;
 	}
 }
@@ -95,7 +95,7 @@
 	
 	// UNSET COOKIE INFORMATION
 	//setcookie("id", NULL, time() + 31536000);
-	//setcookie("id", sha1({$info['user_id']), time() + 31536000);
+	//setcookie("id", sha1($info['user_id']), time() + 31536000);
 	setcookie("id", ${_COOKIE}['id'], time() - 3600, "", ".". DOMAIN);
 	//setcookie("id", ${_COOKIE}['id'], time() - 3600);
 	setcookie(session_name(), $_COOKIE[session_name()], time() - 3600, "", ".". DOMAIN);

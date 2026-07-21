@@ -93,7 +93,7 @@ return ${return}['host'];
 
 
 
-//		//function return_first({$var['1'],{$var['2'],{$var['3']=NULL) { // RETURN FIRST VALUE
+//		//function return_first($var['1'],$var['2'],$var['3']=NULL) { // RETURN FIRST VALUE
 		function return_first($var_1,$var_2,$var_3=NULL) { // RETURN FIRST VALUE
 	$var = array($var_1,$var_2,$var_3);
 	foreach ($var AS $value) {

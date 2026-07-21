@@ -48,10 +48,10 @@
 	/////////////////////////////////////////////////////////////////////////////////////
 	if ( ${info}['user_id'] ) {
 		define('USER_ID', ${info}['user_id']); // USER_ID
-		define('USER_EMAIL', strtolower({$info['email'])); // EMAIL
+		define('USER_EMAIL', strtolower($info['email'])); // EMAIL
 		define('USER_LANG', ${info}['language_code']); // LANGUAGE_CODE
-		define('USER_FIRSTNAME', stripslashes({$info['firstname'])); // FIRSTNAME
-		define('USER_LASTNAME', stripslashes({$info['lastname'])); // LASTNAME
+		define('USER_FIRSTNAME', stripslashes($info['firstname'])); // FIRSTNAME
+		define('USER_LASTNAME', stripslashes($info['lastname'])); // LASTNAME
 	} else {
 		define('USER_ID', NULL); // USER_ID
 		define('USER_EMAIL', NULL); // EMAIL
@@ -73,7 +73,7 @@
 	if ( !defined('CRON') ) {
 			
 		
-		if (!{$redirect['url']) {
+		if (!$redirect['url']) {
 			if ( preg_match("/" . preg_quote($_SERVER['HTTP_HOST'], "/") . "/i", ${_SERVER}['HTTP_REFERER']) ) { // IF NOT OUR WEBSITE --> DO NOT GO BACK ONE (GO TO HOME PAGE)
 				${redirect}['url'] = "javascript:history.back(1)";
 			} else {
@@ -81,15 +81,15 @@
 			}
 		}
 		
-		if (!{$redirect['timer']) ${redirect}['timer'] = "0";
+		if (!$redirect['timer']) ${redirect}['timer'] = "0";
 		
-		if (!{$redirect['redirecting']) {
+		if (!$redirect['redirecting']) {
 			${redirect}['redirecting'] = trans("redirecting",1) ."...";
 		} else {
 			${redirect}['redirecting'] .= "...";
 		}
 		
-		if (!{$redirect['anchor']) ${redirect}['anchor'] = "click here to redirect manually";
+		if (!$redirect['anchor']) ${redirect}['anchor'] = "click here to redirect manually";
 		
 		
 		if ( !headers_sent() ) {
@@ -138,7 +138,7 @@
 			
 		} else {
 			echo "<META HTTP-EQUIV='refresh' CONTENT='0;URL=". ${redirect}['url'] ."'>".
-				"{$redirect['message']<BR>".
+				"$redirect['message']<BR>".
 				"<A HREF='". ${redirect}['url'] ."'>". ${redirect}['anchor'] ."</A>";
 			
 		}

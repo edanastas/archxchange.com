@@ -40,16 +40,16 @@
 	session_regenerate_id();
 	
 	// CHECK IF MEMBER IS LOGGED IN
-	${_SESSION}['user_id'] = sha1({$info['user_id']);
+	${_SESSION}['user_id'] = sha1($info['user_id']);
 	${_SESSION}['password'] = ${info}['password'];
 	
-	setcookie("id", sha1({$info['user_id']), time() + 31536000, "", ".".DOMAIN);
+	setcookie("id", sha1($info['user_id']), time() + 31536000, "", ".".DOMAIN);
 	setcookie("lang", ${info}['language_code'], time() + 31536000, "", ".".DOMAIN);
 	
 	//echo "before --> the user_id is --> [" . USER_ID . "]";
 	//dev_print(cart_qty()); echo "<P>";
 	
-	///cart_login({$info['user_id']); // COPY SESSION CART ITEMS TO DATABASE CART
+	///cart_login($info['user_id']); // COPY SESSION CART ITEMS TO DATABASE CART
 	
 	//echo "after --> ";
 	//dev_print(cart_qty()); echo "<P>";
@@ -124,7 +124,7 @@
 	
 	// UNSET COOKIE INFORMATION
 	//setcookie("id", NULL, time() + 31536000);
-	//setcookie("id", sha1({$info['user_id']), time() + 31536000);
+	//setcookie("id", sha1($info['user_id']), time() + 31536000);
 	setcookie("id", ${_COOKIE}['id'], time() - 3600, "", ".". DOMAIN);
 	setcookie("id", ${_COOKIE}['id'], time() - 3600);
 	setcookie(session_name(), $_COOKIE[session_name()], time() - 3600, "", ".". DOMAIN);

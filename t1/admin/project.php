@@ -25,7 +25,7 @@ $sql = "SELECT * FROM template_departments
 //$sql = query_domain("template_departments");
 $query = mysqli_query($db, $sql);
 while ( $departments = mysqli_fetch_assoc($query) ) {
-	${form}['departments'][{$departments['department_id']] = $departments;
+	${form}['departments'][$departments['department_id']] = $departments;
 }
 
 
@@ -53,7 +53,7 @@ if ( ${_GET}['CRYPT_REF_ID'] ) {
 		WHERE project_id = '". ${_GET}['CRYPT_REF_ID'] ."'";
 	$query = mysqli_query($db, $sql);
 	while ( $departments = mysqli_fetch_assoc($query) ) {
-		${edit}['departments'][{$departments['department_id']][project_id] = true;
+		${edit}['departments'][$departments['department_id']][project_id] = true;
 	}
 	
 }
@@ -83,15 +83,15 @@ if ( ${_POST}['ADD_PROJECT'] || ( ${_POST}['UPDATE_PROJECT'] && ${_GET}['CRYPT_R
 		$values = explode(" ",$name);
 		foreach($values AS $key => $value) {
 			if ( $value && !preg_match("/@/i",$value) ) {
-				${return}['contact'] .= ({$return['contact'] ? " ". $value : $value );
+				${return}['contact'] .= ($return['contact'] ? " ". $value : $value );
 			} elseif ( preg_match("/@/i",$value) ) {
 				${return}['email'] = $value;
 			}
 		}
-		//{$return['firstname'] = ${values}['0'];
-		//{$return['lastname'] = ${values}['1'];
-		//{$return['email'] = (email_validate({$values['2']) ? ${values}['2'] : null);
-		//{$return['email'] = ${values}['2'];
+		//$return['firstname'] = ${values}['0'];
+		//$return['lastname'] = ${values}['1'];
+		//$return['email'] = (email_validate($values['2']) ? ${values}['2'] : null);
+		//$return['email'] = ${values}['2'];
 		
 		return $return;
 	}
@@ -135,11 +135,11 @@ if ( ${_POST}['ADD_PROJECT'] || ( ${_POST}['UPDATE_PROJECT'] && ${_GET}['CRYPT_R
 				contact_id = NULL,
 				type = 'client',
 				domain_id = '". DOMAIN_ID ."',
-				contact = '". query_prep({$values['contact']) ."',
-				email = '". query_prep({$values['email']) ."'";
+				contact = '". query_prep($values['contact']) ."',
+				email = '". query_prep($values['email']) ."'";
 			if ( !mysqli_query($db, $sql) ) {
 				${error}['client_id'] = "There was an error adding the client. An administrator has been contacted to resolve the issue as quickly as possible. If you need immediate assitance please contact us using our trouble ticket system or attempt the form again.";
-				error({$error['client_id'],$sql,1);
+				error($error['client_id'],$sql,1);
 			} else $last_client_id = mysqli_insert_id($db);
 		}
 	}
@@ -159,11 +159,11 @@ if ( ${_POST}['ADD_PROJECT'] || ( ${_POST}['UPDATE_PROJECT'] && ${_GET}['CRYPT_R
 				contact_id = NULL,
 				type = 'architect',
 				domain_id = '". DOMAIN_ID ."',
-				contact = '". query_prep({$values['contact']) ."',
-				email = '". query_prep({$values['email']) ."'";
+				contact = '". query_prep($values['contact']) ."',
+				email = '". query_prep($values['email']) ."'";
 			if ( !mysqli_query($db, $sql) ) {
 				${error}['architect_id'] = "There was an error adding the architect. An administrator has been contacted to resolve the issue as quickly as possible. If you need immediate assitance please contact us using our trouble ticket system or attempt the form again.";
-				error({$error['architect_id'],$sql,1);
+				error($error['architect_id'],$sql,1);
 			} else $last_architect_id = mysqli_insert_id($db);
 		}
 	}
@@ -181,14 +181,14 @@ if ( ${_POST}['ADD_PROJECT'] || ( ${_POST}['UPDATE_PROJECT'] && ${_GET}['CRYPT_R
 				category = '". query_prep($_POST['category_id']) ."'";
 			if ( !mysqli_query($db, $sql) ) {
 				${error}['category_id'] = "There was an error adding the new category. An administrator has been contacted to resolve the issue as quickly as possible. If you need immediate assitance please contact us using our trouble ticket system or attempt the form again.";
-				error({$error['category_id'],$sql,1);
+				error($error['category_id'],$sql,1);
 			} else $last_category_id = mysqli_insert_id($db);
 		}
 	}
 	
 	////////// CHECK DEPARTMENTS
 	//////////////////////////////////////////////////
-	// check if other was submitted (and checked) and it does not equal the default text "enter department" ({$form_default['department_other'])
+	// check if other was submitted (and checked) and it does not equal the default text "enter department" ($form_default['department_other'])
 	if ( ${_POST}['departments']['other'] && ${_POST}['department_other'] && ${_POST}['department_other'] != ${form_default}['department_other'] ) {
 		$sql = "INSERT INTO template_departments SET 
 			department_id = NULL, 
@@ -219,16 +219,16 @@ if ( ${_POST}['ADD_PROJECT'] || ( ${_POST}['UPDATE_PROJECT'] && ${_GET}['CRYPT_R
 	}
 	
 	////////// STILL CHECKING DEPARTMENTS --> ALTER DEPARTMENT : PROJECT ASSOCIATIONS
-	if ( is_array({$form['departments']) ) {
+	if ( is_array($form['departments']) ) {
 		
 		// loop through all project department 
-		foreach({$form['departments'] AS $value) {
+		foreach($form['departments'] AS $value) {
 			$sql = null;
 			
 			////////// ADD NEW DEPARTMENT ASSOCIATIONS TO PROJECT
-			if ( ${_POST}['departments'][{$value['department_id']] || $last_department_id == ${value}['department_id'] ) { // check if submitted -->
+			if ( ${_POST}['departments'][$value['department_id']] || $last_department_id == ${value}['department_id'] ) { // check if submitted -->
 				// yes posted --> is it in the db already?
-				if ( !{$edit['departments'][{$value['department_id']][project_id] || $last_department_id == ${value}['department_id'] ) {
+				if ( !$edit['departments'][$value['department_id']][project_id] || $last_department_id == ${value}['department_id'] ) {
 					// add to database
 					$sql = "INSERT INTO template_project_departments SET 
 						project_id = '". ${_GET}['CRYPT_REF_ID'] ."', 
@@ -270,7 +270,7 @@ if ( ${_POST}['ADD_PROJECT'] || ( ${_POST}['UPDATE_PROJECT'] && ${_GET}['CRYPT_R
 				department = '". query_prep($_POST['department_id']) ."'";
 			if ( !mysqli_query($db, $sql) ) {
 				${error}['department_id'] = "There was an error adding the new department. An administrator has been contacted to resolve the issue as quickly as possible. If you need immediate assitance please contact us using our trouble ticket system or attempt the form again.";
-				error({$error['department_id'],$sql,1);
+				error($error['department_id'],$sql,1);
 			} else $last_department_id = mysqli_insert_id($db);
 		}
 	}*/
@@ -298,7 +298,7 @@ if ( ${_POST}['ADD_PROJECT'] || ( ${_POST}['UPDATE_PROJECT'] && ${_GET}['CRYPT_R
 		
 		if ( !mysqli_query($db, $sql) ) {
 			${error}['SUBMIT'] = "There was an error adding the new project. An administrator has been contacted to resolve the issue as quickly as possible. If you need immediate assitance please contact us using our trouble ticket system or attempt the form again.";
-			error({$error['ADD_PROJECT'],$sql,1);
+			error($error['ADD_PROJECT'],$sql,1);
 		} else {
 			//echo "SUCCESSFULLY UPDATED!";
 			// header("location:projects.php");
@@ -352,14 +352,14 @@ echo "<FORM ACTION='". ${_SERVER}['PHP_SELF'] ."' METHOD=GET>";
 				if ( ${previous}['project_id'] ) ${adjacent}['previous'] = ${previous}['project_id'];
 				$insert_next = TRUE;
 				
-			} elseif ( $insert_next && !{$adjacent['next'] ) {
+			} elseif ( $insert_next && !$adjacent['next'] ) {
 				${adjacent}['next'] = ${info}['project_id'];
 			}
 			*/
 			
 			${input}['project_id'] .= "<OPTION VALUE='". ${info}['project_id'] ."' ". 
 					($_GET['CRYPT_REF_ID'] == ${info}['project_id'] ? " SELECTED" : NULL) .">". 
-				ucwords({$info['title']) ." [". ${info}['project_id'] ."]</OPTION>";
+				ucwords($info['title']) ." [". ${info}['project_id'] ."]</OPTION>";
 			$previous = $info;
 		}
 		${input}['project_id'] .= "</SELECT>";
@@ -373,10 +373,10 @@ echo "<FORM ACTION='". ${_SERVER}['PHP_SELF'] ."' METHOD=GET>";
 	if ( ${_GET}['CRYPT_REF_ID'] ) {
 		////////// ADJACENT - NEXT / PREVIOUS
 		$insert_form[] = array("adjacent", NULL, 
-			({$adjacent['previous'] ? 
+			($adjacent['previous'] ? 
 				"<A HREF='". ${_SERVER}['PHP_SELF']."?". CRYPT_REF_ID ."=". ${adjacent}['previous'] ."'><SMALL><< PREVIOUS</SMALL></A>" : NULL) .
-			({$adjacent['previous'] && ${adjacent}['next'] ? " | " : NULL) .
-			({$adjacent['next'] ? 
+			($adjacent['previous'] && ${adjacent}['next'] ? " | " : NULL) .
+			($adjacent['next'] ? 
 				"<A HREF='". ${_SERVER}['PHP_SELF']."?". CRYPT_REF_ID ."=". ${adjacent}['next'] ."'><SMALL>NEXT >></SMALL></A>" : NULL),
 			array(NULL,NULL,"padding-left:40px;"),NULL,NULL);
 	}
@@ -415,7 +415,7 @@ echo "</FORM>
 		${input}['images'] .= "<br /><div style='clear:left;'><a href='project_images.php?". CRYPT_REF_ID ."=". ${_GET}['CRYPT_REF_ID'] ."'>--> add images to this project</a></div>";
 		
 		////////// IMAGES
-		$insert_form[] = array("_",NULL,{$input['images']); // VERTICAL SPACER
+		$insert_form[] = array("_",NULL,$input['images']); // VERTICAL SPACER
 	}
 	
 	
@@ -424,12 +424,12 @@ echo "</FORM>
 	
 	////////// TITLE
 	$insert_form[] = array("title", trans("project title"),
-		array("TEXT",{$edit['title'],NULL," onFocus=\"formAltered();\""),//safeSubmit(this.form);
+		array("TEXT",$edit['title'],NULL," onFocus=\"formAltered();\""),//safeSubmit(this.form);
 		NULL,NULL,NULL);
 	
 	////////// owner
 	//$insert_form[] = array("owner", trans("owner"), // $field_name // WITH TRANSLATION FUNCTION
-	//	array("TEXT",{$edit['owner'],null,NULL), // ${input}['type'], ${input}['value'], ${input}['style'], ${input}['option']
+	//	array("TEXT",$edit['owner'],null,NULL), // ${input}['type'], ${input}['value'], ${input}['style'], ${input}['option']
 	//	NULL,NULL,NULL);
 	
 	
@@ -462,7 +462,7 @@ echo "</FORM>
 	
 	////////// ARCHITECT
 	//$insert_form[] = array("architect", "architect",
-	//	array("TEXT",{$edit['architect'],NULL,NULL),
+	//	array("TEXT",$edit['architect'],NULL,NULL),
 	//	NULL,NULL,NULL);
 	
 	
@@ -523,7 +523,7 @@ echo "</FORM>
 	
 	
 	////////////////////////////////////////////////// DEPARTMENTS
-	/*{$input['department_id'] = "<select name=department_id onChange=\"check_extend_select(this,'Enter the new department here')\">";
+	/*$input['department_id'] = "<select name=department_id onChange=\"check_extend_select(this,'Enter the new department here')\">";
 	${input}['department_id'] .= "<option value=''>SELECT --></option>";
 	
 	$sql = "SELECT * FROM template_departments WHERE domain_id IS NULL OR domain_id = '". DOMAIN_ID ."'";
@@ -567,8 +567,8 @@ echo "</FORM>
 	//$sql = query_domain("template_departments");
 	//$query = mysqli_query($db, $sql);
 	//while ( $departments = mysqli_fetch_assoc($query) ) {
-	if ( is_array({$form['departments']) ) {
-		foreach({$form['departments'] AS $departments ) {
+	if ( is_array($form['departments']) ) {
+		foreach($form['departments'] AS $departments ) {
 			
 			if ( ${departments}['domain_id'] ) $custom_flag = true;
 			
@@ -581,11 +581,11 @@ echo "</FORM>
 				<input type=checkbox name=departments[". ${departments}['department_id'] ."]".
 					// if departments are submitted in form --> then take $_POST variables only, not db settings unless it was just added ($last_department_id)
 					( ($_POST 
-						//? ($_POST['departments'][{$departments['department_id']] ? ${_POST}['departments'][{$departments['department_id']] : $last_department_id) 
-						? ($_POST['departments'][{$departments['department_id']] || $last_department_id == ${departments}['department_id'] ? true : false) 
-						: ${edit}['departments'][{$departments['department_id']][project_id]) ? " CHECKED" : NULL) ." onChange=\"formAltered();\"> ". 
+						//? ($_POST['departments'][$departments['department_id']] ? ${_POST}['departments'][$departments['department_id']] : $last_department_id) 
+						? ($_POST['departments'][$departments['department_id']] || $last_department_id == ${departments}['department_id'] ? true : false) 
+						: ${edit}['departments'][$departments['department_id']][project_id]) ? " CHECKED" : NULL) ." onChange=\"formAltered();\"> ". 
 					${departments}['department'] ." 
-					". ({$departments['domain_id'] ? " * " : null) ."
+					". ($departments['domain_id'] ? " * " : null) ."
 					[". ${departments}['department_id'] ."]"."";
 			
 			$cell++;
@@ -652,7 +652,7 @@ echo "</FORM>
 	${edit}['design'] = ( ${_POST}['design'] ? ${_POST}['design'] : ${edit}['design'] );
 	$insert_form[] = array("design", "design",
 		"<div id='projectDesignSample' onclick=\"new Effect.BlindUp('projectDesignSample',{ afterFinish: new Effect.BlindDown('projectDesign',{ afterFinish: setTimeout('setCaretToEnd(document.projectForm.design)',1200) }) })\" style='width:". $form_width .";'>
-			". nl2br((strlen({$edit['design']) > $max_length ? substr({$edit['design'],0,$max_length) : ${edit}['design'])) ."... (click to edit)
+			". nl2br((strlen($edit['design']) > $max_length ? substr($edit['design'],0,$max_length) : ${edit}['design'])) ."... (click to edit)
 		</div>
 		<div id='wrapper'>
 			<div id='projectDesign' style='display:none;'>
@@ -668,7 +668,7 @@ echo "</FORM>
 	${edit}['site'] = ( ${_POST}['site'] ? ${_POST}['site'] : ${edit}['site'] );
 	$insert_form[] = array("site", "site",
 		"<div id='projectSiteSample' onclick=\"new Effect.BlindUp('projectSiteSample',{ afterFinish: new Effect.BlindDown('projectSite',{ afterFinish: setTimeout('setCaretToEnd(document.projectForm.site)',1200) }) })\" style='width:". $form_width .";'>
-			". nl2br((strlen({$edit['site']) > $max_length ? substr({$edit['site'],0,$max_length) : ${edit}['site'])) ."... (click to edit)
+			". nl2br((strlen($edit['site']) > $max_length ? substr($edit['site'],0,$max_length) : ${edit}['site'])) ."... (click to edit)
 		</div>
 		<div id='wrapper'>
 			<div id='projectSite' style='display:none;'>
@@ -684,7 +684,7 @@ echo "</FORM>
 	${edit}['construction'] = ( ${_POST}['construction'] ? ${_POST}['construction'] : ${edit}['construction'] );
 	$insert_form[] = array("construction", "construction",
 		"<div id='projectConstructionSample' onclick=\"new Effect.BlindUp('projectConstructionSample',{ afterFinish: new Effect.BlindDown('projectConstruction',{ afterFinish: setTimeout('setCaretToEnd(document.projectForm.construction)',1200) }) })\" style='width:". $form_width .";'>
-			". nl2br((strlen({$edit['construction']) > $max_length ? substr({$edit['construction'],0,$max_length) : ${edit}['construction'])) ."... (click to edit)
+			". nl2br((strlen($edit['construction']) > $max_length ? substr($edit['construction'],0,$max_length) : ${edit}['construction'])) ."... (click to edit)
 		</div>
 		<div id='wrapper'>
 			<div id='projectConstruction' style='display:none;'>
@@ -698,17 +698,17 @@ echo "</FORM>
 	/*
 	////////// SITE
 	$insert_form[] = array("site", "site",
-		array("TEXTAREA",{$edit['site'],NULL,"ROWS=5"),
+		array("TEXTAREA",$edit['site'],NULL,"ROWS=5"),
 		NULL,NULL,NULL);
 	
 	////////// DESIGN
 	$insert_form[] = array("design", "design",
-		array("TEXTAREA",{$edit['design'],NULL,"ROWS=10"),
+		array("TEXTAREA",$edit['design'],NULL,"ROWS=10"),
 		NULL,NULL,NULL);
 	
 	////////// CONSTRUCTION
 	$insert_form[] = array("construction", "construction",
-		array("TEXTAREA",{$edit['construction'],NULL,"ROWS=5"), 
+		array("TEXTAREA",$edit['construction'],NULL,"ROWS=5"), 
 		NULL,NULL,NULL);
 	*/
 	

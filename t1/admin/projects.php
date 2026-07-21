@@ -183,7 +183,7 @@ if ( !$query = mysqli_query($db, $sql. $filter) ) {
 	
 	
 	while ($info = mysqli_fetch_assoc($query)) {
-		//{$info['title']<br />
+		//$info['title']<br />
 		echo "<tr bgcolor='#". return_alternate("ffffff","eeeeee") ."'>
 			<td align=center>". ${info}['project_id'] ."</td>
 			<td><a href='project.php?". CRYPT_REF_ID ."=". ${info}['project_id'] ."' title='". ${info}['design'] ."'>". ${info}['title'] ."</a></td>

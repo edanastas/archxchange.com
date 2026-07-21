@@ -21,9 +21,9 @@
 				query_insert("action",$action,NULL) . // USED IN CRON FILE (BETA)
 				
 				query_insert("filename",basename($_SERVER['PHP_SELF']),NULL) .
-				query_insert("file",basename({$debug['0']['file']),NULL) .
-				query_insert("line",{$debug['0']['line'],NULL) .
-				query_insert("function",{$debug['0']['function'],NULL) .
+				query_insert("file",basename($debug['0']['file']),NULL) .
+				query_insert("line",$debug['0']['line'],NULL) .
+				query_insert("function",$debug['0']['function'],NULL) .
 				
 				query_insert("session_id",session_id(),NULL) .
 				
@@ -75,7 +75,7 @@
 	}
 	
 	
-	/*{$info['error'] = mysqli_fetch_array(mysqli_query($db, "SELECT * FROM errors WHERE error_id = '" . mysqli_insert_id($db) . "' LIMIT 1"));
+	/*$info['error'] = mysqli_fetch_array(mysqli_query($db, "SELECT * FROM errors WHERE error_id = '" . mysqli_insert_id($db) . "' LIMIT 1"));
 	
 	echo "ERROR:<P>" . 
 		$message . "<P>";

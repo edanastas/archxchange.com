@@ -147,12 +147,12 @@ echo "<FORM ACTION=" . ${_SERVER}['PHP_SELF'] . " METHOD=POST>";
 	
 	////////// USERNAME
 	$insert_form[] = array("username", trans("username"),
-		array("TEXT",{$edit['username'],NULL,"MAXLENGTH=30"),
+		array("TEXT",$edit['username'],NULL,"MAXLENGTH=30"),
 		NULL,NULL,NULL);
 	
 	////////// EMAIL
 	$insert_form[] = array("email", trans("email"), // $field_name // WITH TRANSLATION FUNCTION
-		array("TEXT",{$edit['email'],null,NULL), // ${input}['type'], ${input}['value'], ${input}['style'], ${input}['option']
+		array("TEXT",$edit['email'],null,NULL), // ${input}['type'], ${input}['value'], ${input}['style'], ${input}['option']
 		NULL,"email@example.com",NULL); // $styles,$trailer,$options
 	//"<div class='formNote'>we treat your personal privacy just as we would our own. So you can be assured that we will not share your email address with anyone. Simple as that!</div>"
 	
@@ -166,18 +166,18 @@ echo "<FORM ACTION=" . ${_SERVER}['PHP_SELF'] . " METHOD=POST>";
 	/*
 	////////// EMAIL CONFIRM
 	$insert_form[] = array("email_confirm", trans("confirm email"),
-		array("TEXT",{$edit['email_confirm'],NULL,NULL),
+		array("TEXT",$edit['email_confirm'],NULL,NULL),
 		NULL,NULL,NULL);
 	*/
 	
 	////////// PASSWORD
 	$insert_form[] = array("password", trans("password"),
-		array("PASSWORD",{$edit['password'],NULL,NULL),
+		array("PASSWORD",$edit['password'],NULL,NULL),
 		NULL,NULL,NULL);
 		
 	////////// PASSWORD CONFIRM
 	$insert_form[] = array("password_confirm", trans("confirm password"),
-		array("PASSWORD",{$edit['password_confirm'],NULL,NULL),
+		array("PASSWORD",$edit['password_confirm'],NULL,NULL),
 		NULL,NULL,NULL);
 	
 	
@@ -194,7 +194,7 @@ echo "<FORM ACTION=" . ${_SERVER}['PHP_SELF'] . " METHOD=POST>";
 		<OPTION VALUE=''>SELECT --></OPTION>";
 	while ( $info = mysqli_fetch_array($query) ) {
 		${input}['profession'] .= "<OPTION VALUE='". ${info}['profession_id'] ."' ". 
-			({$info['profession_id'] == ${_POST}['profession_id'] ? " SELECTED" : null).">". ucwords({$info['profession']) ."</OPTION>";
+			($info['profession_id'] == ${_POST}['profession_id'] ? " SELECTED" : null).">". ucwords($info['profession']) ."</OPTION>";
 	}
 	${input}['profession'] .= "</SELECT>";
 	
@@ -206,24 +206,24 @@ echo "<FORM ACTION=" . ${_SERVER}['PHP_SELF'] . " METHOD=POST>";
 	
 	////////// FIRSTNAME
 	$insert_form[] = array("firstname", trans("firstname"),
-		array("TEXT",{$edit['firstname'],NULL,NULL),
+		array("TEXT",$edit['firstname'],NULL,NULL),
 		NULL,NULL,NULL);
 	
 	////////// LASTNAME
 	$insert_form[] = array("lastname", trans("lastname"),
-		array("TEXT",{$edit['lastname'],NULL,NULL),
+		array("TEXT",$edit['lastname'],NULL,NULL),
 		NULL,NULL,NULL);
 	
 	
 	/*
 	////////// AGREE
 	$insert_form[] = array("agree", null,
-		array("CHECKBOX",{$edit['agree'],NULL,NULL),
+		array("CHECKBOX",$edit['agree'],NULL,NULL),
 		NULL,NULL,NULL);
 	
 	/////////// test
 	$insert_form[] = array("comments", "comments",
-		array("TEXTAREA",{$edit['comments'],NULL,NULL),
+		array("TEXTAREA",$edit['comments'],NULL,NULL),
 		NULL,NULL,NULL);
 	*/
 	

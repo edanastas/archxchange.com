@@ -51,7 +51,7 @@ $vars["team"]["sql"] = "SELECT * FROM projects_team pt
 	
 */
 
-//{$error['style'][] = "That style already exists for this project.";
+//$error['style'][] = "That style already exists for this project.";
 
 function local_type($type) {
 	
@@ -112,7 +112,7 @@ function local_type($type) {
 							$sql = "SELECT * FROM categories WHERE approved IS NOT NULL";
 							$query = mysqli_query($db, $sql);
 							while (  $category = mysqli_fetch_array($query) ) {
-								$return .= "<option value='". ${category}['category_id'] ."' ". ($_POST['category_id'] == ${category}['category_id'] ? " SELECTED" : null) .">". ucwords({$category['category']) ." [". ${category}['category_id'] ."]</option>";
+								$return .= "<option value='". ${category}['category_id'] ."' ". ($_POST['category_id'] == ${category}['category_id'] ? " SELECTED" : null) .">". ucwords($category['category']) ." [". ${category}['category_id'] ."]</option>";
 							}
 							$return .= "<option value=''>Add Building Category...</option>
 						</select><p>
@@ -126,7 +126,7 @@ function local_type($type) {
 							$sql = "SELECT * FROM styles WHERE approved IS NOT NULL";
 							$query = mysqli_query($db, $sql);
 							while (  $style = mysqli_fetch_array($query) ) {
-								$return .= "<option value='". ${style}['style_id'] ."' ". ($_POST['style_id'] == ${style}['style_id'] ? " SELECTED" : null) .">". ucwords({$style['style']) ." [". ${style}['style_id'] ."]</option>";
+								$return .= "<option value='". ${style}['style_id'] ."' ". ($_POST['style_id'] == ${style}['style_id'] ? " SELECTED" : null) .">". ucwords($style['style']) ." [". ${style}['style_id'] ."]</option>";
 							}
 							$return .= "<option value=''>Add Design Style...</option>
 						</select><p>
@@ -142,7 +142,7 @@ function local_type($type) {
 							$sql = "SELECT * FROM professions WHERE approved IS NOT NULL";
 							$query = mysqli_query($db, $sql);
 							while (  $profession = mysqli_fetch_array($query) ) {
-								$return .= "<option value='". ${profession}['profession_id'] ."' ". ($_POST['profession_id'] == ${profession}['profession_id'] ? " SELECTED" : null) .">". ucwords({$profession['profession']) ." [". ${profession}['profession_id'] ."]</option>";
+								$return .= "<option value='". ${profession}['profession_id'] ."' ". ($_POST['profession_id'] == ${profession}['profession_id'] ? " SELECTED" : null) .">". ucwords($profession['profession']) ." [". ${profession}['profession_id'] ."]</option>";
 							}
 							$return .= "<option value=''>Add Team Member...</option>
 						</select><p>
@@ -256,7 +256,7 @@ function local_type($type) {
 					$return .= "<div id='". $type ."_nav_". $info['projects_'. $type .'_id'] ."' style='display:none;position:absolute;left:-1px;bottom:-1px;border:dotted 1px gray;padding:5px 5px 5px 10px;border-left:0px;border-bottom:0px;background-color:#FFFFFF;color:#717272;'>
 						Your opinion has been recorded</div>";
 				} else {
-					$return .= "<div id='". $type ."_nav_". $info['projects_'. $type .'_id'] ."' style='display:none;position:absolute;left:-1px;bottom:-1px;border:dotted 1px gray;padding:5px 1px 5px 10px;border-left:0px;border-bottom:0px;background-color:#FFFFFF;'>". //rating($info['projects_'. $type .'_id'],{$info['vote_value']) .
+					$return .= "<div id='". $type ."_nav_". $info['projects_'. $type .'_id'] ."' style='display:none;position:absolute;left:-1px;bottom:-1px;border:dotted 1px gray;padding:5px 1px 5px 10px;border-left:0px;border-bottom:0px;background-color:#FFFFFF;'>". //rating($info['projects_'. $type .'_id'],$info['vote_value']) .
 						//display:none;position:absolute;left:-1px;bottom:-1px;z-index:200;border:dotted 1px gray;padding:5px;padding-right:0px;background-color:#FAFBDA;
 
 							"Does this look accurate to you? ". //processVote(vote,ref_id,type,user_id,project_id,consecutive=null)
@@ -273,8 +273,8 @@ function local_type($type) {
 					
 					case 'title':
 						//dev_print($info);
-						//$return .= "<h1 style=''>". ucwords({$info['title']) ." [". ${info}['projects_title_id'] ."] </h1>";
-						$return .= "<h1 style='padding:4px;background-color:#FAFBBB;'>". ucwords({$info['title']) ."</h1>";
+						//$return .= "<h1 style=''>". ucwords($info['title']) ." [". ${info}['projects_title_id'] ."] </h1>";
+						$return .= "<h1 style='padding:4px;background-color:#FAFBBB;'>". ucwords($info['title']) ."</h1>";
 					break;
 					
 					case 'location':
@@ -291,17 +291,17 @@ function local_type($type) {
 					break;
 					
 					case 'team':
-						$return .= "". ucwords({$info['name']) ." [". ${info}['projects_team_id'] ."] <i>(". ${info}['profession'] .")</i>";
+						$return .= "". ucwords($info['name']) ." [". ${info}['projects_team_id'] ."] <i>(". ${info}['profession'] .")</i>";
 					break;
 					
 					case 'description':
-						$return .= "<b>". ({$info['title'] ? ${info}['title'] :"Discussion ". ${info}['projects_desription_id']) ."</b><br />".
-							( strlen({$info['description']) > 200 ? substr({$info['description'],0,200) ."... " : ${info}['description'] ) ."<p>". 
-							ucfirst({$info['firstname']) ." ". ucfirst({$info['lastname']) ." ". ${info}['stamp'] ."";
+						$return .= "<b>". ($info['title'] ? ${info}['title'] :"Discussion ". ${info}['projects_desription_id']) ."</b><br />".
+							( strlen($info['description']) > 200 ? substr($info['description'],0,200) ."... " : ${info}['description'] ) ."<p>". 
+							ucfirst($info['firstname']) ." ". ucfirst($info['lastname']) ." ". ${info}['stamp'] ."";
 					break;
 					
 					case 'link':
-						$return .= "<a href='". ${info}['url'] ."'>". ( ${info}['title'] ?{$info['title'] : return_domain({$info['title']) ) ."</a> [". ${info}['projects_link_id'] ."]";
+						$return .= "<a href='". ${info}['url'] ."'>". ( ${info}['title'] ?$info['title'] : return_domain($info['title']) ) ."</a> [". ${info}['projects_link_id'] ."]";
 					break;
 				}
 				
@@ -613,7 +613,7 @@ if ( is_array($_POST['SUBMIT_COMMENT']) ) {
 				category_id = '". $category_id ."'";
 			if ( !$query = mysqli_query($db, $sql) ) {
 				${error}['category']['insert'] = "There was an error trying to insert the projects_category association.";
-				error({$error['category']['insert'],$sql,1);
+				error($error['category']['insert'],$sql,1);
 			} else {
 				// the category has been added
 				// regenerate the project categories
@@ -644,7 +644,7 @@ if ( is_array($_POST['SUBMIT_COMMENT']) ) {
 				style_id = '". $style_id ."'";
 			if ( !$query = mysqli_query($db, $sql) ) {
 				${error}['style']['insert'] = "there was an error trying to insert the projects_style association.";
-				error({$error['style']['insert'],$sql,1);
+				error($error['style']['insert'],$sql,1);
 			} else {
 				// the style has been added
 				// regenerate the project styles

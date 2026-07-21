@@ -299,7 +299,7 @@ echo "<FORM NAME='NEW_PROJECT' ACTION=" . ${_SERVER}['PHP_SELF'] . " METHOD=POST
 	
 	////////// TITLE
 	$insert_form[] = array("title", trans("project title"),
-		array("TEXT",{$edit['title'],NULL,NULL),
+		array("TEXT",$edit['title'],NULL,NULL),
 		NULL,NULL,NULL);
 	
 	////////// IF TITLE WAS SUBMITTED --> CHECK IF IT EXISTS
@@ -316,7 +316,7 @@ echo "<FORM NAME='NEW_PROJECT' ACTION=" . ${_SERVER}['PHP_SELF'] . " METHOD=POST
 			if ( count($_SESSION['project']['title']) > 1 ) {
 				foreach($_SESSION['project']['title'] AS $key => $title ) {
 					if ( strtolower($title) != strtolower($_POST['title']) && strtolower($title) != strtolower($_SESSION['project']['title'][$_GET['p_title_selected']]) ) {
-							${input}['title_searched'] .= ({$input['title_searched'] ? "</br>":NULL) 
+							${input}['title_searched'] .= ($input['title_searched'] ? "</br>":NULL) 
 								."<a href='". ${_SERVER}['PHP_SELF'] ."?p_title_selected=". $key ."'>". ucwords($title) ."</a>";
 					}
 				}
@@ -372,7 +372,7 @@ echo "<FORM NAME='NEW_PROJECT' ACTION=" . ${_SERVER}['PHP_SELF'] . " METHOD=POST
 			while ($info = mysqli_fetch_assoc($query)) {
 				${input}['project_id'] .= "<INPUT TYPE=RADIO NAME='project_id' VALUE='". ${info}['project_id'] ."'".
 					(($_POST['project_id'] ? ${_POST}['project_id'] : ${_SESSION}['project']['project_id']) == ${info}['project_id'] 
-						? " CHECKED" : NULL) ."> ". ucwords({$info['title']) ."</br>";
+						? " CHECKED" : NULL) ."> ". ucwords($info['title']) ."</br>";
 			}
 			
 			////////// QUESTION
@@ -398,8 +398,8 @@ echo "<FORM NAME='NEW_PROJECT' ACTION=" . ${_SERVER}['PHP_SELF'] . " METHOD=POST
 		
 		
 		////////////////////////////////////////////////// country_id
-		//{$input['country_id'] = form_drop_countries(return_priority(array($_POST['country_id'],{$edit['country_id'])));
-		${input}['country_id'] = form_drop_countries({$edit['country_id']);
+		//$input['country_id'] = form_drop_countries(return_priority(array($_POST['country_id'],$edit['country_id'])));
+		${input}['country_id'] = form_drop_countries($edit['country_id']);
 		
 		////////// COUNTRY MENU
 		$insert_form[] = array("country_id", trans("country"),
@@ -419,9 +419,9 @@ echo "<FORM NAME='NEW_PROJECT' ACTION=" . ${_SERVER}['PHP_SELF'] . " METHOD=POST
 		
 		
 		////////////////////////////////////////////////// zone_id
-		//{$input['zone_id'] = form_drop_zones(return_priority(array($_POST['zone_id'],{$edit['zone_id'])));
-		//{$input['zone_id'] = form_drop_zones({$edit['zone_id'],NULL,array("onchange"=>true));
-		${input}['zone_id'] = form_drop_zones({$edit['zone_id']);
+		//$input['zone_id'] = form_drop_zones(return_priority(array($_POST['zone_id'],$edit['zone_id'])));
+		//$input['zone_id'] = form_drop_zones($edit['zone_id'],NULL,array("onchange"=>true));
+		${input}['zone_id'] = form_drop_zones($edit['zone_id']);
 		
 		////////// PROVINCE MENU
 		$insert_form[] = array("zone_id", trans("province / state"),
@@ -470,30 +470,30 @@ echo "<FORM NAME='NEW_PROJECT' ACTION=" . ${_SERVER}['PHP_SELF'] . " METHOD=POST
 			/*
 			////////// OFFICE WEBSITE
 			$insert_form[] = array("office_url", trans("website url"),
-				array("TEXT",{$edit['office_url'],NULL,NULL),
+				array("TEXT",$edit['office_url'],NULL,NULL),
 				NULL,NULL,NULL);
 			
 			////////// OFFICE PHONE
 			$insert_form[] = array("office_phone", trans("office phone"),
-				array("TEXT",{$edit['office_phone'],NULL,NULL),
+				array("TEXT",$edit['office_phone'],NULL,NULL),
 				NULL,NULL,NULL);
 			*/
 			
 			////////// OFFICE ADDRESS LINE 1
 			$insert_form[] = array("address_01", trans("address"),
-				array("TEXT",{$edit['address_01'],NULL,NULL),
+				array("TEXT",$edit['address_01'],NULL,NULL),
 				NULL,NULL,NULL);
 			
 			////////// CITY
 			$insert_form[] = array("city", trans("city / township"), 
-				array("TEXT",{$edit['city'],NULL,NULL),
-				//array("TEXT",return_priority(array($_POST['city'],{$edit['city'])),NULL,NULL),
+				array("TEXT",$edit['city'],NULL,NULL),
+				//array("TEXT",return_priority(array($_POST['city'],$edit['city'])),NULL,NULL),
 				NULL,NULL,NULL); // $styles,$trailer,$options
 			
 			////////// POSTAL CODE
 			$insert_form[] = array("postal_code", trans("postal code"), 
-				array("TEXT",{$edit['postal_code'],NULL,NULL),
-				//array("TEXT",return_priority(array($_POST['postal_code'],{$edit['postal_code'])),NULL,NULL),
+				array("TEXT",$edit['postal_code'],NULL,NULL),
+				//array("TEXT",return_priority(array($_POST['postal_code'],$edit['postal_code'])),NULL,NULL),
 				NULL,NULL,NULL); // $styles,$trailer,$options
 			
 		}
