@@ -56,10 +56,7 @@ $config[image][types] = array(
 
 ////////// DATABASE CONNECTION
 /////////////////////////////////////////////////////////////////////////////////////
-// On aaPanel, secure files live above web root
-// Adjust this path to match your server's secure directory location
-$secure_dir = (LOCAL ? dirname(__FILE__) : "/www/domains/secure/archxchange.com");
-require($secure_dir . "/db.php"); // CONNECT TO DB
+require(dirname(__FILE__) . "/db.php"); // CONNECT TO DB — always relative to this file
 
 
 
