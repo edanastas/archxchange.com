@@ -86,15 +86,15 @@ if ( !$query = mysqli_query($db, $sql) ) {
 		*/
 		while ($category = mysqli_fetch_assoc($query)) {
 			
-			if ($_GET['category_id'] == ${category}['category_id'] ? ${category}['category'] : null ) 
-				$selected_category = ${category}['category'];
+			if ($_GET['category_id'] == $category['category_id'] ? $category['category'] : null ) 
+				$selected_category = $category['category'];
 			
-			$portfolio_links[] = "<li><a href='portfolio.php?category_id=". ${category}['category_id'] ."'>". ${category}['category'] ."</a></li>";
+			$portfolio_links[] = "<li><a href='portfolio.php?category_id=". $category['category_id'] ."'>". $category['category'] ."</a></li>";
 			
 			/*echo "<li>
-				<a href='portfolio.php?category_id=". ${category}['category_id'] ."'". 
-					($_GET['category_id'] == ${category}['category_id'] ? " class='categoryListSelected'" : null ) .">". 
-					${category}['category'] ." [". ${category}['category_id'] ."] - ". ${category}['count'] ."</a>
+				<a href='portfolio.php?category_id=". $category['category_id'] ."'". 
+					($_GET['category_id'] == $category['category_id'] ? " class='categoryListSelected'" : null ) .">". 
+					$category['category'] ." [". $category['category_id'] ."] - ". $category['count'] ."</a>
 			</li>";*/
 		}
 		
@@ -137,13 +137,13 @@ if ( file_exists(ROOT_DIR ."images/logo.gif")) {
 
 ////////// LIST PROJECTS
 //////////////////////////////////////////////////
-if ( ${_GET}['category_id'] ) {
+if ( $_GET['category_id'] ) {
 	// get all the projects for the category
 	$sql = "SELECT p.*, c.category, c.category_id 
 		FROM template_projects p 
 		LEFT JOIN template_categories c ON p.category_id = c.category_id 
 		WHERE p.domain_id = '". DOMAIN_ID ."' 
-			AND p.category_id = '". ${_GET}['category_id'] ."' 
+			AND p.category_id = '". $_GET['category_id'] ."' 
 		ORDER BY p.title";
 	
 	if ( !$query = mysqli_query($db, $sql) ) {
@@ -157,13 +157,13 @@ if ( ${_GET}['category_id'] ) {
 			
 			while ($projects = mysqli_fetch_assoc($query)) {
 				
-				if ($_GET['project_id'] == ${projects}['project_id'] ) $project = $projects;
+				if ($_GET['project_id'] == $projects['project_id'] ) $project = $projects;
 				
 				echo "<li>
-					<a href='portfolio.php?category_id=". ${_GET}['category_id'] ."&project_id=". ${projects}['project_id'] ."'". 
-						($_GET['project_id'] == ${projects}['project_id'] ? " id='projectListSelected'" : null ) ." 
+					<a href='portfolio.php?category_id=". $_GET['category_id'] ."&project_id=". $projects['project_id'] ."'". 
+						($_GET['project_id'] == $projects['project_id'] ? " id='projectListSelected'" : null ) ." 
 						accesskey='". ++$accesskey_index ."' class='key'>". 
-						${projects}['title'] ."</a><!-- [". ${projects}['project_id'] ."]-->
+						$projects['title'] ."</a><!-- [". $projects['project_id'] ."]-->
 				</li>";
 				
 				
@@ -179,7 +179,7 @@ if ( ${_GET}['category_id'] ) {
 
 ////////// PROJECT DETAILS
 //////////////////////////////////////////////////
-if ( ${_GET}['project_id'] ) {
+if ( $_GET['project_id'] ) {
 	
 	echo '
 	<style type="text/css">
@@ -202,11 +202,11 @@ if ( ${_GET}['project_id'] ) {
 	
 	//dev_print($project);
 	echo "<div id='projectDetails'>";
-		echo "<div id='projectTitle'>". ${project}['title'] ."</div>";
+		echo "<div id='projectTitle'>". $project['title'] ."</div>";
 		echo "<div id='projectText'>";
-			echo "<div id='projectDescription'>". ${project}['design'] ."</div>";
-			echo "<div id='projectSite'>". ${project}['site'] ."</div>";
-			echo "<div id='projectConstruction'>". ${project}['construction'] ."</div>";
+			echo "<div id='projectDescription'>". $project['design'] ."</div>";
+			echo "<div id='projectSite'>". $project['site'] ."</div>";
+			echo "<div id='projectConstruction'>". $project['construction'] ."</div>";
 		echo "</div>";
 	echo "</div>";
 	
@@ -216,7 +216,7 @@ if ( ${_GET}['project_id'] ) {
 	////////// PROJECT IMAGES
 	//////////////////////////////////////////////////
 	$sql = "SELECT * FROM template_images 
-		WHERE project_id = '". ${_GET}['project_id'] ."' 
+		WHERE project_id = '". $_GET['project_id'] ."' 
 		ORDER BY date DESC";
 	
 	if ( !$query = mysqli_query($db, $sql) ) {
@@ -228,25 +228,25 @@ if ( ${_GET}['project_id'] ) {
 			while ($images = mysqli_fetch_assoc($query)) {
 				
 				//dev_print($images);
-				//echo "<div id='projectImageCaption'>". ${project}['caption'] ."</div>";
+				//echo "<div id='projectImageCaption'>". $project['caption'] ."</div>";
 				//visibility:hidden;
 				
 				echo "<div id='wrapper'>\n<div id='projectImage_". ++$image_index ."' style='";
 					if ( !$init ) $init = true; else echo "display:none;";
 					echo "position:absolute;top:0px;left:0px;'>\n";
-				echo "<a href='#'><img border='0' src='uploads/". ${images}['image_id'] .".png'></a>";
+				echo "<a href='#'><img border='0' src='uploads/". $images['image_id'] .".png'></a>";
 				echo "</div></div>";
 				
 				$image_links[] = "
 					<a href='#' id='projectImageLink_". $image_index ."' onMouseOver=\"testImages('projectImage_". $image_index ."');\">". $image_index ."</a>";
 				/*
-				if ($_GET['project_id'] == ${projects}['project_id'] ) $project = $projects;
+				if ($_GET['project_id'] == $projects['project_id'] ) $project = $projects;
 				
 				echo "<li>
-					<a href='portfolio.php?category_id=". ${_GET}['category_id'] ."&project_id=". ${projects}['project_id'] ."'". 
-						($_GET['project_id'] == ${projects}['project'] ? " class='projectListSelected'" : null ) ." 
+					<a href='portfolio.php?category_id=". $_GET['category_id'] ."&project_id=". $projects['project_id'] ."'". 
+						($_GET['project_id'] == $projects['project'] ? " class='projectListSelected'" : null ) ." 
 						accesskey='". ++$accesskey_index ."'>". 
-						${projects}['title'] ." [". ${projects}['project_id'] ."]</a>
+						$projects['title'] ." [". $projects['project_id'] ."]</a>
 				</li>";
 				*/
 				
@@ -291,7 +291,7 @@ if ( !$query = mysqli_query($db, $sql) ) {
 	echo "<div id='projectDepartment'></div>";
 	
 	while ($info = mysqli_fetch_assoc($query)) {
-		echo "<div class='projectList'>". ${info}['title'] ." ". ${info}['category'] ."</div>";
+		echo "<div class='projectList'>". $info['title'] ." ". $info[category] ."</div>";
 	}
 }
 

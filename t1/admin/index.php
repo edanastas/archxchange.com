@@ -35,7 +35,7 @@ if ( !$query = mysqli_query($db, $sql) ) {
 	echo mysqli_error($db);
 } else {
 	while ($info = mysqli_fetch_assoc($query)) {
-		echo "{$info['firstname']}<P>";
+		echo "$info[firstname]<P>";
 	}
 }
 */
@@ -65,11 +65,11 @@ if ( !$query = mysqli_query($db, $sql) ) {
 		foreach( $content AS $value ) {
 			
 			
-			if ( ${value}['0'] == "_" ) {
+			if ( $value[0] == "_" ) {
 				
-				if ( is_numeric($value['1']) ) { // VERTICAL SPACE
+				if ( is_numeric($value[1]) ) { // VERTICAL SPACE
 					$return .= "<TR>
-						<TD COLSPAN=$colspan BGCOLOR=#FFFFFF HEIGHT=". ${value}['1'] ."></TD>
+						<TD COLSPAN=$colspan BGCOLOR=#FFFFFF HEIGHT=". $value[1] ."></TD>
 					</TR>";
 					
 				} else { // SUBTITLE
@@ -77,36 +77,36 @@ if ( !$query = mysqli_query($db, $sql) ) {
 					// BE8000 275788 123351 72653A 5A5039
 					
 					$return .= "<TR>
-						<TD COLSPAN=$colspan BGCOLOR=#FFFFFF STYLE='padding:10px;color:#5A5039;'><B>". ${value}['1'] ."</B></TD>
+						<TD COLSPAN=$colspan BGCOLOR=#FFFFFF STYLE='padding:10px;color:#5A5039;'><B>". $value[1] ."</B></TD>
 					</TR>";
 				}
 				
-			//} elseif ( ${value}['0'] == "?" ) { // QUESTION
+			//} elseif ( $value[0] == "?" ) { // QUESTION
 				
-			} elseif ( ${value}['0'] == "~" ) { // text
+			} elseif ( $value[0] == "~" ) { // text
 				$return .= "<TR>
-					<TD COLSPAN=$colspan BGCOLOR=#FFFFFF STYLE='padding:4px;color:#333333;'>". ${value}['1'] ."</TD>
+					<TD COLSPAN=$colspan BGCOLOR=#FFFFFF STYLE='padding:4px;color:#333333;'>". $value[1] ."</TD>
 				</TR>";
 				
 				
-			} elseif ( ${value}['0'] == "-" ) {
+			} elseif ( $value[0] == "-" ) {
 				
-				if ( is_numeric($value['1']) ) { // DIVIDER LINE (PERCENTAGE OF WIDTH)
+				if ( is_numeric($value[1]) ) { // DIVIDER LINE (PERCENTAGE OF WIDTH)
 					$return .= "<TR>
 						<TD COLSPAN=$colspan BGCOLOR=#FFFFFF>
-							<HR WIDTH=". ${value}['1'] ."% NOSHADE SIZE=1 COLOR=#DDDDDD></TD>
+							<HR WIDTH=". $value[1] ."% NOSHADE SIZE=1 COLOR=#DDDDDD></TD>
 					</TR>";
 					
 				} else { // LIST LINK CONTENT
 					
 					
-					//$temp = "<TD COLSPAN=1 BGCOLOR=#FFFFFF>". ${value}['1'] ."</TD>";
+					//$temp = "<TD COLSPAN=1 BGCOLOR=#FFFFFF>". $value[1] ."</TD>";
 					
 					$return .= "<TR>";
 					
 					$cell_count = NULL;
 					
-					foreach ( ${value}['1'] AS $features ) {
+					foreach ( $value[1] AS $features ) {
 						
 						if ( $cell_count == 2 ) {
 							$cell_count = NULL;
@@ -114,7 +114,7 @@ if ( !$query = mysqli_query($db, $sql) ) {
 						}
 						
 						$return .= "<TD BGCOLOR=#FFFFFF WIDTH=50% COLSPAN=1 STYLE='padding-left:20px;'>
-							<BIG><B>&#149</B></BIG> <A HREF='". ${features}['0'] ."'>". ${features}['1'] ."</A></TD>";
+							<BIG><B>&#149</B></BIG> <A HREF='". $features[0] ."'>". $features[1] ."</A></TD>";
 						
 						$cell_count++;
 					}
@@ -122,7 +122,7 @@ if ( !$query = mysqli_query($db, $sql) ) {
 					$return .= "</TR>";
 					
 					//$return .= "<TR>
-					//	<TD COLSPAN=1 BGCOLOR=#FFFFFF>". ${value}['1'] ."</TD>
+					//	<TD COLSPAN=1 BGCOLOR=#FFFFFF>". $value[1] ."</TD>
 					//</TR>";
 					
 					

@@ -146,9 +146,9 @@ function local_admin_nav($links) {
 			
 			foreach ( $links AS $value ) {
 				$return .= "<td align=center>
-					<a href='". ${value}['url'] ."' style='' ". ({$value['onclick']}?"onclick=\"". ${value}['onclick'] ."\"":null) .">
-						". ({$value['icon']} ? "<img height=30 border=0 src='". TEMPLATE_DOMAIN . ${value}['icon'] ."'>" : null) ."<br />
-						". ${value}['anchor'] ."</a></td>";
+					<a href='". $value[url] ."' style='' ". ($value[onclick]?"onclick=\"". $value[onclick] ."\"":null) .">
+						". ($value[icon] ? "<img height=30 border=0 src='". TEMPLATE_DOMAIN . $value[icon] ."'>" : null) ."<br />
+						". $value[anchor] ."</a></td>";
 			}
 			
 			$return .= "</tr>

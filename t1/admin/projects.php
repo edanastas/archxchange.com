@@ -13,7 +13,7 @@ if ( !defined('ACCESS') ) die(ERROR_MESSAGE);
 // VARIABLES ////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////// 3.0
 //define("TITLE","PAGE TITLE"); // PAGE TITLE
-if ( ${_GET}['CRYPT_REF_ID'] ) {
+if ( $_GET[CRYPT_REF_ID] ) {
 	/*
 	LEFT JOIN template_departments td ON td.department_id = tp.department_id 
 	*/
@@ -99,8 +99,8 @@ echo "<div class='productSearchContainer'>
 			$sql = query_domain('template_categories');
 			$query = mysqli_query($db, $sql);
 			while ( $info = mysqli_fetch_assoc($query) ) {
-				echo "<option value='". ${info}['category_id'] ."'".
-					($_GET['category_id'] == ${info}['category_id'] ? " SELECTED" : NULL) .">". ${info}['category'] ."</option>";
+				echo "<option value='". $info[category_id] ."'".
+					($_GET[category_id] == $info[category_id] ? " SELECTED" : NULL) .">". $info[category] ."</option>";
 			}
 			echo "</select></span> ";
 			
@@ -114,23 +114,23 @@ echo "<div class='productSearchContainer'>
 					AND type = 'architect'";
 			$query = mysqli_query($db, $sql);
 			while ( $info = mysqli_fetch_assoc($query) ) {
-				echo "<option value='". ${info}['contact_id'] ."'".
-					($_GET['architect_id'] == ${info}['contact_id'] ? " SELECTED" : NULL) .">". ${info}['contact'] ."</option>";
+				echo "<option value='". $info[contact_id] ."'".
+					($_GET[architect_id] == $info[contact_id] ? " SELECTED" : NULL) .">". $info[contact] ."</option>";
 			}
 			echo "</select></span> ";
 			
 			echo "<br />";
 			
 			echo "<span style='padding:4px;'>
-				id: <input type=text name=". CRYPT_REF_ID ." ". form_value("project id",{$_GET['CRYPT_REF_ID']}) ." size=15>
+				id: <input type=text name=". CRYPT_REF_ID ." ". form_value("project id",$_GET[CRYPT_REF_ID]) ." size=15>
 			</span> ";
 			
 			echo "<span style='padding:4px;'>
-				title: <input type=text name=title ". form_value("title",{$_GET['title']}) ." size=15>
+				title: <input type=text name=title ". form_value("title",$_GET[title]) ." size=15>
 			</span> ";
 			
 			echo "<span style='padding:4px;'>
-				description: <input type=text name=description ". form_value("description",{$_GET['description']}) ." size=15>
+				description: <input type=text name=description ". form_value("description",$_GET[description]) ." size=15>
 				<input type=submit name=search value='Search'>
 			</span> ";
 			
@@ -141,11 +141,11 @@ echo "<div class='productSearchContainer'>
 
 ////////// FILTER LIST
 /////////////////////////////////////////////////////////////////////////////////////
-if ( ${_GET}['category_id'] ) $filter .= " AND tc.category_id = '". ${_GET}['category_id'] ."' ";
-if ( ${_GET}['architect_id'] ) $filter .= " AND tca.contact_id = '". ${_GET}['architect_id'] ."' ";
-if ( ${_GET}['CRYPT_REF_ID'] && is_numeric($_GET['CRYPT_REF_ID']) ) $filter .= " AND tp.project_id = '". ${_GET}['CRYPT_REF_ID'] ."' ";
-if ( ${_GET}['title'] && ${_GET}['title'] != "title" ) $filter .= " AND tp.title LIKE '". ( strlen({$_GET['title']}) > 1 ? "%" : null ) . ${_GET}['title'] ."%' ";
-if ( ${_GET}['description'] && ${_GET}['description'] != "description" ) $filter .= " AND CONCAT(tp.site, tp.design, tp.construction) LIKE '%" . ${_GET}['description'] ."%' ";
+if ( $_GET[category_id] ) $filter .= " AND tc.category_id = '". $_GET[category_id] ."' ";
+if ( $_GET[architect_id] ) $filter .= " AND tca.contact_id = '". $_GET[architect_id] ."' ";
+if ( $_GET[CRYPT_REF_ID] && is_numeric($_GET[CRYPT_REF_ID]) ) $filter .= " AND tp.project_id = '". $_GET[CRYPT_REF_ID] ."' ";
+if ( $_GET[title] && $_GET[title] != "title" ) $filter .= " AND tp.title LIKE '". ( strlen($_GET[title]) > 1 ? "%" : null ) . $_GET[title] ."%' ";
+if ( $_GET[description] && $_GET[description] != "description" ) $filter .= " AND CONCAT(tp.site, tp.design, tp.construction) LIKE '%" . $_GET[description] ."%' ";
 
 
 //	LEFT JOIN template_departments td ON td.department_id = tp.department_id 
@@ -183,14 +183,14 @@ if ( !$query = mysqli_query($db, $sql. $filter) ) {
 	
 	
 	while ($info = mysqli_fetch_assoc($query)) {
-		//$info['title']<br />
+		//$info[title]<br />
 		echo "<tr bgcolor='#". return_alternate("ffffff","eeeeee") ."'>
-			<td align=center>". ${info}['project_id'] ."</td>
-			<td><a href='project.php?". CRYPT_REF_ID ."=". ${info}['project_id'] ."' title='". ${info}['design'] ."'>". ${info}['title'] ."</a></td>
-			<td>". ${info}['contact'] ."</td>
-			<td>". ${info}['department'] ."</td>
-			<td>". ${info}['category'] ."</td>
-			<td>". ${info}['date_started'] ."</td>
+			<td align=center>". $info[project_id] ."</td>
+			<td><a href='project.php?". CRYPT_REF_ID ."=". $info[project_id] ."' title='". $info[design] ."'>". $info[title] ."</a></td>
+			<td>". $info[contact] ."</td>
+			<td>". $info[department] ."</td>
+			<td>". $info[category] ."</td>
+			<td>". $info[date_started] ."</td>
 		</tr>";
 	}
 	

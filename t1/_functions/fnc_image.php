@@ -7,16 +7,16 @@
 	
 	
 	// DIRECTORY
-	if ( !$dst_dir ) ${error}['dst_dir'] = "please specify a directory to copy the image to";
+	if ( !$dst_dir ) $error[dst_dir] = "please specify a directory to copy the image to";
 	
 	// FILE NAME
-	if ( !$dst_file ) ${error}['dst_file'] = "please specify a file name for the image";
+	if ( !$dst_file ) $error[dst_file] = "please specify a file name for the image";
 	
 	// MAX DIMENSIONS (WIDTH / HEIGHT)
 	//if ( !$max ) $max = 640;
 	
 	
-	if ( $_FILES['upload_file'. ${options}['suffix']][name] ) {
+	if ( $_FILES['upload_file'. $options[suffix]][name] ) {
 	
 		//dev_print($_FILES);
 		
@@ -24,11 +24,11 @@
 		
 		
 		////////// CHECK IF JPG FORMAT 
-		if ( !preg_match("/jpeg/i", $_FILES['upload_file'. ${options}['suffix']][type]) ) ${error}['image_type'] = "please use .jpg image file format";
+		if ( !preg_match("/jpeg/i", $_FILES['upload_file'. $options[suffix]][type]) ) $error[image_type] = "please use .jpg image file format";
 		
 		////////// CHECK IF FILE IS TOO BIG
-		if ( $_FILES['upload_file'. ${options}['suffix']][size] > ($_POST['MAX_FILE_SIZE'] ? ${_POST}['MAX_FILE_SIZE'] : 2000000) ) {
-			${error}['MAX_FILE_SIZE'] = "please use files under 2MB";
+		if ( $_FILES['upload_file'. $options[suffix]][size] > ($_POST[MAX_FILE_SIZE] ? $_POST[MAX_FILE_SIZE] : 2000000) ) {
+			$error[MAX_FILE_SIZE] = "please use files under 2MB";
 		}
 		
 		
@@ -38,12 +38,12 @@
 			
 			
 			////////// DEFINE SOURCE FILE
-			$src_file = $_FILES['upload_file'. ${options}['suffix']][tmp_name];
+			$src_file = $_FILES['upload_file'. $options[suffix]][tmp_name];
 			$dst_file = $dst_dir ."/". $dst_file . ".jpg";
 			
 			////////// CREATE SOURCE IMAGE REFERENCE
 			if ( !$src_im = ImageCreateFromJpeg($src_file) ) {
-				${error}['src_im'] = "Failed to upload the photo <B><I>" . $_FILES['upload_file'. ${options}['suffix']][name] . "</I></B>";
+				$error[src_im] = "Failed to upload the photo <B><I>" . $_FILES['upload_file'. $options[suffix]][name] . "</I></B>";
 			}
 			
 			
@@ -85,13 +85,13 @@
 			
 			////////// COPY IMAGE TO DESTINATION
 			if ( !@imagecopyresized ($dst_im, $src_im, $dst_x, $dst_y, $src_x, $src_y, ($dst_w + 1), ($dst_h + 1), ($src_w), ($src_h)) ) {
-				$error[] = "Failed to upload the photo <B><I>" . $_FILES['upload_file'. ${options}['suffix']][name] . "</I></B>";
+				$error[] = "Failed to upload the photo <B><I>" . $_FILES['upload_file'. $options[suffix]][name] . "</I></B>";
 			}
 			
 			
 			////////// CREATE THE IMAGE FILE
 			if ( !ImageJpeg ($dst_im, $dst_file) ) {
-				$error[] = "Failed to upload the photo <B><I>" . $_FILES['upload_file'. ${options}['suffix']][name] . "</I></B>";
+				$error[] = "Failed to upload the photo <B><I>" . $_FILES['upload_file'. $options[suffix]][name] . "</I></B>";
 			} else {
 				//echo "CREATED IMAGE FILE! ($dst_im, $dst_file)<P>";
 			}
@@ -106,7 +106,7 @@
 		
 		
 	} else {
-		${error}['file'] = "please specify a file name for the image";
+		$error[file] = "please specify a file name for the image";
 	}
 	
 	// SEND ERROR
@@ -170,7 +170,7 @@
 			while ( $set = mysqli_fetch_assoc($query_sets) ) {
 				
 				// SWATCH SET IMAGE FILE
-				$product_set_image_file = DEFAULT_ROOT_DIR ."images_swatch_set/". ${set}['set_id'] .".jpg";
+				$product_set_image_file = DEFAULT_ROOT_DIR ."images_swatch_set/". $set[set_id] .".jpg";
 				
 				if ( file_exists($product_set_image_file) ) {
 					
@@ -200,18 +200,18 @@
 	////////// CHECK IF IMAGE EXISTS
 	if ( image_exists($src) ) {
 		
-		if ( ${options}['max'] && !preg_match("/WIDTH|HEIGHT/i",$options['html'])) {
+		if ( $options[max] && !preg_match("/WIDTH|HEIGHT/i",$options[html])) {
 			
 			list($width, $height) = getimagesize($src);
 			
-			if ( $width >= $height || ${options}['width'] && !$options['height'] ) {
-				${options}['html'] .= " WIDTH=". ${options}['max'];
+			if ( $width >= $height || $options[width] && !$options[height] ) {
+				$options[html] .= " WIDTH=". $options[max];
 			} else {
-				${options}['html'] .= " HEIGHT=". ${options}['max'];
+				$options[html] .= " HEIGHT=". $options[max];
 			}
 		}
 	
-		return "<IMG BORDER=0 SRC='". $src ."' ". ${options}['html'] ." CLASS='". ${options}['class'] ."' STYLE='". ${options}['style'] ."'>";
+		return "<IMG BORDER=0 SRC='". $src ."' ". $options[html] ." CLASS='". $options['class'] ."' STYLE='". $options[style] ."'>";
 	}
 	
 }

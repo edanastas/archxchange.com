@@ -23,10 +23,10 @@ if ( $_POST ) {
 	// CONVERT THE POST VALUES TO PASS TO THE FORM FUNCTION
 	$form_value = $_POST;
 	
-} elseif ( ${_GET}['CRYPT_REF_ID'] ) {
+} elseif ( $_GET[CRYPT_REF_ID] ) {
 	
 	// GET THE FORM VALUES TO EDIT
-	$query = mysqli_query($db, "SELECT * FROM " . basename({$_SERVER['PHP_SELF']},".php") . " WHERE id = '" . ${_GET}['CRYPT_REF_ID'] . "'");
+	$query = mysqli_query($db, "SELECT * FROM " . basename($_SERVER[PHP_SELF],".php") . " WHERE id = '" . $_GET[CRYPT_REF_ID] . "'");
 	$form_value = mysqli_fetch_array($query);
 	
 }

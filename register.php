@@ -20,60 +20,60 @@ define("TITLE","Registration"); // PAGE TITLE
 
 // DATABASE /////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////// 4.0
-if ( ${_POST}['SUBMIT'] ) {
+if ( $_POST[SUBMIT] ) {
 	
 	
 	// CHECK USERNAME
-	if ( !$_POST['username'] ) {
-		${error}['username'] = "please submit a username";
-	} elseif ( strlen($_POST['username']) < 4 ) {
-		${error}['username'] = "Your username should be at least 4 characters";
+	if ( !$_POST[username] ) {
+		$error[username] = "please submit a username";
+	} elseif ( strlen($_POST[username]) < 4 ) {
+		$error[username] = "Your username should be at least 4 characters";
 	} else {
-		$sql = "SELECT * FROM users WHERE username = '". query_prep({$_POST['username']}) ."' LIMIT 1";
+		$sql = "SELECT * FROM users WHERE username = '". query_prep($_POST[username]) ."' LIMIT 1";
 		if ( !mysqli_query($db, $sql) ) {
 			error("there was an error checking if the new user exists",$sql,1);
-			${error}['username'] = "There was an error validating your information. Please contact an administrator for assistance.";
+			$error[username] = "There was an error validating your information. Please contact an administrator for assistance.";
 		} else {
 			
 		}
 	}
 	
 	// CHECK EMAIL
-	if ( !$_POST['email'] ) {
-		${error}['email'] = "please submit your email address";
-	} elseif ( !email_validate($_POST['email']) ) {
-		${error}['email'] = "We could not validate your email address. Make sure you submitted it correctly. They usually have an @ in there somewhere, without any spaces.";
+	if ( !$_POST[email] ) {
+		$error[email] = "please submit your email address";
+	} elseif ( !email_validate($_POST[email]) ) {
+		$error[email] = "We could not validate your email address. Make sure you submitted it correctly. They usually have an @ in there somewhere, without any spaces.";
 	}
 	
 	// CHECK NAMES
-	if ( !$_POST['firstname'] ) 
-		${error}['firstname'] = "please provide us with a contact name. You can change this name at any time from your account management.";
+	if ( !$_POST[firstname] ) 
+		$error[firstname] = "please provide us with a contact name. You can change this name at any time from your account management.";
 	
-	if ( !$_POST['lastname'] ) 
-		${error}['lastname'] = "please provide us with a contact name. You can change this name at any time from your account management.";
+	if ( !$_POST[lastname] ) 
+		$error[lastname] = "please provide us with a contact name. You can change this name at any time from your account management.";
 	
-	if ( !$_POST['company'] ) 
-		${error}['company'] = "Please submit a company name.";
+	if ( !$_POST[company] ) 
+		$error[company] = "Please submit a company name.";
 	
-	if ( !$_POST['phone'] ) 
-		${error}['phone'] = "Please submit a phone so we can contact you if we need any additional information.";
+	if ( !$_POST[phone] ) 
+		$error[phone] = "Please submit a phone so we can contact you if we need any additional information.";
 	
 	
 	// CHECK PASSWORD
-	if ( !$_POST['password'] ) {
-		${error}['password'] = "please submit a password";
-	} elseif ( strlen($_POST['password']) < 6 ) {
-		${error}['password'] = "Your password should be at least 6 characters";
-	} elseif ( ${_POST}['password'] != ${_POST}['password_confirm'] ) {
-		${error}['password_confirm'] = "Your passwords did not match. Make sure you got your password correct otherwise you may not be able to get access this account next time you try to login.";
+	if ( !$_POST[password] ) {
+		$error[password] = "please submit a password";
+	} elseif ( strlen($_POST[password]) < 6 ) {
+		$error[password] = "Your password should be at least 6 characters";
+	} elseif ( $_POST[password] != $_POST[password_confirm] ) {
+		$error[password_confirm] = "Your passwords did not match. Make sure you got your password correct otherwise you may not be able to get access this account next time you try to login.";
 	}
 	
 	
 	// CHECK DOMAIN
-	if ( !$_POST['domain'] ) {
-		${error}['domain'] = "please submit your offices website domain";
-	} elseif ( !preg_match("/[a-z0-9-]+\.[a-z]{2,4}$/i",trim($_POST['domain'])) ) { //(www\.)?
-		${error}['domain'] = "We could not validate your website domain.";
+	if ( !$_POST[domain] ) {
+		$error[domain] = "please submit your offices website domain";
+	} elseif ( !preg_match("/[a-z0-9-]+\.[a-z]{2,4}$/i",trim($_POST[domain])) ) { //(www\.)?
+		$error[domain] = "We could not validate your website domain.";
 	}
 	
 	
@@ -82,8 +82,8 @@ if ( ${_POST}['SUBMIT'] ) {
 		// INSERT DOMAIN (MOST IMPORTANT)
 		$sql = "INSERT INTO domains SET 
 			domain_id = NULL, 
-			domain = '". ${_POST}['domain'] ."', 
-			company = '". ${_POST}['company'] ."'";
+			domain = '". $_POST[domain] ."', 
+			company = '". $_POST[company] ."'";
 		if ( !mysqli_query($db, $sql) ) {
 			error("there was an error trying to insert new domain",$sql,1,NULL,
 				"manually create a member for this domain (". $last_insert_id .")");
@@ -94,11 +94,11 @@ if ( ${_POST}['SUBMIT'] ) {
 				$sql = "INSERT INTO members SET 
 					member_id = NULL, 
 					domain_id = '". $last_insert_id ."', 
-					username = '". strtolower({$_POST['username']}) ."', 
-					password = sha1('". ${_POST}['password'] ."'), 
-					email = '". ${_POST}['email'] ."', 
-					firstname = '". ${_POST}['firstname'] ."', 
-					lastname = '". ${_POST}['lastname'] ."'";
+					username = '". strtolower($_POST[username]) ."', 
+					password = sha1('". $_POST[password] ."'), 
+					email = '". $_POST[email] ."', 
+					firstname = '". $_POST[firstname] ."', 
+					lastname = '". $_POST[lastname] ."'";
 				if ( !mysqli_query($db, $sql) ) {
 					error("there was an error trying to insert new member for domain_id ". $last_insert_id,$sql,1);
 				} else {
@@ -108,9 +108,9 @@ if ( ${_POST}['SUBMIT'] ) {
 						contact_id = NULL, 
 						access = '3', 
 						domain_id = '". $last_insert_id ."', 
-						email = '". ${_POST}['email'] ."', 
-						firstname = '". ${_POST}['firstname'] ."', 
-						lastname = '". ${_POST}['lastname'] ."'";
+						email = '". $_POST[email] ."', 
+						firstname = '". $_POST[firstname] ."', 
+						lastname = '". $_POST[lastname] ."'";
 					if ( !mysqli_query($db, $sql) ) {
 						error("there was an error trying to copy the member information to the contacts (member_id ". mysqli_insert_id($db) .")",$sql,1);
 					}
@@ -145,7 +145,7 @@ include(TEMPLATE_BASE_DIR . "_includes/inc_header.php");
 /////////////////////////////////////////////////////////////////////////////////////
 //echo "<TABLE BORDER=0 BORDERCOLOR=PINK ALIGN=CENTER CELLPADDING=1 CELLSPACING=0 RULES=NONE>";
 echo form_table_start();
-echo "<FORM ACTION=" . ${_SERVER}['PHP_SELF'] . " METHOD=POST>";
+echo "<FORM ACTION=" . $_SERVER[PHP_SELF] . " METHOD=POST>";
 
 
 
@@ -179,12 +179,12 @@ echo "<FORM ACTION=" . ${_SERVER}['PHP_SELF'] . " METHOD=POST>";
 	
 	////////// USERNAME
 	$insert_form[] = array("username", trans("username"),
-		array("TEXT",{$edit['username']},NULL,"MAXLENGTH=30"),
+		array("TEXT",$edit[username],NULL,"MAXLENGTH=30"),
 		NULL,NULL,NULL);
 	
 	////////// EMAIL
 	$insert_form[] = array("email", trans("email"), // $field_name // WITH TRANSLATION FUNCTION
-		array("TEXT",$edit['email'],null,NULL), // ${input}['type'], ${input}['value'], ${input}['style'], ${input}['option']
+		array("TEXT",$edit[email],null,NULL), // $input[type], $input[value], $input[style], $input[option]
 		NULL,"email@example.com",NULL); // $styles,$trailer,$options
 	//"<div class='formNote'>we treat your personal privacy just as we would our own. So you can be assured that we will not share your email address with anyone. Simple as that!</div>"
 	
@@ -198,35 +198,35 @@ echo "<FORM ACTION=" . ${_SERVER}['PHP_SELF'] . " METHOD=POST>";
 	/*
 	////////// EMAIL CONFIRM
 	$insert_form[] = array("email_confirm", trans("confirm email"),
-		array("TEXT",$edit['email_confirm'],NULL,NULL),
+		array("TEXT",$edit[email_confirm],NULL,NULL),
 		NULL,NULL,NULL);
 	*/
 	
 	////////// PASSWORD
 	$insert_form[] = array("password", "password",
-		array("PASSWORD",$edit['password'],NULL,NULL),
+		array("PASSWORD",$edit[password],NULL,NULL),
 		NULL,"6-18 characters",NULL);
 		
 	////////// PASSWORD CONFIRM
 	$insert_form[] = array("password_confirm", "confirm password",
-		array("PASSWORD",$edit['password_confirm'],NULL,NULL),
+		array("PASSWORD",$edit[password_confirm],NULL,NULL),
 		NULL,NULL,NULL);
 	
 	
 	/*
 	////////// FIRSTNAME
 	$insert_form[] = array("firstname", "firstname",
-		array("TEXT",$edit['firstname'],NULL,NULL),
+		array("TEXT",$edit[firstname],NULL,NULL),
 		NULL,NULL,NULL);
 	
 	////////// AGREE
 	$insert_form[] = array("agree", null,
-		array("CHECKBOX",$edit['agree'],NULL,NULL),
+		array("CHECKBOX",$edit[agree],NULL,NULL),
 		NULL,NULL,NULL);
 	
 	/////////// test
 	$insert_form[] = array("comments", "comments",
-		array("TEXTAREA",$edit['comments'],NULL,NULL),
+		array("TEXTAREA",$edit[comments],NULL,NULL),
 		NULL,NULL,NULL);
 	*/
 	
@@ -236,12 +236,12 @@ echo "<FORM ACTION=" . ${_SERVER}['PHP_SELF'] . " METHOD=POST>";
 	
 	////////// FIRSTNAME
 	$insert_form[] = array("firstname", "firstname",
-		array("TEXT",$edit['firstname'],NULL,NULL),
+		array("TEXT",$edit[firstname],NULL,NULL),
 		NULL,NULL,NULL);
 	
 	////////// LASTNAME
 	$insert_form[] = array("lastname", "lastname",
-		array("TEXT",$edit['lastname'],NULL,NULL),
+		array("TEXT",$edit[lastname],NULL,NULL),
 		NULL,NULL,NULL);
 	
 	
@@ -252,7 +252,7 @@ echo "<FORM ACTION=" . ${_SERVER}['PHP_SELF'] . " METHOD=POST>";
 	
 	////////// COMPANY
 	$insert_form[] = array("domain", "website domain",
-		array("TEXT",$edit['domain'],NULL,NULL),
+		array("TEXT",$edit[domain],NULL,NULL),
 		NULL,"your-company-name.com",NULL);
 	
 	////////// NOTE
@@ -261,18 +261,18 @@ echo "<FORM ACTION=" . ${_SERVER}['PHP_SELF'] . " METHOD=POST>";
 	
 	////////// COMPANY
 	$insert_form[] = array("company", "company name",
-		array("TEXT",$edit['company'],NULL,NULL),
+		array("TEXT",$edit[company],NULL,NULL),
 		NULL,NULL,NULL);
 	
 	////////// PHONE
 	$insert_form[] = array("phone", "office phone",
-		array("TEXT",$edit['phone'],NULL,NULL),
+		array("TEXT",$edit[phone],NULL,NULL),
 		NULL,NULL,NULL);
 	
 	/*
 	////////// FAX
 	$insert_form[] = array("fax", "office fax",
-		array("TEXT",$edit['fax'],NULL,NULL),
+		array("TEXT",$edit[fax],NULL,NULL),
 		NULL,NULL,NULL);
 	
 	
@@ -281,7 +281,7 @@ echo "<FORM ACTION=" . ${_SERVER}['PHP_SELF'] . " METHOD=POST>";
 	
 	////////// SUBMIT
 	$insert_form[] = array("SUBMIT",NULL,
-		"<INPUT TYPE=SUBMIT NAME=SUBMIT VALUE='Sign Me Up!'>", // ${input}['type'], ${input}['value'], ${input}['style'], ${input}['option']
+		"<INPUT TYPE=SUBMIT NAME=SUBMIT VALUE='Sign Me Up!'>", // $input[type], $input[value], $input[style], $input[option]
 		NULL,NULL,NULL); // $styles,$trailer,$options
 	
 	
