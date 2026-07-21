@@ -32,8 +32,11 @@ if ( !defined('CRON') && !LOCAL ) { // IF NOT RUN BY CRONTAB CONTINUE
 define('SITE_ACCESS', '0'); // SITE DEVELOPMENT STATE
 	// 0 (NORMAL), 1 (NO VIEWING), 2 (NO LOGIN), 3 (NO ACCOUNT CHANGES)
 
-// GLOBAL // 
-//define('LOCAL', ( preg_match("/^(concord.local|192\.168\.)/i",$_SERVER[HTTP_HOST]) ? TRUE : FALSE )); // LOCAL DEV SERVER
+// GLOBAL //
+// define LOCAL — loaded from config_global.php below
+// Load secure config early so LOCAL is available
+$secure_path = "../secure/archxchange.com/";
+require($secure_path . "config_global.php");
 
 ////////// SET DEVELOPMENT STATE
 define('DEV_TRANS', TRUE); // DEVELOPER TRANSLATION STATE
@@ -71,9 +74,6 @@ define('DEFAULT_TITLE', 'Welcome to ' . DOMAIN); // WEB PAGE TITLE
 ////////// FUNCTIONS
 /////////////////////////////////////////////////////////////////////////////////////
 //require(TEMPLATE_BASE_DIR . "_functions/fnc.php"); // QUERY
-// Load secure config from above web root (aaPanel) or relative path (local dev)
-$secure_path = "../secure/archxchange.com/";
-require($secure_path . "config_global.php");
 define('ROOT_DIR', (LOCAL ? '/home/archx/' : '/www/domains/archxchange.com/')); // ROOT DIRECTORY
 
 
