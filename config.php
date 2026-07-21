@@ -72,9 +72,9 @@ define('DEFAULT_TITLE', 'Welcome to ' . DOMAIN); // WEB PAGE TITLE
 /////////////////////////////////////////////////////////////////////////////////////
 //require(TEMPLATE_BASE_DIR . "_functions/fnc.php"); // QUERY
 // Load secure config from above web root (aaPanel) or relative path (local dev)
-$secure_path = (LOCAL ? dirname(__FILE__) . "/../secure/" : "/secure/archxchange.com/");
+$secure_path = (LOCAL ? dirname(__FILE__) . "/../secure/" : "/www/domains/secure/archxchange.com/");
 require($secure_path . "config_global.php");
-define('ROOT_DIR', (LOCAL ? '/home/archx/' : '/www/wwwroot/archxchange.com/')); // ROOT DIRECTORY
+define('ROOT_DIR', (LOCAL ? '/home/archx/' : '/www/domains/archxchange.com/')); // ROOT DIRECTORY
 
 
 
