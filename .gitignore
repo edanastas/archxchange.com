@@ -1,0 +1,8 @@
+_uploads/
+upload/
+error_log
+.DS_Store
+Thumbs.db
+*.log
+cache/
+tmp/

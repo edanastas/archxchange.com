@@ -1,0 +1,190 @@
+<?php
+
+
+// ACCESS ///////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////// 1.0
+define("ACCESS", NULL); // see config.php for settings
+
+define("BASE_DIR","./"); // WHERE IS THE BASE DIRECTORY?
+require(BASE_DIR . "config.php"); // _functions/fnc.php
+
+
+// SESSION //////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////// 2.0
+
+
+// VARIABLES ////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////// 3.0
+//define("TITLE","PAGE TITLE"); // PAGE TITLE
+
+
+// DATABASE /////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////// 4.0
+if ( $_POST ) {
+	
+	
+	////////// PROCESS SUBSECTION POST DATA
+	////////////////////////////////////////////////////////////////////////////////
+	if ( $_POST[SUBMIT_IDENTIFIER] ) {
+		
+		// CHECK IF FIELD SUBMITTED
+		if ( !$_POST[fieldname] ) {
+			$error[fieldname] = "please submit this field";
+		}
+		
+		// SETUP AN SQL QUERY ARRAY TO PROCESS IF THERE ARE NO ERRORS
+		$db[insert][] = "INSERT INTO `table_name` SET fieldname = '" . $_POST[fieldname] . "'"; // INSERT SAMPLE
+		$db[insert][] = "UPDATE `table_name` SET fieldname = '" . $_POST[fieldname] . "' WHERE id = '" . $_POST[id] . "' LIMIT 1"; // INSERT SAMPLE
+		$db[insert][] = "DELETE FROM `table_name` WHERE id = '" . $_POST[id] . "' LIMIT 1";
+		
+	}
+	
+	////////// PROCESS DB
+	////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////
+	
+	////////// IF NO ERRORS -->
+	if ( !$error && $db[insert] ) {
+		
+		////////// MODIFY DATABASE
+		////////////////////////////////////////
+		foreach( $db[insert] AS $process ) {
+			// PROCESS $db[insert] ARRAY
+			if ( !mysqli_query($db, $process) ) {
+				$error[error] = "there has been an error modifying the database\n" . mysqli_error($db) . "";
+			}
+		}
+		
+	}
+	
+	// PRINT DATABASE SQL QUERIES FOR ERROR CHECKING
+	//-- dev_print($db);
+	
+}
+
+
+// HTML /////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////// 10.0
+
+////////// HEADER
+/////////////////////////////////////////////////////////////////////////////////////
+include(BASE_DIR . "_includes/inc_header.php");
+
+////////// START BODY
+/////////////////////////////////////////////////////////////////////////////////////
+//echo "<TABLE BORDER=0 ALIGN=CENTER WIDTH=100% CELLPADDING=1 CELLSPACING=0 RULES=NONE>";
+echo form_table_start();
+echo "<FORM ACTION=" . $_SERVER[PHP_SELF] . " METHOD=POST>";
+
+
+
+
+
+//////// MAIN SECTION HEADING
+/////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+
+
+////////// SUBSECTION HEADINGS
+/////////////////////////////////////////////////////////////////////////////////////
+
+
+	////////// TITLE NAME HERE
+	$insert_form[] = array("-",NULL,"SETUP FORMS"); // SUBTITLE
+	
+	
+	////////// SPACER
+	$insert_form[] = array("-",NULL,5); // VERTICAL SPACER
+	
+	
+	
+	
+////////// MANUAL INPUT
+/////////////////////////////////////////////////////////////////////////////////////
+
+	////////// SUBMIT
+	$insert_form[] = array("SUBMIT",NULL,
+		"<INPUT TYPE=SUBMIT NAME=SUBMIT VALUE=SUBMIT>", // $input[type], $input[value], $input[style], $input[option]
+		NULL,NULL,NULL); // $styles,$trailer,$options
+	
+	
+	
+	////////////////////////////////////////////////////////////////////////////////
+	
+	$input[sample] = "<SELECT NAME=sample>";
+	$input[sample] .= "<OPTION STYLE='color:CCC;' VALUE=''>SELECT</OPTION>";
+	
+	$query_samples = mysqli_query($db, "SELECT * FROM samples " . "");
+	while ( $results = mysqli_fetch_assoc($query_samples) ) {
+		
+		$input[sample] .= "<OPTION VALUE='" . $results[sample] . "' " . // SAMPLES SELECT
+			return_match($_POST[sample], $results[sample], "SELECTED") . ">" . $results[sample] . " (" . $results[sample_id] . ")</OPTION>";
+		
+	}
+	
+	$input[sample] .= "</SELECT>";
+	
+	////////// SAMPLE
+	$insert_form[] = array("sample", trans("sample"), // $field_name
+		$input[sample], // $input[type], $input[value], $input[style], $input[option]
+		NULL,NULL,NULL); // $styles,$trailer,$options
+	
+	
+	
+////////// FORMATTED INPUT
+/////////////////////////////////////////////////////////////////////////////////////
+
+	////////// FIELDNAME
+	$insert_form[] = array("fieldname", trans("fieldname"), // $field_name // WITH TRANSLATION FUNCTION
+		array("TEXT",$edit[fieldname],NULL,NULL), // $input[type], $input[value], $input[style], $input[option]
+		NULL,NULL,array("no_post" => $_POST[fieldname])); // $styles,$trailer,$options
+		
+		
+		/********** EXAMPLE: WHEN YOU DO NOT WANT TO REPOST FORM DATA ******************/
+		NULL,NULL,array(no_post=>$_POST[fieldname]
+						value=>2)); // SEE inpput_form FUNCTION FOR VALUE DEFINITIONS
+		/************************************************* END EXAMPLE *****************/
+			
+	
+	
+/* -----------------  PUT FORMS THAT ARE UNDER DEVELOPMENT HERE ----------------
+
+
+----------------------------------------------------------------------------- */
+
+
+////////// PROCESS FORM ARRAY
+/////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+
+	echo form_input($insert_form);
+	
+/////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////
+////////// END TABLE (BODY)
+echo form_table_end();
+//echo "</TABLE>";
+echo "</FORM>";
+
+
+
+
+
+
+////////// CHECK VARIABLES
+/////////////////////////////////////////////////////////////////////////////////////
+//-- echo "<B>\$error</B><BR>"; dev_print($error);
+//-- echo "<B>\$_REQUEST</B><BR>"; dev_print($_REQUEST);
+
+
+////////// FOOTER
+/////////////////////////////////////////////////////////////////////////////////////
+include(BASE_DIR . "_includes/inc_footer.php");
+
+?>

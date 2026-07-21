@@ -1,0 +1,105 @@
+
+input,textarea,text {
+	/*
+	color:#0066b3;
+	color:#890814;
+	color:#3D1B1E;
+	background-color:#eeeeee;
+	font-size:x-large;
+	font-size:large;
+	font-size:6pt;
+	color:#00334F;
+	
+	
+	background-color:#FFFCC4;
+	*/
+}
+
+
+.form {
+/*
+	text-align:right;
+	width:400px;
+	vertical-align:middle;
+	text-align:center;
+	font-size:large;
+*/
+}
+
+.formNote {
+/*
+*/
+	width:400px;
+	border:dotted 1px gray;
+	background-color:#eeeeee;
+	padding:4px;
+}
+.formLabel {
+	/*
+	font-weight:bold;
+	font-size:large;
+	*/
+	
+}
+
+.formTitle {
+/*
+	line-height: 3em;
+*/
+	padding-top:20px;
+	padding-bottom:10px;
+	
+}
+
+
+.formSubtitle {
+/*
+	line-height: 3em;
+*/
+	padding-top:10px;
+	padding-bottom:5px;
+}
+
+
+.formQuestion {
+	/*
+	padding:10px;
+	padding-bottom:5px;
+	color:#779D83;
+	color:#596D74;
+	
+	font-weight:bold;
+	color:#779D83;
+	font-size:x-large;
+	*/
+}
+
+.formNotification {
+	background-color:#EEEEEE;
+	color:darkgreen;
+	padding:10px;
+	font-weight:bold;
+	border:solid darkgreen 1px;
+}
+
+.formAlert {
+	color:red;
+	font-size:x-large;
+	padding:10px;
+	font-weight:bold;
+	border:solid red 2px;
+}
+
+
+select.compact input.compact {
+	font-size:xx-small;
+}
+
+div.error {
+	color:red;
+	background-color:yellow;
+	border:dotted orange 1px;
+	padding:8px;
+	font-size:normal;
+	font-weight:bold;
+}

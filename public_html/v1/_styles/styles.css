@@ -1,0 +1,507 @@
+
+html {
+	/*
+	min-width:450px;
+	*/
+}
+
+
+body {
+	font-family:"arial","Helvetica","sans-serif";
+	/*
+	vertical-align:middle;
+	text-align:center;
+	color:#555555;
+	background-image: url(../images/bg_halftone.gif);
+	margin:auto;
+	
+	background-color: #cccccc;
+	
+	font:12px/12px "Verdana","Helvetica","sans-serif";
+	*/
+}
+
+
+a,a:link,a:visited,a:active {
+	/*
+	text-transform:uppercase;
+	background-color:white;
+	color:#5EA936;
+	font-weight:700;
+	color:#5EA936;
+	
+	background-color:white;
+	text-decoration:underline;
+	border-bottom:dashed 1px lightgray;
+	
+	padding:0px 2px 1px 2px;
+	*/
+	color:#004c91;
+	text-decoration:none;
+	text-decoration:underline;
+}
+
+a:hover {
+	/*
+	display:block;
+	text-decoration:underline;
+	color:white;
+	padding:0px 12px 1px 12px;
+	background-color:#004c91;
+	border-bottom:dotted 1px white;
+	border-bottom:dotted 0px white;
+	text-decoration:none;
+	*/
+	color:#ffffff;
+	background-color:#FF0000; /*#2A6EAC;*/
+	text-decoration:none;
+}
+
+::-moz-selection{
+	background: #fbdbe8;
+	color: #F55B99;
+}
+
+::selection {
+	background: #fbdbe8;
+	color: #F55B99;
+}
+
+
+
+/****************** LAYOUT *******************/
+
+#header {
+/*
+	vertical-align:middle;
+	height:750px;
+	text-align:center;
+	
+	background:url(girl.jpg) top right no-repeat;
+	text-align:center;
+	height:80;
+	
+	
+	vertical-align:middle;
+	background-color:#EEEEEE;
+	border:dotted gray 1px;
+	margin:auto;
+	background-color:#ffffff;
+	
+	
+	width:100%;
+	
+	background-color: #ffffff;
+	height:23px;
+*/
+	padding:4px;
+	position:relative;
+}
+
+
+
+#imageLogoBox {
+	/*
+	width:250;
+	height:50;
+	
+	right:-1px;
+	top:-1px;
+	
+	background-color:white;
+	background-color:#cccccc;
+	---------------
+	
+	border-left:1px dotted gray;
+	border-bottom:1px dotted gray;
+	*/
+	position:absolute;
+	right:-30px;
+	top:-40px;
+	padding:2px 10px 2px 10px;
+}
+
+#imageLogo {
+	/*
+	height:25px;
+	height:120px;
+	*/
+}
+	
+	
+/*
+#imageBox {
+	position:absolute;
+	right:0px;
+	top:0px;
+	background-color:white;
+	padding:0px 12px 1px 24px;
+	border-left:4px solid black;
+	border-bottom:2px solid black;
+	width:300;
+}
+*/
+
+#imageResize {
+/*
+	max-height:100px;
+*/
+	width:100%;
+	margin:0 auto;
+}
+
+
+
+
+#container {
+	/*
+		vertical-align:middle;
+		height:750px;
+		text-align:center;
+		
+	background:url(girl.jpg) top right no-repeat;
+	width:80%;
+	padding:30px 18px 10px 8px;
+	text-align:center;
+	background-image: url(../images/bg_halftone.gif);
+	
+	
+	border:red double thick;
+	position:relative;
+	vertical-align:middle;
+	*/
+	margin:auto;
+	width:700;
+	height:100%;
+}
+
+#content {
+	/*
+	
+	width:400px;
+	vertical-align:middle;
+	text-align:center;
+	background-color:transparent;
+	text-align:center;
+	width:700;
+	margin:auto;
+	width:700;
+	
+	background-color:#ffffff;
+	
+	height:95%;
+	margin-left:auto;
+	margin-right:auto;
+	*/
+
+	clear:both;
+	width:100%;
+	
+}
+
+.colorSecondary {
+	color:#96AC20;
+}
+
+
+h1 {
+	
+	/*
+	font-size: larger;
+	color:#890814;
+	color:#0066b3;
+	------------
+	
+	font-size:1.5em;
+	*/
+	color:#0066b3;
+	margin:0px;
+	margin-bottom:3px;
+}
+
+h2 {
+	/*
+	margin-bottom:2px;
+	font-size:1.2em;
+	*/
+	color:#596D74;
+	margin:0px;
+	margin-bottom:4px;
+}
+
+h3 {
+	/*
+	color:#0B91FF; // lighter blue
+	-------------------
+	
+	font-size:1.2em;
+	*/
+	color:#596D74;
+	margin:0px;
+}
+
+h4 {
+	
+	margin:0px;
+	font-size:.9em;
+}
+
+h5 {
+	font-weight:normal;
+	margin:0px;
+}
+
+h6 {
+	
+	margin:0px;
+}
+
+ul {
+	/*
+	content: "\0020 \0020 \0020 \00BB \0020";
+	display: inline;
+	&#187;
+	list-style: rectangle;
+	
+	list-style-position: outside;
+	padding-left:0px;
+	text-indent:20px;
+	list-style: none;
+	*/
+	list-style-position: outside;
+	padding-left:20px;
+}
+
+li.spacer {
+	/*
+ul li:before {
+	list-style: none;
+	list-style: "\00BB \0020"; // did not work
+	content: "\00BB \0020";
+	*/
+	padding-bottom:10px;
+}
+
+
+
+/************************************************
+	 custom style classes and ids
+*/
+
+div#nifty {
+	/*
+	background:#DDB600; // too goldish yellow
+	margin: 0 30%;
+	font-weight:bold;
+	text-align:center;
+	*/
+	margin: 6 10%;
+	color:#000;
+	background:#FAD734;
+}
+
+div#nifty div {
+	padding:0px 10px 0px 10px;
+}
+
+span.highlight {
+	/*
+	background-color:#FAD734;
+	*/
+	color:#E23434;
+}
+
+
+.TextGray {
+	color: #777777; }
+
+
+
+#text {
+/*
+
+	width:400px;
+	vertical-align:middle;
+	text-align:center;
+	
+	width:100%;
+	text-align:center;
+	margin:auto;
+	border:solid white 1px;
+	background-image: url(../images/bg_halftone.gif);
+	background-color:gray;
+	color:white;
+	padding:0 10 10 10;
+*/
+}
+
+.defaultTable {
+	background-color:#ccc;
+}
+
+.defaultTable TD {
+	background-color:#fff;
+}
+.defaultTableHeader, .defaultTableHeader TD {
+	padding:4px;
+	background-color:#7FACD2;
+	color:#fff;
+}
+
+
+/**********  **********/
+
+.packagesBoxes {
+	/*
+	padding:10px;border:solid gray 1px;background-color:lightgray;text-align:center
+	
+	background-color: #FFED6F;
+	border: 1px solid #B7A000;
+	height:200px;
+	*/
+	border: 1px solid #B7A000;
+	position:relative;
+	
+	height:100%;
+	padding: 10px;
+	text-align:center;
+	vertical-align:center;
+}
+
+.packagesPrices {
+	/*
+	padding:10px;border:solid gray 1px;background-color:lightgray;text-align:center
+	*/
+	position:absolute;
+	bottom:70px;
+	text-align:center;
+	width:90%;
+	border:red 1px dotted;
+}
+
+
+.packagesRadio {
+	/*
+	padding:10px;border:solid gray 1px;background-color:lightgray;text-align:center
+	
+	border:red 1px dotted;
+	
+	position:absolute;
+	width:90%;
+	bottom:20px;
+	text-align:center;
+	display:block;
+	
+	border:red 1px dotted;
+	*/
+	
+	position:absolute;
+	width:90%;
+	bottom:15px;
+	text-align:center;
+	display:block;
+}
+
+h3.packageFeatures {
+	/*
+	text-decoration:underline;
+	*/
+	color:#314551;
+}
+
+.packageDetailsBox {
+	/*
+	height:250px;
+	*/
+	
+	position:relative;
+}
+
+.packageDetails {
+	/*
+	position:absolute;
+	vertical-align:middle;
+	position:absolute;
+	visibility:hidden;
+	width:90%;
+	height:300px;
+	height:100%;
+	
+	border:solid gray 1px;
+	background-color:#BFDDFF;
+	*/
+	position:absolute;
+	top:0px;
+	left:0px;
+	padding:15px;
+	border:solid gray 1px;
+	background-color:#BFDDFF;
+	visibility:hidden;
+}
+
+.packageContinue {
+	/*
+	*/
+	
+	float:right;
+	padding-top:10px;
+	padding-right:40px;
+}
+
+
+.packagePromotion {
+	/*
+	height:50px;
+	*/
+	padding:8px;
+	margin:4px;
+	background-color:#D9ECFF;
+	border:dotted gray thin;
+	text-align:center;
+}
+
+
+
+.packageSale {
+	/*
+	height:50px;
+	padding:8px;
+	margin:4px;
+	background-color:#D9ECFF;
+	border:dotted gray thin;
+	text-align:center;
+	*/
+	position:absolute;
+	top:53px;
+	left:70px;
+}
+
+
+
+/************** faq tips pop box ******************/
+
+/*
+	http://daringfireball.net/css/fireball_screen.css?v1.38
+*/
+
+fieldset {
+	border: 1px dotted #777;
+	padding: 1em 1em .5em 1em;
+	margin: 0 0 2.5em 0;
+	}
+
+fieldset p {
+	margin-bottom: 0;
+	padding-bottom: 1em;
+	}
+
+legend {
+	color: #aaa;
+	background-color: inherit;
+	font-weight: normal;
+	font-size: .91em;
+	letter-spacing: .2em;
+	text-transform: uppercase;
+	}
+
+
