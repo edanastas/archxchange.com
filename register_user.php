@@ -20,21 +20,21 @@ define("TITLE","Registration"); // PAGE TITLE
 
 // DATABASE /////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////// 4.0
-if ( $_POST[SUBMIT] ) {
+if ( $_POST['SUBMIT'] ) {
 	
 	// CHECK USERNAME
-	if ( !$_POST[username] ) {
-		$error[username] = "please submit a username";
-	} elseif ( strlen($_POST[username]) < 4 ) {
-		$error[username] = "Your username should be at least 4 characters";
+	if ( !$_POST['username'] ) {
+		$error['username'] = "please submit a username";
+	} elseif ( strlen($_POST['username']) < 4 ) {
+		$error['username'] = "Your username should be at least 4 characters";
 	} else {
 		
-		$sql = "SELECT * FROM users WHERE username = '". $_POST[username] ."' LIMIT 1";
+		$sql = "SELECT * FROM users WHERE username = '". $_POST['username'] ."' LIMIT 1";
 		if ( !$query = mysqli_query($db, $sql) ) {
 			error("there was an error checking if the new user exists",$sql,1);
-			$error[username] = "There was an error validating your information. Please contact an administrator for assistance.";
+			$error['username'] = "There was an error validating your information. Please contact an administrator for assistance.";
 		} elseif ( mysqli_fetch_array($query)) {
-			$error[username] = "The username you selected is not vailable. Please select another username.";
+			$error['username'] = "The username you selected is not vailable. Please select another username.";
 		}
 		
 		
@@ -42,48 +42,48 @@ if ( $_POST[SUBMIT] ) {
 	}
 	
 	// CHECK EMAIL
-	if ( !$_POST[email] ) {
-		$error[email] = "please submit your email address";
-	} elseif ( !email_validate($_POST[email]) ) {
-		$error[email] = "We could not validate your email address. Make sure you submitted it correctly. They usually have an @ in there somewhere, without any spaces.";
+	if ( !$_POST['email'] ) {
+		$error['email'] = "please submit your email address";
+	} elseif ( !email_validate($_POST['email']) ) {
+		$error['email'] = "We could not validate your email address. Make sure you submitted it correctly. They usually have an @ in there somewhere, without any spaces.";
 	} else {
-		$sql = "SELECT * FROM users WHERE email = '". $_POST[email] ."' LIMIT 1";
+		$sql = "SELECT * FROM users WHERE email = '". $_POST['email'] ."' LIMIT 1";
 		if ( !$query = mysqli_query($db, $sql) ) {
 			error("there was an error checking if the new user exists",$sql,1);
-			$error[email] = "There was an error validating your information. Please contact an administrator for assistance.";
+			$error['email'] = "There was an error validating your information. Please contact an administrator for assistance.";
 		} elseif ( mysqli_fetch_array($query)) {
-			$error[email] = "Your email address is already registered. Would you like to have your password email to you? <a href='". TEMPLATE_BASE_DIR ."forgot.php'>forgot password</a>";
+			$error['email'] = "Your email address is already registered. Would you like to have your password email to you? <a href='". TEMPLATE_BASE_DIR ."forgot.php'>forgot password</a>";
 		}
 	}
 	
 	// CHECK PASSWORD
-	if ( !$_POST[password] ) {
-		$error[password] = "please submit a password";
-	} elseif ( strlen($_POST[password]) < 6 ) {
-		$error[password] = "Your password should be at least 6 characters";
-	} elseif ( $_POST[password] != $_POST[password_confirm] ) {
-		$error[password_confirm] = "Your passwords did not match. Make sure you got your password correct otherwise you may not be able to get access this account next time you try to login.";
+	if ( !$_POST['password'] ) {
+		$error['password'] = "please submit a password";
+	} elseif ( strlen($_POST['password']) < 6 ) {
+		$error['password'] = "Your password should be at least 6 characters";
+	} elseif ( $_POST['password'] != $_POST['password_confirm'] ) {
+		$error['password_confirm'] = "Your passwords did not match. Make sure you got your password correct otherwise you may not be able to get access this account next time you try to login.";
 	}
 	
 	// CHECK FIRSTNAME
-	if ( strlen($_POST[firstname]) < 3 ) {
-		$error[firstname] = "please submit your first name";
+	if ( strlen($_POST['firstname']) < 3 ) {
+		$error['firstname'] = "please submit your first name";
 	}
 	
 	// CHECK LASTNAME
-	if ( strlen($_POST[lastname]) < 3 ) {
-		$error[lastname] = "please submit your last name";
+	if ( strlen($_POST['lastname']) < 3 ) {
+		$error['lastname'] = "please submit your last name";
 	}
 	
 	if ( !$error ) {
 		
 		$sql = "INSERT INTO users SET 
-			username = '". $_POST[username] ."',
-			email = '". $_POST[email] ."',
-			password = '". sha1($_POST[password]) ."',
-			firstname = '". $_POST[firstname] ."',
-			lastname = '". $_POST[lastname] ."',
-			profession_id = '". $_POST[profession_id] ."',
+			username = '". $_POST['username'] ."',
+			email = '". $_POST['email'] ."',
+			password = '". sha1($_POST['password']) ."',
+			firstname = '". $_POST['firstname'] ."',
+			lastname = '". $_POST['lastname'] ."',
+			profession_id = '". $_POST['profession_id'] ."',
 			reg_date = NOW()";
 		if ( !mysqli_query($db, $sql) ) {
 			error("there was an error trying to insert new user",$sql,1);
@@ -113,7 +113,7 @@ include(TEMPLATE_BASE_DIR . "_includes/inc_header.php");
 /////////////////////////////////////////////////////////////////////////////////////
 //echo "<TABLE BORDER=0 BORDERCOLOR=PINK ALIGN=CENTER CELLPADDING=1 CELLSPACING=0 RULES=NONE>";
 echo form_table_start();
-echo "<FORM ACTION=" . $_SERVER[PHP_SELF] . " METHOD=POST>";
+echo "<FORM ACTION=" . $_SERVER['PHP_SELF'] . " METHOD=POST>";
 
 
 
@@ -147,12 +147,12 @@ echo "<FORM ACTION=" . $_SERVER[PHP_SELF] . " METHOD=POST>";
 	
 	////////// USERNAME
 	$insert_form[] = array("username", trans("username"),
-		array("TEXT",$edit[username],NULL,"MAXLENGTH=30"),
+		array("TEXT",$edit['username'],NULL,"MAXLENGTH=30"),
 		NULL,NULL,NULL);
 	
 	////////// EMAIL
 	$insert_form[] = array("email", trans("email"), // $field_name // WITH TRANSLATION FUNCTION
-		array("TEXT",$edit[email],null,NULL), // $input[type], $input[value], $input[style], $input[option]
+		array("TEXT",$edit['email'],null,NULL), // $input['type'], $input['value'], $input['style'], $input['option']
 		NULL,"email@example.com",NULL); // $styles,$trailer,$options
 	//"<div class='formNote'>we treat your personal privacy just as we would our own. So you can be assured that we will not share your email address with anyone. Simple as that!</div>"
 	
@@ -166,18 +166,18 @@ echo "<FORM ACTION=" . $_SERVER[PHP_SELF] . " METHOD=POST>";
 	/*
 	////////// EMAIL CONFIRM
 	$insert_form[] = array("email_confirm", trans("confirm email"),
-		array("TEXT",$edit[email_confirm],NULL,NULL),
+		array("TEXT",$edit['email_confirm'],NULL,NULL),
 		NULL,NULL,NULL);
 	*/
 	
 	////////// PASSWORD
 	$insert_form[] = array("password", trans("password"),
-		array("PASSWORD",$edit[password],NULL,NULL),
+		array("PASSWORD",$edit['password'],NULL,NULL),
 		NULL,NULL,NULL);
 		
 	////////// PASSWORD CONFIRM
 	$insert_form[] = array("password_confirm", trans("confirm password"),
-		array("PASSWORD",$edit[password_confirm],NULL,NULL),
+		array("PASSWORD",$edit['password_confirm'],NULL,NULL),
 		NULL,NULL,NULL);
 	
 	
@@ -190,46 +190,46 @@ echo "<FORM ACTION=" . $_SERVER[PHP_SELF] . " METHOD=POST>";
 	//////////////////////////////////////////////////
 	$sql = "SELECT * FROM professions WHERE approved IS NOT NULL";
 	$query = mysqli_query($db, $sql);
-	$input[profession] = "<SELECT NAME=profession_id>
+	$input['profession'] = "<SELECT NAME=profession_id>
 		<OPTION VALUE=''>SELECT --></OPTION>";
 	while ( $info = mysqli_fetch_array($query) ) {
-		$input[profession] .= "<OPTION VALUE='". $info[profession_id] ."' ". 
-			($info[profession_id] == $_POST[profession_id] ? " SELECTED" : null).">". ucwords($info[profession]) ."</OPTION>";
+		$input['profession'] .= "<OPTION VALUE='". $info['profession_id'] ."' ". 
+			($info['profession_id'] == $_POST['profession_id'] ? " SELECTED" : null).">". ucwords($info['profession']) ."</OPTION>";
 	}
-	$input[profession] .= "</SELECT>";
+	$input['profession'] .= "</SELECT>";
 	
 	////////// PROFESSION
 	$insert_form[] = array("profession", trans("profession"),
-		$input[profession],
+		$input['profession'],
 		NULL,NULL,NULL);
 	
 	
 	////////// FIRSTNAME
 	$insert_form[] = array("firstname", trans("firstname"),
-		array("TEXT",$edit[firstname],NULL,NULL),
+		array("TEXT",$edit['firstname'],NULL,NULL),
 		NULL,NULL,NULL);
 	
 	////////// LASTNAME
 	$insert_form[] = array("lastname", trans("lastname"),
-		array("TEXT",$edit[lastname],NULL,NULL),
+		array("TEXT",$edit['lastname'],NULL,NULL),
 		NULL,NULL,NULL);
 	
 	
 	/*
 	////////// AGREE
 	$insert_form[] = array("agree", null,
-		array("CHECKBOX",$edit[agree],NULL,NULL),
+		array("CHECKBOX",$edit['agree'],NULL,NULL),
 		NULL,NULL,NULL);
 	
 	/////////// test
 	$insert_form[] = array("comments", "comments",
-		array("TEXTAREA",$edit[comments],NULL,NULL),
+		array("TEXTAREA",$edit['comments'],NULL,NULL),
 		NULL,NULL,NULL);
 	*/
 	
 	////////// SUBMIT
 	$insert_form[] = array("SUBMIT",NULL,
-		"<INPUT TYPE=SUBMIT NAME=SUBMIT VALUE='Sign Me Up!'>", // $input[type], $input[value], $input[style], $input[option]
+		"<INPUT TYPE=SUBMIT NAME=SUBMIT VALUE='Sign Me Up!'>", // $input['type'], $input['value'], $input['style'], $input['option']
 		NULL,NULL,NULL); // $styles,$trailer,$options
 	
 	

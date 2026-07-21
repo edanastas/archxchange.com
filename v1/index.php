@@ -57,7 +57,7 @@ if ( !$query = mysqli_query($db, $sql) ) {
 	echo mysqli_error($db);
 } else {
 	while ($info = mysqli_fetch_assoc($query)) {
-		echo "$info[firstname]<P>";
+		echo "$info['firstname']<P>";
 	}
 }
 

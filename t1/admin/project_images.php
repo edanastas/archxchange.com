@@ -30,8 +30,8 @@ function local_project_menu($name="project_id",$default_id=null) {
 	$sql = "SELECT * FROM template_projects WHERE domain_id = '". DOMAIN_ID ."'";
 	$query = mysqli_query($db, $sql);
 	while ( $projects = mysqli_fetch_assoc($query) ) {
-		$return .= "<option value='". $projects[project_id] ."' ". 
-			(( $_POST[$name] ? $_POST[$name] : ( $default_id ? $default_id : $_REQUEST[CRYPT_REF_ID])) == $projects[project_id] ? " SELECTED" : NULL) .">". substr($projects[title],0,50) ."</option>";
+		$return .= "<option value='". $projects['project_id'] ."' ". 
+			(( $_POST[$name] ? $_POST[$name] : ( $default_id ? $default_id : $_REQUEST['CRYPT_REF_ID'])) == $projects['project_id'] ? " SELECTED" : NULL) .">". substr($projects['title'],0,50) ."</option>";
 	}
 	$return .= "</select>";
 	
@@ -42,10 +42,10 @@ function local_project_menu($name="project_id",$default_id=null) {
 // insert image type_id menu
 function local_type_id_menu($prefix="type_id_",$index=null,$default_type_id=null,$options=null) {
 	global $config;
-	//$config[image][types]
-	$return = "<select name='". $prefix . $index ."'>". ($options[optional] ? "<option value=''>Select Type --></options>":null);
-		if ( is_array($config[image][types]) ) {
-			foreach ($config[image][types] AS $key => $value) {
+	//$config['image']['types']
+	$return = "<select name='". $prefix . $index ."'>". ($options['optional'] ? "<option value=''>Select Type --></options>":null);
+		if ( is_array($config['image']['types']) ) {
+			foreach ($config['image']['types'] AS $key => $value) {
 				if ( is_array($value)) {
 					$return .= "<optgroup label='". $key ."'>";
 					/*if ( $key == "photographers") {
@@ -53,10 +53,10 @@ function local_type_id_menu($prefix="type_id_",$index=null,$default_type_id=null
 						$query = mysqli_query($db, $sql);
 						while ($info = mysqli_fetch_assoc($query)) {
 							
-							//$types[$info[type]][$info[contact_id]] = $info[contact];
-								//$types[photographers][$info[contact_id]] = $info[contact];
+							//$types[$info['type']][$info['contact_id']] = $info['contact'];
+								//$types['photographers'][$info['contact_id']] = $info['contact'];
 							
-							$types[$info[type]] .= "<option value='". $info[contact_id] ."'>". ucwords($info[contact]) ."</option>\n";
+							$types[$info['type']] .= "<option value='". $info['contact_id'] ."'>". ucwords($info['contact']) ."</option>\n";
 							
 							if ( is_array($types) ) {
 							
@@ -65,16 +65,16 @@ function local_type_id_menu($prefix="type_id_",$index=null,$default_type_id=null
 								foreach ($types AS $key => $value ) {
 									
 									if ( $key == "photographer" ) {
-										//$menu[photographers] = "<optgroup label='". $key ."s'>". $value ."</optgroup>";
-										$menu[photographers] .= $value;
+										//$menu['photographers'] = "<optgroup label='". $key ."s'>". $value ."</optgroup>";
+										$menu['photographers'] .= $value;
 									} else {
-										//$menu[others] = "<optgroup label='". $key ."s'>". $value ."</optgroup>";
-										$menu[others] .= $value;
+										//$menu['others'] = "<optgroup label='". $key ."s'>". $value ."</optgroup>";
+										$menu['others'] .= $value;
 									}
 								}
 							}
 							
-							$return .= $menu[photographers] . $menu[others];
+							$return .= $menu['photographers'] . $menu['others'];
 							
 							
 						}
@@ -119,7 +119,7 @@ function local_form_image_details($index) {
 // DATABASE /////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////// 4.0
 if ( $_POST['BACK'] ) {
-	header("location:project.php?". CRYPT_REF_ID ."=". $_POST[project_id]);
+	header("location:project.php?". CRYPT_REF_ID ."=". $_POST['project_id']);
 } elseif ( $_POST['ADD_IMAGES'] ) {
 	
 	
@@ -142,7 +142,7 @@ if ( $_POST['BACK'] ) {
 				$sql = "INSERT INTO template_images SET 
 					image_id = NULL, 
 					domain_id = '". DOMAIN_ID ."', 
-					project_id = ". ($_POST[project_id] ? "'". $_POST['project_id'] ."'" : 
+					project_id = ". ($_POST['project_id'] ? "'". $_POST['project_id'] ."'" : 
 						($_POST['project_id'] ? "'". $_POST['project_id'] ."'" : "NULL")) .",
 					
 					type_id = ". ($_POST['type_id_'. $key] ? "'". $_POST['type_id_'. $key] ."'" : 
@@ -182,7 +182,7 @@ if ( $_POST['BACK'] ) {
 					// sudo chmod 1777 /tmp
 					// http://meta.wikimedia.org/wiki/Running_MediaWiki_on_Mac_OS_X
 					$file_uploaded = $last_insert_id .".png";
-					$command = (LOCAL ? "/usr/local/bin/convert" : "convert") ." -resize 800x800'>' ". $file[tmp_name] ." ". 
+					$command = (LOCAL ? "/usr/local/bin/convert" : "convert") ." -resize 800x800'>' ". $file['tmp_name'] ." ". 
 						(LOCAL ? ROOT_DIR ."uploads/" : "../uploads/") ."". $file_uploaded;
 					//$command = "convert '". $_FILES[$key][tmp_name] ."' ../uploads/". $last_insert_id .".png";
 					//$command = "convert ../uploads/". $file ." ../uploads/". $last_insert_id .".png";
@@ -206,8 +206,8 @@ if ( $_POST['BACK'] ) {
 					
 					
 					if (file_exists($filename)) {
-						header("location:project.php?". CRYPT_REF_ID ."=". $_GET[CRYPT_REF_ID]);
-						$alert[] = "location:project.php?". CRYPT_REF_ID ."=". $_GET[CRYPT_REF_ID];
+						header("location:project.php?". CRYPT_REF_ID ."=". $_GET['CRYPT_REF_ID']);
+						$alert[] = "location:project.php?". CRYPT_REF_ID ."=". $_GET['CRYPT_REF_ID'];
 					} else {
 						$sql = "DELETE FROM template_images WHERE image_id = '". $last_insert_id ."' AND domain_id = '". DOMAIN_ID ."' LIMIT 1";
 						if (!mysqli_query($db, $sql)) error("there was an error removing a new image from the database because the new image file could not be uploaded",$sql,1,null,"remove the image manually (". LOCAL_DOMAIN ."upload/". $file_uploaded .")");
@@ -230,8 +230,8 @@ if ( $_POST['BACK'] ) {
 	if ( $_FILES['update_image_file']['name'] ) {
 		
 		
-		$alert[] = "image upload info --> ". $_FILES['update_image_file'][tmp_name] .",". $_GET[image_id] ."";
-		if ( image_upload($_FILES['update_image_file'][tmp_name],$_GET[image_id]) ) {
+		$alert[] = "image upload info --> ". $_FILES['update_image_file']['tmp_name'] .",". $_GET['image_id'] ."";
+		if ( image_upload($_FILES['update_image_file']['tmp_name'],$_GET['image_id']) ) {
 			$alert[] = "upload was successful!";
 		}
 	}
@@ -268,7 +268,7 @@ if ( $_POST['BACK'] ) {
 	if ( !$_POST['delete_confirmation'] ) {
 		$error['DELETE'] = "Please confirm that you want to delete this image and all the image information associated with it (caption, date, etc.).";
 		
-		//$error['DELETE'] = "you are trying to delete ". ROOT_DIR ."/uploads/". $_GET[image_id] .".png";
+		//$error['DELETE'] = "you are trying to delete ". ROOT_DIR ."/uploads/". $_GET['image_id'] .".png";
 		
 		
 	} else {
@@ -279,7 +279,7 @@ if ( $_POST['BACK'] ) {
 			$error['DELETE'] = "There was an error deleting this image. An administrator has been contacted to resolve the issues. If you need immediate assistance please submit a trouble ticket.";
 			error($error['DELETE'],$sql,1);
 		} else {
-			$file_loc = ROOT_DIR ."/uploads/". $_GET[image_id] .".png";
+			$file_loc = ROOT_DIR ."/uploads/". $_GET['image_id'] .".png";
 			if ( !unlink($file_loc) ) error("the file (". $file_loc .") could not be removed",3,null,"manually remove the file, the member was not informed of the error");
 			header("location:project.php?". CRYPT_REF_ID ."=". $_POST['project_id']);
 		}
@@ -364,7 +364,7 @@ echo "<STYLE TYPE=\"text/css\">
 /////////////////////////////////////////////////////////////////////////////////////
 //echo "<TABLE BORDER=0 BORDERCOLOR=PINK ALIGN=CENTER CELLPADDING=1 CELLSPACING=0 RULES=NONE>";
 echo form_table_start();
-//echo "<FORM ACTION=" . $_SERVER[PHP_SELF] . " METHOD=POST>";
+//echo "<FORM ACTION=" . $_SERVER['PHP_SELF'] . " METHOD=POST>";
 
 
 
@@ -376,7 +376,7 @@ echo form_table_start();
 
 echo "<TABLE BORDER=0 BORDERCOLOR=orange ALIGN=CENTER width=100% CELLPADDING=3 CELLSPACING=0 RULSE=NONE>";
 /*
-echo "<FORM ACTION='". $_SERVER[PHP_SELF] ."' METHOD=GET>";
+echo "<FORM ACTION='". $_SERVER['PHP_SELF'] ."' METHOD=GET>";
 
 
 	$insert_form[] = array("-",NULL,"Departments Manager"); // TITLE
@@ -395,47 +395,47 @@ echo "<FORM ACTION='". $_SERVER[PHP_SELF] ."' METHOD=GET>";
 	$query = mysqli_query($db, $sql);
 	if ( mysqli_num_rows($query) > 0 ) {
 		
-		$input[department_id] = "<SELECT NAME='". CRYPT_REF_ID ."' ". html_onchange() .">";
+		$input['department_id'] = "<SELECT NAME='". CRYPT_REF_ID ."' ". html_onchange() .">";
 		
 		// INSERT SELECT
-		$input[department_id] .= "<OPTION VALUE=''>SELECT ---></OPTION>";
+		$input['department_id'] .= "<OPTION VALUE=''>SELECT ---></OPTION>";
 		
 		while ( $info = mysqli_fetch_assoc($query) ) {
 			
 			//dev_print($info);
 			// SELECTED
-			if ( $_GET[CRYPT_REF_ID] == $info[department_id] ) {
+			if ( $_GET['CRYPT_REF_ID'] == $info['department_id'] ) {
 				$edit = $info;
 				
-				if ( $previous[department_id] ) $adjacent[previous] = $previous[department_id];
+				if ( $previous['department_id'] ) $adjacent['previous'] = $previous['department_id'];
 				$insert_next = TRUE;
 				
-			} elseif ( $insert_next && !$adjacent[next] ) {
-				$adjacent[next] = $info[department_id];
+			} elseif ( $insert_next && !$adjacent['next'] ) {
+				$adjacent['next'] = $info['department_id'];
 			}
 			
 			
-			$input[department_id] .= "<OPTION VALUE='". $info[department_id] ."' ". 
-				($_GET[CRYPT_REF_ID] == $info[department_id] ? " SELECTED" : NULL) .">". ucwords($info[department]) ." [". $info[department_id] ."]</OPTION>";
+			$input['department_id'] .= "<OPTION VALUE='". $info['department_id'] ."' ". 
+				($_GET['CRYPT_REF_ID'] == $info['department_id'] ? " SELECTED" : NULL) .">". ucwords($info['department']) ." [". $info['department_id'] ."]</OPTION>";
 			$previous = $info;
 		}
-		$input[department_id] .= "</SELECT>";
+		$input['department_id'] .= "</SELECT>";
 	}
 	
 	////////// EXISTING DEPARTMENTS
 	$insert_form[] = array("department_id", "existing departments", 
-		$input[department_id],
+		$input['department_id'],
 		NULL,NULL,NULL);
 	
 	
-	if ( $_GET[CRYPT_REF_ID] ) {
+	if ( $_GET['CRYPT_REF_ID'] ) {
 		////////// ADJACENT - NEXT / PREVIOUS
 		$insert_form[] = array("adjacent", NULL, 
-			($adjacent[previous] ? 
-				"<A HREF='". $_SERVER[PHP_SELF]."?". CRYPT_REF_ID ."=". $adjacent[previous] ."'><SMALL><< PREVIOUS</SMALL></A>" : NULL) .
-			($adjacent[previous] && $adjacent[next] ? " | " : NULL) .
-			($adjacent[next] ? 
-				"<A HREF='". $_SERVER[PHP_SELF]."?". CRYPT_REF_ID ."=". $adjacent[next] ."'><SMALL>NEXT >></SMALL></A>" : NULL),
+			($adjacent['previous'] ? 
+				"<A HREF='". $_SERVER['PHP_SELF']."?". CRYPT_REF_ID ."=". $adjacent['previous'] ."'><SMALL><< PREVIOUS</SMALL></A>" : NULL) .
+			($adjacent['previous'] && $adjacent['next'] ? " | " : NULL) .
+			($adjacent['next'] ? 
+				"<A HREF='". $_SERVER['PHP_SELF']."?". CRYPT_REF_ID ."=". $adjacent['next'] ."'><SMALL>NEXT >></SMALL></A>" : NULL),
 			array(NULL,NULL,"padding-left:40px;"),NULL,NULL);
 	}
 	
@@ -580,7 +580,7 @@ echo "<FORM ACTION='". $_SERVER[PHP_SELF] ."' METHOD=GET>";
 	
 	////////// DEPARTMENT
 	//$insert_form[] = array("tags", "tags", // $field_name // WITH TRANSLATION FUNCTION
-	//	array("TEXT",$edit[department],NULL,NULL), // $input[type], $input[value], $input[style], $input[option]
+	//	array("TEXT",$edit['department'],NULL,NULL), // $input['type'], $input['value'], $input['style'], $input['option']
 	//	NULL,NULL,array(value=>1)); // $styles,$trailer,$options
 	
 
@@ -609,7 +609,7 @@ echo "<FORM ACTION='". $_SERVER[PHP_SELF] ."' METHOD=GET>";
 	
 	////////// INACTIVE CHECKBOX
 	//$insert_form[] = array("inactive", NULL, 
-	//	"<INPUT TYPE=CHECKBOX NAME=inactive VALUE=1 ". ($edit[inactive] ? " CHECKED" : NULL) ."> check to make department inactive",
+	//	"<INPUT TYPE=CHECKBOX NAME=inactive VALUE=1 ". ($edit['inactive'] ? " CHECKED" : NULL) ."> check to make department inactive",
 	//	NULL,NULL,NULL);
 	
 	////////// DEFAULT DATE
@@ -619,15 +619,15 @@ echo "<FORM ACTION='". $_SERVER[PHP_SELF] ."' METHOD=GET>";
 	
 	
 	//////////////////////////////////////////////////
-	/*if ( $_GET[CRYPT_REF_ID] ) {
-		$input[submit] = "<INPUT TYPE=SUBMIT NAME='CHANGE' VALUE='SUBMIT CHANGES'> 
+	/*if ( $_GET['CRYPT_REF_ID'] ) {
+		$input['submit'] = "<INPUT TYPE=SUBMIT NAME='CHANGE' VALUE='SUBMIT CHANGES'> 
 			<INPUT TYPE=SUBMIT NAME='ADD' VALUE='ADD AS NEW'> ";
 		
-		$input[delete] = "<INPUT TYPE=SUBMIT NAME=DELETE VALUE='DELETE...'> 
-			". ($error[DELETE] ? "<INPUT TYPE=CHECKBOX NAME=confirm_delete>check to confirm delete" : null);
+		$input['delete'] = "<INPUT TYPE=SUBMIT NAME=DELETE VALUE='DELETE...'> 
+			". ($error['DELETE'] ? "<INPUT TYPE=CHECKBOX NAME=confirm_delete>check to confirm delete" : null);
 		
 	} else {*/
-		//$input[submit] = "<INPUT TYPE=SUBMIT NAME='ADD' VALUE='UPLOAD IMAGES' onClick=\"uploadingImages();return safeSubmit(this);\">"; // onMouseUp=\"this.disabled=true;\"
+		//$input['submit'] = "<INPUT TYPE=SUBMIT NAME='ADD' VALUE='UPLOAD IMAGES' onClick=\"uploadingImages();return safeSubmit(this);\">"; // onMouseUp=\"this.disabled=true;\"
 	//}
 	
 	if ( $_GET['image_id'] ) {

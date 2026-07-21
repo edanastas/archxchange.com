@@ -36,7 +36,7 @@ if ($_GET['vote'] && $_GET['ref_id']) {
 		//project_id = '". $_GET['project_id'] ."',
 		"vote_". $_GET['vote'] ." = vote_". $_GET['vote'] ." + ". ($_GET['direction'] > 5 ? "2" : "1") .", 
 		vote_direction = vote_direction ". ($_GET['vote'] == "yes" ? " + 1" : " - 1 ") .", 
-		vote_ip = '". $_SERVER[REMOTE_ADDR] ."', 
+		vote_ip = '". $_SERVER['REMOTE_ADDR'] ."', 
 		stamp = stamp 
 		WHERE project_id = '". $_GET['project_id'] ."' 
 			AND projects_". $_GET['type'] ."_id = ". $_GET['ref_id'] ."";
@@ -61,7 +61,7 @@ if ($_GET['vote'] && $_GET['ref_id']) {
 			'". $_GET['user_id'] ."', 
 			vote_". $_GET['vote'] ." + ". ($_GET['direction'] > 5 ? "2" : "1") .", 
 			vote_direction ". ($_GET['vote'] == "yes" ? " + 1" : " - 1") .", 
-			'". $_SERVER[REMOTE_ADDR] ."')";
+			'". $_SERVER['REMOTE_ADDR'] ."')";
 	//". ($_GET['user_id'] ? "'". $_GET['user_id'] ."'" : "NULL") .", 
 	
 	if ( !mysqli_query($db, $sql) ) {

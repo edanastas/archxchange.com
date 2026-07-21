@@ -9,10 +9,10 @@
 	$query = mysqli_query($db, "DESCRIBE $table"); 
 	$result = mysqli_fetch_array($query); 
 	do { 
-		if ($result[Field] == $field) { 
-			if (substr($result[Type],0,5) != "enum(") return FALSE; 
+		if ($result['Field'] == $field) { 
+			if (substr($result['Type'],0,5) != "enum(") return FALSE; 
 			
-			$field_type = str_replace("enum(","",$result[Type]); 
+			$field_type = str_replace("enum(","",$result['Type']); 
 			$field_type = str_replace("'","",$field_type); 
 			$field_type = str_replace(")","",$field_type); 
 			$options = explode(",",$field_type); 
@@ -55,28 +55,28 @@
 				// SETUP SPACING VALUES
 				$field_label_display = html_strip($field_label);
 				if ( strlen($field_label_display) > 20 ) {
-					$html[width] = 240;
-					$style[width] = "width:". $html[width] ."px;";
-					//$style[padding-left] = ($html[width]/2);
-					$style[padding] = ($html[width]/4);
+					$html['width'] = 240;
+					$style['width'] = "width:". $html['width'] ."px;";
+					//$style[padding-left] = ($html['width']/2);
+					$style['padding'] = ($html['width']/4);
 				} elseif ( strlen($field_label_display) < 6 ) {
-					$html[width] = 40;
-					$style[width] = "width:". $html[width] ."px;";
-					//$style[padding-left] = ($html[width]/2);
+					$html['width'] = 40;
+					$style['width'] = "width:". $html['width'] ."px;";
+					//$style[padding-left] = ($html['width']/2);
 				} else {
-					$html[width] = 150;
-					$style[width] = "width:". $html[width] ."px;";
-					//$style[width] = "width:100px;";
-					//$style[padding-left] = ($html[width]/2);
+					$html['width'] = 150;
+					$style['width'] = "width:". $html['width'] ."px;";
+					//$style['width'] = "width:100px;";
+					//$style[padding-left] = ($html['width']/2);
 					
-					$style[padding] = ($html[width]/10);
+					$style['padding'] = ($html['width']/10);
 				}
 				
-				$style[padding-left] = ($html[width]);
+				$style[padding-left] = ($html['width']);
 				
 				if ( is_array($options) ) { // IF ARRAY PROCESS VALUES -->
 					if ( array_key_exists("required_to_display",$options) ) { // IF ARRAY KEY EXISTS
-						if ( !$options[required_to_display] ) { // AND IF KEY DOES NOT CONTAIN VALUE
+						if ( !$options['required_to_display'] ) { // AND IF KEY DOES NOT CONTAIN VALUE
 							$input = NULL; // RESET INPUT TO NULL TO PREVENT FORM FROM BEING DISPLAYED
 						}
 					}
@@ -88,8 +88,8 @@
 					////////// DEFAULT VARIABLES
 					////////////////////////////////////////////////////////////////////////////////
 					////////////////////////////////////////////////////////////////////////////////
-					$html[valign] = " VALIGN=TOP"; // CHANGED TO TOP FOR PAYMENT FORM WHEN TEXT WRAPS ON SMALL TABLES SEE checkout.php (payment)
-					//$html[valign] = " VALIGN=CENTER";
+					$html['valign'] = " VALIGN=TOP"; // CHANGED TO TOP FOR PAYMENT FORM WHEN TEXT WRAPS ON SMALL TABLES SEE checkout.php (payment)
+					//$html['valign'] = " VALIGN=CENTER";
 					
 					
 					////////// ALTERNATE FUNCTIONS
@@ -98,7 +98,7 @@
 						foreach($fieldname 	AS $value) {
 							$construct_stirng .= "[". $value ."]";
 							
-							//$error[address][134834][fieldname] = "error message";
+							//$error['address']['134834'][fieldname] = "error message";
 						}
 					} else*/
 					
@@ -113,7 +113,7 @@
 								if ( !is_int($key) ) { // DISPLAY THE TITLE 
 									$bg_color = "CCCCCC"; // DDDDDD
 									$return .= "<TR BGCOLOR=#" . $bg_color . ">
-											<TD CLASS='formTitle' STYLE='padding-left:". $style[padding] ."px;font-weight:bold;color:#FFFFFF;' COLSPAN=2>" . 
+											<TD CLASS='formTitle' STYLE='padding-left:". $style['padding'] ."px;font-weight:bold;color:#FFFFFF;' COLSPAN=2>" . 
 												$value . "</TD>
 										</TR>";
 								} else {
@@ -173,19 +173,19 @@
 							if ($input == 1) {
 								// SETUP SET 1 CHARACTERISTICS (SIZE, WIDTH, COLOR, ETC.)
 								// SETUP HERE VALUES HERE AND ADJUST INPUTS BELOW
-								$hr[width] = 100;
+								$hr['width'] = 100;
 							} elseif ($input == 2) {
 								// SETUP SET 1 CHARACTERISTICS (SIZE, WIDTH, COLOR, ETC.)
-								$hr[width] = 90;
+								$hr['width'] = 90;
 							} elseif ($input == 3) {
 								// SETUP SET 1 CHARACTERISTICS (SIZE, WIDTH, COLOR, ETC.)
-								$hr[width] = 60;
+								$hr['width'] = 60;
 							}
 							
 							$return = "<TR>
 									<TD></TD>
 									<TD>
-										<HR SIZE=1 WIDTH=". $hr[width] ."% ALIGN=LEFT NOSHADE COLOR=#DDDDDD></TD>
+										<HR SIZE=1 WIDTH=". $hr['width'] ."% ALIGN=LEFT NOSHADE COLOR=#DDDDDD></TD>
 								</TR>";
 						
 						} else { // TITLE BAR
@@ -217,7 +217,7 @@
 						} else { // TITLE BAR
 							$return = "<TR>
 										<TD ALIGN=LEFT COLSPAN=2 CLASS='TextGray' 
-											STYLE='padding-top:5px;padding-bottom:5px;padding-right:". $style[padding] ."px;padding-left:". $style[padding] ."px;'>
+											STYLE='padding-top:5px;padding-bottom:5px;padding-right:". $style['padding'] ."px;padding-left:". $style['padding'] ."px;'>
 											" . $input . "</TD>
 									</TR>";
 						}
@@ -254,15 +254,15 @@
 						////////////////////////////////////////////////////////////////////////////////
 						if ( $error[$field_name] ) { // IF ERROR - DISPLAY -->
 							
-							//$line[type] = "thin lightgray solid";
-							$line[type] = "solid thin #DDDDDD";
-							//$padding[top] = "padding-top:10px;";
-							$styles[1] .= "border-left:". $line[type] .";";
-							$styles[2] .= "border-right:". $line[type] .";";
+							//$line['type'] = "thin lightgray solid";
+							$line['type'] = "solid thin #DDDDDD";
+							//$padding['top'] = "padding-top:10px;";
+							$styles['1'] .= "border-left:". $line['type'] .";";
+							$styles['2'] .= "border-right:". $line['type'] .";";
 							
 							//background-color:#FFFFCC
 							//if ( is_array( $input ) ) { // MOVED BELOW
-								//if ( !preg_match("/background-color/i", $input[2]) ) $input[2] .= "background-color:#FFF6AA;";
+								//if ( !preg_match("/background-color/i", $input['2']) ) $input['2'] .= "background-color:#FFF6AA;";
 							//}
 							
 							//if ( $field_name == "error" ) {
@@ -271,86 +271,86 @@
 								$error[$field_name] = "<FONT COLOR=RED><B>OOPS!</B> - " . $error[$field_name] . " </FONT>";
 							//}
 							
-							$styles[0] .= "background-color:#FFFFCC;";
+							$styles['0'] .= "background-color:#FFFFCC;";
 							
 							// DISPLAY THE START OF THE ERROR AREA (DOTTED LINE / START BACKGROUND COLOR CHANGE)
-							$start = "<TR STYLE='" . $styles[0] . "'>
+							$start = "<TR STYLE='" . $styles['0'] . "'>
 								<TD ALIGN=LEFT VALIGN=CENTER HEIGHT=20 COLSPAN=2  CLASS='form' ". 
-									//"STYLE='". $cell[padding] ."border-top:". $line[type] .";border-left:". $line[type] .";border-right:". $line[type] .";'>" . 
-									"STYLE='padding-left:10px;padding-right:10px;padding-top:5px;border-top:". $line[type] .";". $styles[1] . $styles[2] ."'>
+									//"STYLE='". $cell['padding'] ."border-top:". $line['type'] .";border-left:". $line['type'] .";border-right:". $line['type'] .";'>" . 
+									"STYLE='padding-left:10px;padding-right:10px;padding-top:5px;border-top:". $line['type'] .";". $styles['1'] . $styles['2'] ."'>
 									". $error[$field_name] . "</TD></TR>";
 							
 							// DISPLAY THE END OF THE ERROR AREA (DOTTED LINE / END BACKGROUND COLOR CHANGE)
-							$end = "<TR STYLE='" . $styles[0] . "'>
-								<TD HEIGHT=2 COLSPAN=2 STYLE='empty-cells:show;padding-bottom:2px;border-bottom:". $line[type] .";". $styles[1] . $styles[2] ."'></TD></TR>";
+							$end = "<TR STYLE='" . $styles['0'] . "'>
+								<TD HEIGHT=2 COLSPAN=2 STYLE='empty-cells:show;padding-bottom:2px;border-bottom:". $line['type'] .";". $styles['1'] . $styles['2'] ."'></TD></TR>";
 							
-							//$styles[1] .= "border-left:". $line[type] .";";
-							//$styles[2] .= "border-right:". $line[type] .";";
+							//$styles['1'] .= "border-left:". $line['type'] .";";
+							//$styles['2'] .= "border-right:". $line['type'] .";";
 							
 						}
 						
 						////////// DEFAULT INPUT FORMAT
 						////////////////////////////////////////////////////////////////////////////////
 						////////////////////////////////////////////////////////////////////////////////
-						//$input[type],$input[name],$input[value],$input[style],$input[option] // FORM FUNCTION VARIABLES
+						//$input['type'],$input['name'],$input['value'],$input['style'],$input['option'] // FORM FUNCTION VARIABLES
 						if ( is_array( $input ) ) { // IF DEFAULT INPUT FORMAT -->
 							
 							////////// DEFAULT STYLE
-							//if ( !$input[2] && $input[2] != "-" ) { // IF NO STYLE SUBMITTED USE -->
-								//$input[2] = "width:240px;";
+							//if ( !$input['2'] && $input['2'] != "-" ) { // IF NO STYLE SUBMITTED USE -->
+								//$input['2'] = "width:240px;";
 							//}
 							
-							if ( !preg_match("/width/i", $input[2]) && preg_match("/TEXT|TEXTAREA|PASSWORD/i", $input[0]) ) $input[2] .= "width:". FORM_WIDTH ."px;";
-							//if ( !preg_match("/background-color/i", $input[2]) ) $input[2] .= "background-color:#FFFCC4;"; //FFF6AA
+							if ( !preg_match("/width/i", $input['2']) && preg_match("/TEXT|TEXTAREA|PASSWORD/i", $input['0']) ) $input['2'] .= "width:". FORM_WIDTH ."px;";
+							//if ( !preg_match("/background-color/i", $input['2']) ) $input['2'] .= "background-color:#FFFCC4;"; //FFF6AA
 							
 							////////// SET FORM VALUES
 							////////////////////////////////////////////////////////////////////////////////
 							////////////////////////////////////////////////////////////////////////////////
-							if ( $options[value] == 1 || $options[no_post] ) { // KEEP INPUT VALUE OVER POST VALUE
+							if ( $options['value'] == 1 || $options['no_post'] ) { // KEEP INPUT VALUE OVER POST VALUE
 								
-							} elseif ( $options[value] == 2 ) { // IF THERE IS NO INPUT VALUE, USE POST VALUE
+							} elseif ( $options['value'] == 2 ) { // IF THERE IS NO INPUT VALUE, USE POST VALUE
 								
-								if ( !$input[1] ) 
-									$input[1] = $_POST[$field_name];
+								if ( !$input['1'] ) 
+									$input['1'] = $_POST[$field_name];
 								
-							} elseif ( $options[value] == 3 ) { // EMPTY VALUE FOR INPUT
+							} elseif ( $options['value'] == 3 ) { // EMPTY VALUE FOR INPUT
 								
-								$input[1] = NULL;
+								$input['1'] = NULL;
 								
-							} elseif ( $options[value] == 4 ) { // DEFAULT VALUE FOR INPUT
+							} elseif ( $options['value'] == 4 ) { // DEFAULT VALUE FOR INPUT
 								
-								//$options[default]
+								//$options['default']
 								
 								
 								
 							} elseif ( $_POST[$field_name] ) { // DEFAULT: IF POST VALUE --> USE POST VALUE
-							//} elseif ( !$options[no_post] && $_POST[$field_name] ) { // IF POST VALUE AND NO no_post --> USE POST VALUE
-							//if ( !$options[value] && $_POST[$field_name]) { // IF THERE IS NO VALUE PRIORITY DEFINED USE POST IF EXISTS
-							//if ( !$input[1] && !$options[no_post] ) { // IF NO INPUT SUBMITTED USE POST VALUE
+							//} elseif ( !$options['no_post'] && $_POST[$field_name] ) { // IF POST VALUE AND NO no_post --> USE POST VALUE
+							//if ( !$options['value'] && $_POST[$field_name]) { // IF THERE IS NO VALUE PRIORITY DEFINED USE POST IF EXISTS
+							//if ( !$input['1'] && !$options['no_post'] ) { // IF NO INPUT SUBMITTED USE POST VALUE
 								
-								//if ( $_POST[$field_name] && $input[1] && admin_access(9) ) 
+								//if ( $_POST[$field_name] && $input['1'] && admin_access(9) ) 
 									//echo "alert! function change<BR>"; // --> input field overwritten by post field <BR>";
-									//(file:". $_SERVER[PHP_SELF] ." line:". __LINE__ .")<BR> 
+									//(file:". $_SERVER['PHP_SELF'] ." line:". __LINE__ .")<BR> 
 									//change implemented for user_address.php affecting inc_address_form.php in the file fnc_form.php line: ". __LINE__ . "<P>";
 								
-								$input[1] = $_POST[$field_name];
+								$input['1'] = $_POST[$field_name];
 								
 							}
 							
 							
-							if ( $input[0] == "TEXTAREA" ) { // IF TEXTAREA
-								$html[valign] = " VALIGN=TOP";
+							if ( $input['0'] == "TEXTAREA" ) { // IF TEXTAREA
+								$html['valign'] = " VALIGN=TOP";
 								$input = "<TEXTAREA NAME=\"" . $field_name ." ID=\"" . $field_name . 
-									"\" STYLE='" . $input[2] . "' " . $input[3] . ">" . stripslashes($input[1]) . "</TEXTAREA> ". 
-										( $input[4] ? "<BR>". $input[4] : NULL ) ."\n";
+									"\" STYLE='" . $input['2'] . "' " . $input['3'] . ">" . stripslashes($input['1']) . "</TEXTAREA> ". 
+										( $input['4'] ? "<BR>". $input['4'] : NULL ) ."\n";
 								
 							} else { // NOT TEXTAREA
-								$input = "<INPUT TYPE=\"" . $input[0] ."\"".
+								$input = "<INPUT TYPE=\"" . $input['0'] ."\"".
 									" NAME=\"" . $field_name . "\"" . 
 								    " ID=\"" . $field_name . "\"" .
-									" VALUE=\"" . stripslashes($input[1]) . "\"" . 
-									" STYLE='" . $input[2] . "' " . $input[3] . "". 
-										( preg_match("/RADIO|CHECKBOX/i",$input[0]) && $_POST[$field_name] ? " CHECKED" : NULL ) ."> ". $input[4] ."\n";
+									" VALUE=\"" . stripslashes($input['1']) . "\"" . 
+									" STYLE='" . $input['2'] . "' " . $input['3'] . "". 
+										( preg_match("/RADIO|CHECKBOX/i",$input['0']) && $_POST[$field_name] ? " CHECKED" : NULL ) ."> ". $input['4'] ."\n";
 							}
 							
 						}// else {
@@ -360,13 +360,13 @@
 						
 						
 						// ADD THE PADDING TO THE DISPLAY CELL
-						//if ( !preg_match("/padding-top/i", $styles[1]) ) $styles[1] .= "padding-top:5px;";
+						//if ( !preg_match("/padding-top/i", $styles['1']) ) $styles['1'] .= "padding-top:5px;";
 						//if ( is_array($styles) )
-							if ( !preg_match("/padding-right/i", $styles[1]) ) $styles[1] .= "padding-right:5px;";
-							if ( !preg_match("/padding-top/i", $styles[1]) ) $styles[1] .= "padding-top:5px;";
+							if ( !preg_match("/padding-right/i", $styles['1']) ) $styles['1'] .= "padding-right:5px;";
+							if ( !preg_match("/padding-top/i", $styles['1']) ) $styles['1'] .= "padding-top:5px;";
 							// REMOVED NEXT LINE BECAUSE OF DISPLAY ALIGNMENT OF ADMIN MANAGER (firstname, lastname)
-							//if ( !preg_match("/padding-top/i", $styles[1]) ) $styles[1] .= "padding-top:5px;";
-							if ( !preg_match("/width/i", $styles[1]) ) $styles[1] .= $style[width];
+							//if ( !preg_match("/padding-top/i", $styles['1']) ) $styles['1'] .= "padding-top:5px;";
+							if ( !preg_match("/width/i", $styles['1']) ) $styles['1'] .= $style['width'];
 						
 						
 						
@@ -376,12 +376,12 @@
 						
 						//text-align:right;
 						
-						$return .= "<TR". ( $styles[0] ? " STYLE='" . $styles[0] . "'" : NULL ) ." ID='" . $field_name . "Row'>
-								<TD ALIGN=RIGHT ". $html[valign] ." CLASS='formLabel'". 
-									( $styles[1] ? " STYLE='" . $styles[1] . "'" : NULL ) ." NOWRAP>". //  WIDTH=25% // $style[width] . // WIDTH=". $html[width] ."
+						$return .= "<TR". ( $styles['0'] ? " STYLE='" . $styles['0'] . "'" : NULL ) ." ID='" . $field_name . "Row'>
+								<TD ALIGN=RIGHT ". $html['valign'] ." CLASS='formLabel'". 
+									( $styles['1'] ? " STYLE='" . $styles['1'] . "'" : NULL ) ." NOWRAP>". //  WIDTH=25% // $style['width'] . // WIDTH=". $html['width'] ."
 									$field_label ."</TD>
 								<TD ALIGN=LEFT VALIGN=CENTER CLASS='formInput'". 
-										( $styles[2] ? " STYLE='" . $styles[2] . "'" : NULL ) .">". //  WIDTH=75%
+										( $styles['2'] ? " STYLE='" . $styles['2'] . "'" : NULL ) .">". //  WIDTH=75%
 									$input . 
 										( $trailer ? " <FONT CLASS='TextGray'>&#160 ". $trailer ."</FONT>" : NULL ) . "</TD>
 							</TR>";
@@ -419,17 +419,17 @@
 	while ($results = mysqli_fetch_assoc($query) ) {
 		
 		// IF COUNTRY IS AFGHANISTAN --> INSERT BREAK LINE
-		if ( $results[country_name] == "Afghanistan" ) {
+		if ( $results['country_name'] == "Afghanistan" ) {
 			$return .= "<OPTION VALUE=''> -------------- </OPTION>";
 		}
 			
-		if ( $match == $results[country_id] ) {
+		if ( $match == $results['country_id'] ) {
 			$insert_selected_country = " SELECTED";
 		} else {
 			$insert_selected_country = NULL;
 		}
 		
-		$return .= "<OPTION VALUE='$results[country_id]'$insert_selected_country>$results[country_name]</OPTION>";
+		$return .= "<OPTION VALUE='$results['country_id']'$insert_selected_country>$results['country_name']</OPTION>";
 		
 	}
 		
@@ -460,15 +460,15 @@ return $return;
 	
 	while ($results = mysqli_fetch_assoc($query) ) {
 				
-		if ( $match == $results[zone_id] ) {
+		if ( $match == $results['zone_id'] ) {
 			$insert_selected_zone = " SELECTED";
 		} else {
 			$insert_selected_zone = NULL;
 		}
 		
-		if($results[country_name] != $lastcname) $return .= "<OPTION VALUE='' DISABLED></OPTION>\n<OPTION VALUE='' DISABLED>" . $results[country_name]. "</OPTION>\n";
-		$return .= "<OPTION VALUE='$results[zone_id]'$insert_selected_zone> - $results[zone_name]</OPTION>";
-		$lastcname = $results[country_name];
+		if($results['country_name'] != $lastcname) $return .= "<OPTION VALUE='' DISABLED></OPTION>\n<OPTION VALUE='' DISABLED>" . $results['country_name']. "</OPTION>\n";
+		$return .= "<OPTION VALUE='$results['zone_id']'$insert_selected_zone> - $results['zone_name']</OPTION>";
+		$lastcname = $results['country_name'];
 	
 	}
 		
@@ -489,11 +489,11 @@ return $return;
 	// PROCESS FORM NAMES
 	if ( is_array($fieldname) ) {
 	
-		if ( $posted_value = eval("return \$_POST[". $fieldname[0] ."]". $fieldname[2] ."[". $fieldname[1] ."];") ) {
+		if ( $posted_value = eval("return \$_POST[". $fieldname['0'] ."]". $fieldname['2'] ."[". $fieldname['1'] ."];") ) {
 			$selected = $posted_value;
 		}
 		
-		$form_name = $fieldname[0] . $fieldname[2] . "[". $fieldname[1] ."]";
+		$form_name = $fieldname['0'] . $fieldname['2'] . "[". $fieldname['1'] ."]";
 		
 	} else {
 		if ( $_POST[$fieldname] ) $selected = $_POST[$fieldname];
@@ -502,10 +502,10 @@ return $return;
 	}
 	
 	
-	if ( !$options[java] ) $options[java] = "onchange=\"submit()\"";
+	if ( !$options['java'] ) $options['java'] = "onchange=\"submit()\"";
 	
-	//$return .= "<SELECT NAME=". $form_name ."". (!$options[manual] ? " onchange=\"updateMenu(this,'". $update_zones ."')\"" : NULL ) .">";
-	$return .= "<SELECT ID=". $form_name ." NAME=". $form_name ." ". (!$options[manual] ? $options[java] : NULL ) .">";
+	//$return .= "<SELECT NAME=". $form_name ."". (!$options['manual'] ? " onchange=\"updateMenu(this,'". $update_zones ."')\"" : NULL ) .">";
+	$return .= "<SELECT ID=". $form_name ." NAME=". $form_name ." ". (!$options['manual'] ? $options['java'] : NULL ) .">";
 	
 	
 	//$query = mysqli_query($db, "SELECT * FROM countries WHERE inactive IS NULL ORDER BY country_name");
@@ -521,21 +521,21 @@ return $return;
 	while ($results = mysqli_fetch_assoc($query) ) {
 		
 		// IF COUNTRY IS AFGHANISTAN --> INSERT BREAK LINE
-		if ( $results[country_name] == "Afghanistan" ) {
+		if ( $results['country_name'] == "Afghanistan" ) {
 			$return .= "<OPTION VALUE=''> -------------- </OPTION>";
 		}
 		
 		//echo "\$_POST[$fieldname] --> $_POST[$fieldname]<BR>";
 		
-		/*if ( $_REQUEST[$fieldname] return_priority(array($_REQUEST[zone_id],$selected)) == $results[$fieldname] ) {
+		/*if ( $_REQUEST[$fieldname] return_priority(array($_REQUEST['zone_id'],$selected)) == $results[$fieldname] ) {
 			$insert_selected_country = " SELECTED";
 		} else {
 			$insert_selected_country = NULL;
 		}*/
 		
-		$return .= "<OPTION VALUE='". $results[country_id] ."'" . 
-			//return_match(return_priority(array($_REQUEST[$fieldname],$selected)), $results[$fieldname], " SELECTED") . ">$results[country_name]</OPTION>";
-			( $selected == $results[country_id] ? " SELECTED" : NULL ) . ">". $results[country_name] ."</OPTION>";
+		$return .= "<OPTION VALUE='". $results['country_id'] ."'" . 
+			//return_match(return_priority(array($_REQUEST[$fieldname],$selected)), $results[$fieldname], " SELECTED") . ">$results['country_name']</OPTION>";
+			( $selected == $results['country_id'] ? " SELECTED" : NULL ) . ">". $results['country_name'] ."</OPTION>";
 		
 	}
 		
@@ -555,27 +555,27 @@ return $return;
 	//global $edit;
 	//query_db();
 	
-	//echo "\$_POST[". $fieldname[0] ."]". $fieldname[1] ."";
-	//echo "<P>eval -> ". eval("return \$_POST[". $fieldname[0] ."]". $fieldname[1] .";");
+	//echo "\$_POST[". $fieldname['0'] ."]". $fieldname['1'] ."";
+	//echo "<P>eval -> ". eval("return \$_POST[". $fieldname['0'] ."]". $fieldname['1'] .";");
 	
 	// PROCESS FORM NAMES
 	if ( is_array($fieldname) ) {
 	
-		if ( $posted_value = eval("return \$_POST[". $fieldname[0] ."]". $fieldname[2] ."[". $fieldname[1] ."];") ) {
+		if ( $posted_value = eval("return \$_POST[". $fieldname['0'] ."]". $fieldname['2'] ."[". $fieldname['1'] ."];") ) {
 			$selected = $posted_value;
 		}
 		
-		$form_name = $fieldname[0] . $fieldname[2] . "[". $fieldname[1] ."]";
+		$form_name = $fieldname['0'] . $fieldname['2'] . "[". $fieldname['1'] ."]";
 		
 		// CHECK IF COUNTRY IS SELECTED
-		$selected_country = eval("return \$_POST[". $fieldname[0] ."]". $fieldname[2] ."[country_id];");
+		$selected_country = eval("return \$_POST[". $fieldname['0'] ."]". $fieldname['2'] ."[country_id];");
 		
 	} else {
 		if ( $_POST[$fieldname] ) $selected = $_POST[$fieldname];
 		$form_name = $fieldname;
 		
 		// CHECK IF COUNTRY IS SELECTED
-		$selected_country = $_POST[country_id];
+		$selected_country = $_POST['country_id'];
 	}
 	
 	
@@ -583,9 +583,9 @@ return $return;
 	// could not figure out why had this sql query below so I removed it.
 	// gave priority to posted values, even if a value is submitted.
 	// if you experince problems, remove /// (three bar)) lines below
-	/*if ( $_POST[zone_id] ) {
+	/*if ( $_POST['zone_id'] ) {
 		
-		$selected = $_POST[zone_id];
+		$selected = $_POST['zone_id'];
 	}
 	
 	if ( $selected ) {
@@ -597,7 +597,7 @@ return $return;
 	} else {
 		
 		//$query = mysqli_query($db, "SELECT * FROM countries_zones WHERE zone_country_id = '" . $selected . "'");
-		$query = mysqli_query($db, "SELECT * FROM countries_zones WHERE zone_country_id = '" . $_REQUEST[country_id] . "'");
+		$query = mysqli_query($db, "SELECT * FROM countries_zones WHERE zone_country_id = '" . $_REQUEST['country_id'] . "'");
 	}*/
 	
 	
@@ -608,7 +608,7 @@ return $return;
 		
 		/*$query = mysqli_query($db, "SELECT c2.* FROM `countries_zones` c1 
 			LEFT JOIN `countries_zones` c2 ON c1.zone_country_id = c2.zone_country_id 
-			WHERE c1.zone_id = '" . $selected . "' AND c1.zone_country_id = '" . $_POST[country_id] . "'");*/
+			WHERE c1.zone_id = '" . $selected . "' AND c1.zone_country_id = '" . $_POST['country_id'] . "'");*/
 		
 	} elseif ( $selected ) { // IF ZONE CHANGES SELECT COUNTRY FOR THAT ZONE
 		$query = mysqli_query($db, "SELECT c2.* FROM `countries_zones` c1 
@@ -616,47 +616,47 @@ return $return;
 			WHERE c1.zone_id = '" . $selected . "'");
 	}// else {
 		
-	//	$query = mysqli_query($db, "SELECT * FROM countries_zones WHERE zone_country_id = '" . $_POST[country_id] . "'");
+	//	$query = mysqli_query($db, "SELECT * FROM countries_zones WHERE zone_country_id = '" . $_POST['country_id'] . "'");
 	//}
 	
 	
 	
-	if ( $options[onchange] ) {
-		$options[onchange] = " onchange=\"submit()\"";
+	if ( $options['onchange'] ) {
+		$options['onchange'] = " onchange=\"submit()\"";
 	}
 	
 	if ( $query ) {
 		
 		if ( mysqli_num_rows($query) > 0 ) {
 			
-			$return .= "<SELECT ID=". $form_name ." NAME=". $form_name ."". $options[onchange] .">";
+			$return .= "<SELECT ID=". $form_name ." NAME=". $form_name ."". $options['onchange'] .">";
 							
 			// CHECK IF A ZONE HAS BEEN SUBMITTED
-			//if ( !$_REQUEST[zone_id] ) {
+			//if ( !$_REQUEST['zone_id'] ) {
 				//$return .= "<OPTION VALUE='' DISABLED>" . trans("SELECT",1) . " ----------------> </OPTION>";
 				
 				// SET THIS TO THE zone_id VAR IN THE URL TO PASS BACK IF NOTHING WAS CHANGED (SEE admin_warehouse_priorities.php AND )
-				//$return .= "<OPTION VALUE='". $_GET[zone_id] ."'>" . trans("SELECT A ZONE",1) . " --------> </OPTION>";
+				//$return .= "<OPTION VALUE='". $_GET['zone_id'] ."'>" . trans("SELECT A ZONE",1) . " --------> </OPTION>";
 				$return .= "<OPTION VALUE='". 
 					//eval("return $_REQUEST". $form_name .";") .// 
-					$_GET[zone_id] .
+					$_GET['zone_id'] .
 					"'>" . trans("SELECT A ZONE",1) . " --------> </OPTION>";
 			//}
 			
 			while ($results = mysqli_fetch_assoc($query) ) {
 				
-				/*if ( return_priority(array($_REQUEST[zone_id],$selected)) == $results[zone_id] ) {
+				/*if ( return_priority(array($_REQUEST['zone_id'],$selected)) == $results['zone_id'] ) {
 					$insert_selected_zone = " SELECTED";
 				} else {
 					$insert_selected_zone = NULL;
 				}*/
 				
-				//$return .= "<OPTION VALUE='$results[zone_id]'$insert_selected_zone>$results[zone_name]</OPTION>";
-				$return .= "<OPTION VALUE='$results[zone_id]'" . 
-					///return_match(return_priority(array($_REQUEST[zone_id],$selected)), $results[zone_id], " SELECTED") . ">$results[zone_name]</OPTION>";
+				//$return .= "<OPTION VALUE='$results['zone_id']'$insert_selected_zone>$results['zone_name']</OPTION>";
+				$return .= "<OPTION VALUE='$results['zone_id']'" . 
+					///return_match(return_priority(array($_REQUEST['zone_id'],$selected)), $results['zone_id'], " SELECTED") . ">$results['zone_name']</OPTION>";
 					( 
-						( $selected != NULL ? $selected : $_REQUEST[zone_id] ) // IF NO SELECT ZONE --> MATCH TO POSTED ZONE VALUE
-					== $results[zone_id] ? " SELECTED": NULL ) . ">$results[zone_name]</OPTION>";
+						( $selected != NULL ? $selected : $_REQUEST['zone_id'] ) // IF NO SELECT ZONE --> MATCH TO POSTED ZONE VALUE
+					== $results['zone_id'] ? " SELECTED": NULL ) . ">$results['zone_name']</OPTION>";
 				
 				
 				
@@ -695,15 +695,15 @@ return $return;
 
 		function form_drop_timezones($timezone_id=NULL) { // RETURN TIMEZONES WHERE $timezone_id IS THE SELECTED GMT
 	
-	//echo "the timezone is \$_REQUEST[timezone_id] --> " . $_REQUEST[timezone_id] . " <P>";
+	//echo "the timezone is \$_REQUEST['timezone_id'] --> " . $_REQUEST['timezone_id'] . " <P>";
 	
-	if ( !$timezone_id ) { // IF NO $timezone_id USE $_REQUEST[timezone_id]
-		$timezone_id = $_REQUEST[timezone_id];
+	if ( !$timezone_id ) { // IF NO $timezone_id USE $_REQUEST['timezone_id']
+		$timezone_id = $_REQUEST['timezone_id'];
 		//echo "no timezone set<P>";
 	}
 	
 	query_db();
-	//$query = mysqli_query($db, "SELECT * FROM timezones WHERE zone_country_id = '" . $_REQUEST[country_id] . "'");
+	//$query = mysqli_query($db, "SELECT * FROM timezones WHERE zone_country_id = '" . $_REQUEST['country_id'] . "'");
 	$query = mysqli_query($db, "SELECT * FROM timezones");
 	
 	if ( mysqli_num_rows($query) > 0 ) {
@@ -717,15 +717,15 @@ return $return;
 		
 		while ($results = mysqli_fetch_assoc($query) ) {
 			
-			/*if ( $results[timezone_id] == $timezone_id ) {
-			//if ( $results[timezone_id] |= $_REQUEST[timezone_id] | $timezone_id) {
+			/*if ( $results['timezone_id'] == $timezone_id ) {
+			//if ( $results['timezone_id'] |= $_REQUEST['timezone_id'] | $timezone_id) {
 				$insert_selected_zone = " SELECTED";
 			} else {
 				$insert_selected_zone = NULL;
 			}*/
 			
-			$return .= "<OPTION VALUE='$results[timezone_id]'" . 
-				return_match($timezone_id, $results[timezone_id], " SELECTED") . ">[" . $results[utc] . "] $results[timezone]</OPTION>";
+			$return .= "<OPTION VALUE='$results['timezone_id']'" . 
+				return_match($timezone_id, $results['timezone_id'], " SELECTED") . ">[" . $results['utc'] . "] $results['timezone']</OPTION>";
 			
 		}
 		$return .= "</SELECT>\n";
@@ -743,8 +743,8 @@ return $return;
 
 		function form_drop_currencies($currency_id=NULL,$options=NULL) { // RETURN CURRENCY WHERE $currency_id IS THE SELECTED CURRENCY
 	
-	if ( !$currency_id ) { // IF NO $currency_id USE $_REQUEST[currency_id]
-		$currency_id = $_REQUEST[currency_id];
+	if ( !$currency_id ) { // IF NO $currency_id USE $_REQUEST['currency_id']
+		$currency_id = $_REQUEST['currency_id'];
 	}
 	
 	query_db();
@@ -756,22 +756,22 @@ return $return;
 		$return .= "<SELECT NAME=currency_id>";
 						
 		// CHECK IF A ZONE HAS BEEN SUBMITTED
-		if ( !$currency_id && !$options[compact]) {
+		if ( !$currency_id && !$options['compact']) {
 			$return .= "<OPTION VALUE=''>" . trans("SELECT",1) . " ----> </OPTION>";
 		}
 		
 		while ($results = mysqli_fetch_assoc($query) ) {
 			
-			/*if ( $results[currency_id] == $currency_id ) {
-			//if ( $results[currency_id] |= $_REQUEST[currency_id] | $currency_id) {
+			/*if ( $results['currency_id'] == $currency_id ) {
+			//if ( $results['currency_id'] |= $_REQUEST['currency_id'] | $currency_id) {
 				$insert_selected_zone = " SELECTED";
 			} else {
 				$insert_selected_zone = NULL;
 			}*/
 			
-			$return .= "<OPTION VALUE='$results[currency_id]'" . 
-				( $currency_id == $results[currency_id] ? " SELECTED" : NULL ) . ">". 
-					( $options[compact] ? $results[code] : $results[currency] ) ."</OPTION>";
+			$return .= "<OPTION VALUE='$results['currency_id']'" . 
+				( $currency_id == $results['currency_id'] ? " SELECTED" : NULL ) . ">". 
+					( $options['compact'] ? $results['code'] : $results['currency'] ) ."</OPTION>";
 			
 		}
 		$return .= "</SELECT>\n";
@@ -788,19 +788,19 @@ return $return;
 
 		function form_table_start($options=NULL) {
 	if ( !is_array($options) ) {
-		//$options[cellpadding] = "":
+		//$options['cellpadding'] = "":
 	//} elseif ( $options ) {
-		$insert[options] = $options;
+		$insert['options'] = $options;
 	}
 	
-	if ( !isset($options[width]) ) $options[width] = "100%";
-	if ( !isset($options[border]) ) $options[border] = "0";
-	if ( !isset($options[cellpadding]) ) $options[cellpadding] = 2;
-	if ( !isset($options[cellspacing]) ) $options[cellspacing] = "0";
-	if ( !isset($options[rules]) ) $options[rules] = "NONE";
+	if ( !isset($options['width']) ) $options['width'] = "100%";
+	if ( !isset($options['border']) ) $options['border'] = "0";
+	if ( !isset($options['cellpadding']) ) $options['cellpadding'] = 2;
+	if ( !isset($options['cellspacing']) ) $options['cellspacing'] = "0";
+	if ( !isset($options['rules']) ) $options['rules'] = "NONE";
 	
-	return "<TABLE BORDER=". $options[border] ." BORDERCOLOR=biege ALIGN=CENTER WIDTH=". $options[width] ." 
-		CELLPADDING=". $options[cellpadding] ." CELLSPACING=". $options[cellspacing] ." RULES=". $options[rules] ." " . $insert[options] . ">";
+	return "<TABLE BORDER=". $options['border'] ." BORDERCOLOR=biege ALIGN=CENTER WIDTH=". $options['width'] ." 
+		CELLPADDING=". $options['cellpadding'] ." CELLSPACING=". $options['cellspacing'] ." RULES=". $options['rules'] ." " . $insert['options'] . ">";
 }
 /**** END FUNCTION ****/
 

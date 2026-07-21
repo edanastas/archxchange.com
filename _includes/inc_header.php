@@ -28,7 +28,7 @@ if (!defined('ACCESS')) die(ERROR_MESSAGE);
 	return ((float) $sec + (float)$usec);
 }
 
-$load_time[start] = getMicrotime();   //include ("XPath.class.php");
+$load_time['start'] = getMicrotime();   //include ("XPath.class.php");
 */
 
 // HTML /////////////////////////////////////////////////////////////////////////////
@@ -77,7 +77,7 @@ foreach ( array("Add Project"=>"add_project.php?start",
 echo "<div id='header'>
 	
 	<div id='imageLogoBox'>
-	<img src='_images/axc_logo_0". ($_GET[css] ? $_GET[css] : "2") .".gif' id='imageLogo'>
+	<img src='_images/axc_logo_0". ($_GET['css'] ? $_GET['css'] : "2") .".gif' id='imageLogo'>
 	</div>
 	
 	<span style='padding:2px;color:#ccc;'>". implode("|",$links) ."</span>

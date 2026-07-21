@@ -31,7 +31,7 @@ $description = "description goes here.";
 
 /*
 	<!--<META HTTP-EQUIV='Content-Type' CONTENT='text/html; CHARSET=iso-8859-1'>
-		<BASE HREF='http://" . $_SERVER[HTTP_HOST] . dirname($_SERVER[PHP_SELF]) . "'>
+		<BASE HREF='http://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . "'>
 		<BASE HREF='http://" . TEMPLATE_DOMAIN . "'>
 		http://www.htmlhelp.com/reference/wilbur/head/base.html
 	
@@ -78,7 +78,7 @@ echo "<html>
 	
 	<title>" . (defined('TITLE') ? TITLE : DEFAULT_TITLE) . "</title>
 	
-	". (preg_match("//admin//i",$_SERVER[PHP_SELF]) 
+	". (preg_match("//admin//i",$_SERVER['PHP_SELF']) 
 		? "<link rel=stylesheet href='". TEMPLATE_DOMAIN ."_styles/styles.css' type='text/css'>"
 		: "<link rel=stylesheet href='". BASE_DIR ."_styles/styles.css' type='text/css'>" ) ."
 	<!--<link rel=stylesheet href='". TEMPLATE_DOMAIN ."_styles/styles.css' type='text/css'>-->
@@ -106,7 +106,7 @@ echo "<html>
 			color:#000;
 			background:#FAD734;
 		}
-		". $style[css] ."
+		". $style['css'] ."
 	-->
 	</style>
 	

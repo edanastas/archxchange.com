@@ -24,22 +24,22 @@ if ( $_POST ) {
 	
 	////////// PROCESS SUBSECTION POST DATA
 	////////////////////////////////////////////////////////////////////////////////
-	if ( $_POST[SUBMIT] ) {
+	if ( $_POST['SUBMIT'] ) {
 		
 		// CHECK IF FIELD SUBMITTED
-		if ( !$_POST[fieldname] ) $error[fieldname] = "please submit the fieldname";
+		if ( !$_POST['fieldname'] ) $error['fieldname'] = "please submit the fieldname";
 		
 		
 		// CHECK ERROR FIELD
-		if ( !$_POST[checkbox] ) $error[checkbox] = "please check the box";
-		if ( !$_POST[style] ) $error[style] = "please submit a style";
-		//if ( !$_POST[sample] ) $error[sample] = "please select an item from the menu";
+		if ( !$_POST['checkbox'] ) $error['checkbox'] = "please check the box";
+		if ( !$_POST['style'] ) $error['style'] = "please submit a style";
+		//if ( !$_POST['sample'] ) $error['sample'] = "please select an item from the menu";
 		
 		
 		// CHECK IF manual FIELD SUBMITTED
-		if ( !$_POST[manual] || $_POST[manual] == "enter your [something]" ) {
+		if ( !$_POST['manual'] || $_POST['manual'] == "enter your [something]" ) {
 			// more complicated statements can go here
-			$error[manual] = "please submit a manual test field";
+			$error['manual'] = "please submit a manual test field";
 		}
 		
 	}
@@ -55,16 +55,16 @@ if ( $_POST ) {
 		////////// MODIFY DATABASE
 		$sql = "INSERT INTO `samples` SET 
 			sample_id = NULL, 
-			fieldname = '" . query_prep($_POST[fieldname]) . "', 
-			error = '" . query_prep($_POST[error]) . "', 
-			style = '" . query_prep($_POST[style]) . "', 
-			checkbox = '" . query_prep($_POST[checkbox]) . "', 
-			manual = '" . query_prep($_POST[manual]) . "', 
-			menu = '" . query_prep($_POST[menu]) . "', 
-			textarea = '" . query_prep($_POST[textarea]) . "'"; // INSERT SAMPLE
+			fieldname = '" . query_prep($_POST['fieldname']) . "', 
+			error = '" . query_prep($_POST['error']) . "', 
+			style = '" . query_prep($_POST['style']) . "', 
+			checkbox = '" . query_prep($_POST['checkbox']) . "', 
+			manual = '" . query_prep($_POST['manual']) . "', 
+			menu = '" . query_prep($_POST['menu']) . "', 
+			textarea = '" . query_prep($_POST['textarea']) . "'"; // INSERT SAMPLE
 		if ( !mysqli_query($db, $sql) ) {
-			$error[error] = "there was an error modifying the database";
-			error($error[error]); // LOG ALL ERRORS
+			$error['error'] = "there was an error modifying the database";
+			error($error['error']); // LOG ALL ERRORS
 			
 			echo mysqli_error($db);
 		} else {
@@ -92,7 +92,7 @@ include(TEMPLATE_BASE_DIR . "_includes/inc_header.php");
 /////////////////////////////////////////////////////////////////////////////////////
 echo "<TABLE BORDER=0 ALIGN=CENTER WIDTH=100% CELLPADDING=2 CELLSPACING=0 RULES=NONE>";
 //echo form_table_start();
-echo "<FORM ACTION=" . $_SERVER[PHP_SELF] . " METHOD=POST>";
+echo "<FORM ACTION=" . $_SERVER['PHP_SELF'] . " METHOD=POST>";
 
 
 
@@ -145,7 +145,7 @@ echo "<FORM ACTION=" . $_SERVER[PHP_SELF] . " METHOD=POST>";
 	////////// FIELDNAME
 	$insert_form[] = array("fieldname", trans("fieldname"), // $field_name // WITH TRANSLATION FUNCTION
 			// by the way, the translation function translates all text from english to any othe language in our database (tbd)
-		array("TEXT",$edit[fieldname],NULL,NULL), // $input[type], $input[value], $input[style], $input[option]
+		array("TEXT",$edit['fieldname'],NULL,NULL), // $input['type'], $input['value'], $input['style'], $input['option']
 		NULL,NULL,NULL); // $styles,$trailer,$options
 	
 	////////// TEXT NOTE
@@ -160,11 +160,11 @@ echo "<FORM ACTION=" . $_SERVER[PHP_SELF] . " METHOD=POST>";
 	////////// TEXT NOTE
 	$insert_form[] = array("_",NULL," This is what an error message would look like by only setting the variable \$error[<NAME OF VARIABLE HERE>]");
 	
-	$error[error] = "This is a custom error message, usually instructing the user what to do to eliminate it. <B>This is really the purpose behind this whole form function. It allows you to locate the error message right where the error is occurring.</B>";
+	$error['error'] = "This is a custom error message, usually instructing the user what to do to eliminate it. <B>This is really the purpose behind this whole form function. It allows you to locate the error message right where the error is occurring.</B>";
 	
 	////////// FIELDNAME
 	$insert_form[] = array("error", trans("error"),
-		array("TEXT",$edit[error],NULL,NULL),
+		array("TEXT",$edit['error'],NULL,NULL),
 		NULL,"OH! almost forgot about the trailer!",NULL); // $styles,$trailer,$options
 	
 	
@@ -173,7 +173,7 @@ echo "<FORM ACTION=" . $_SERVER[PHP_SELF] . " METHOD=POST>";
 	
 	////////// STYLE EXAMPLE
 	$insert_form[] = array("style", trans("style sample"),
-		array("TEXT",$edit[style],NULL,NULL),
+		array("TEXT",$edit['style'],NULL,NULL),
 		array(null,"background-color:lightgreen;","background-color:lightgreen;"),"optional",NULL); // $styles,$trailer,$options
 	
 	////////// TEXT NOTE
@@ -181,7 +181,7 @@ echo "<FORM ACTION=" . $_SERVER[PHP_SELF] . " METHOD=POST>";
 	
 	////////// CHECKBOX
 	$insert_form[] = array("checkbox", trans("checkbox"),
-		array("CHECKBOX","1","1",($_POST[checkbox] ? " CHECKED":NULL)), // $input[type], $input[value], $input[style], $input[option]
+		array("CHECKBOX","1","1",($_POST['checkbox'] ? " CHECKED":NULL)), // $input['type'], $input['value'], $input['style'], $input['option']
 		NULL,NULL,NULL);
 	
 	// notice the predefined styles in the example above
@@ -189,7 +189,7 @@ echo "<FORM ACTION=" . $_SERVER[PHP_SELF] . " METHOD=POST>";
 	
 	////////// TEXTARE
 	$insert_form[] = array("textarea", trans("textarea"),
-		array("TEXTAREA","this has a custom height to six rows, but the width throughout the form is constant via a style sheet setting which can be adjusted for the whole site.",NULL,"ROWS=6"), // $input[type], $input[value], $input[style], $input[option]
+		array("TEXTAREA","this has a custom height to six rows, but the width throughout the form is constant via a style sheet setting which can be adjusted for the whole site.",NULL,"ROWS=6"), // $input['type'], $input['value'], $input['style'], $input['option']
 		NULL,NULL,NULL);
 	
 	
@@ -205,26 +205,26 @@ echo "<FORM ACTION=" . $_SERVER[PHP_SELF] . " METHOD=POST>";
 	
 	////////// MANUAL FORM INPUT
 	$insert_form[] = array("manual", trans("manual input"),
-		"<INPUT NAME=manual TYPE=TEXT ". form_value("enter your [something]",$_POST[manual]) .">",
+		"<INPUT NAME=manual TYPE=TEXT ". form_value("enter your [something]",$_POST['manual']) .">",
 		NULL,"notice, no arrays in this code input value",NULL);
 	
 	
 	////////////////////////////////////////////////////////////////////////////////
 	
-	$input[sample] = "<SELECT NAME=sample>";
-	$input[sample] .= "<OPTION STYLE='color:CCC;' VALUE=''>SELECT</OPTION>";
+	$input['sample'] = "<SELECT NAME=sample>";
+	$input['sample'] .= "<OPTION STYLE='color:CCC;' VALUE=''>SELECT</OPTION>";
 	
 	$query_samples = mysqli_query($db, "SELECT * FROM samples");
 	while ( $results = mysqli_fetch_assoc($query_samples) ) {
-		$input[sample] .= "<OPTION VALUE='" . $results[sample_id] . "' " . // SAMPLES SELECT
-			return_match($_POST[fieldname], $results[fieldname], "SELECTED") . ">" . $results[fieldname] . " (" . $results[sample_id] . ")</OPTION>";
+		$input['sample'] .= "<OPTION VALUE='" . $results['sample_id'] . "' " . // SAMPLES SELECT
+			return_match($_POST['fieldname'], $results['fieldname'], "SELECTED") . ">" . $results['fieldname'] . " (" . $results['sample_id'] . ")</OPTION>";
 	}
 	
-	$input[sample] .= "</SELECT>";
+	$input['sample'] .= "</SELECT>";
 	
 	////////// SAMPLE
 	$insert_form[] = array("sample", trans("menu sample"), // $field_name
-		$input[sample], // $input[type], $input[value], $input[style], $input[option]
+		$input['sample'], // $input['type'], $input['value'], $input['style'], $input['option']
 		NULL,NULL,NULL); // $styles,$trailer,$options
 	
 	
@@ -238,7 +238,7 @@ echo "<FORM ACTION=" . $_SERVER[PHP_SELF] . " METHOD=POST>";
 	
 	////////// SUBMIT
 	$insert_form[] = array("SUBMIT",NULL,
-		"<INPUT TYPE=SUBMIT NAME=SUBMIT VALUE=SUBMIT> ", // $input[type], $input[value], $input[style], $input[option]
+		"<INPUT TYPE=SUBMIT NAME=SUBMIT VALUE=SUBMIT> ", // $input['type'], $input['value'], $input['style'], $input['option']
 		NULL,"click here to see the error handling and add to the db",NULL); // $styles,$trailer,$options
 	
 	////////// TEXT NOTE

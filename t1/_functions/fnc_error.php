@@ -11,7 +11,7 @@
 	
 	////////// INSERT ERROR INTO ERROR DATABASE
 	/////////////////////////////////////////////////////////////////////////////////////
-	$db[insert] = "INSERT INTO template_errors SET " .
+	$db['insert'] = "INSERT INTO template_errors SET " .
 				"error_id = NULL," .
 				query_insert("user_id",USER_ID,NULL) .
 				query_insert("level",$level,NULL) .
@@ -20,16 +20,16 @@
 				query_insert("sql",$sql,NULL) .
 				query_insert("action",$action,NULL) . // USED IN CRON FILE (BETA)
 				
-				query_insert("filename",basename($_SERVER[PHP_SELF]),NULL) .
-				query_insert("file",basename($debug[0]['file']),NULL) .
-				query_insert("line",$debug[0]['line'],NULL) .
-				query_insert("function",$debug[0]['function'],NULL) .
+				query_insert("filename",basename($_SERVER['PHP_SELF']),NULL) .
+				query_insert("file",basename($debug['0']['file']),NULL) .
+				query_insert("line",$debug['0']['line'],NULL) .
+				query_insert("function",$debug['0']['function'],NULL) .
 				
 				query_insert("session_id",session_id(),NULL) .
 				
-				query_insert("http_host",$_SERVER[HTTP_HOST],NULL) .
-				query_insert("remote_addr",$_SERVER[REMOTE_ADDR],NULL) .
-				query_insert("http_user_agent",$_SERVER[HTTP_USER_AGENT],NULL) .
+				query_insert("http_host",$_SERVER['HTTP_HOST'],NULL) .
+				query_insert("remote_addr",$_SERVER['REMOTE_ADDR'],NULL) .
+				query_insert("http_user_agent",$_SERVER['HTTP_USER_AGENT'],NULL) .
 				
 				query_insert("debug",print_r($debug,1),NULL) .
 				query_insert("session",print_r($_SESSION,1),NULL) .
@@ -44,7 +44,7 @@
 			
 			
 			
-			if ( !mysqli_query($db, $db[insert]) ) {
+			if ( !mysqli_query($db, $db['insert']) ) {
 				echo mysqli_error($db);
 			}
 			
@@ -58,24 +58,24 @@
 		case ($level >= 5):
 			// EMAIL ADMIN NOTIFICATION
 			//echo "AN ERROR HAS OCCURRED (ADMIN EMAIL)<P>";
-			//mail(EMAIL_ADMIN,"DEMESSI ALERT","CHECK " . $_SERVER[HTTP_HOST] . "\nERROR ID --> $id");
+			//mail(EMAIL_ADMIN,"DEMESSI ALERT","CHECK " . $_SERVER['HTTP_HOST'] . "\nERROR ID --> $id");
 			
 		case ($level >= 7):
 			// EMAIL EMERGENCY CONTACT
 			//echo "AN ERROR HAS OCCURRED (EMERGENCY EMAIL)<P>";
-			//mail(EMAIL_EMERGENCY,"DEMESSI ALERT","CHECK " . $_SERVER[HTTP_HOST] . "\nERROR ID --> $id");
+			//mail(EMAIL_EMERGENCY,"DEMESSI ALERT","CHECK " . $_SERVER['HTTP_HOST'] . "\nERROR ID --> $id");
 		
 		case ($level == 9):
 			// STOP SCRIPT
 			//echo "STOP SCRIPT (REDIRECT)<P>";
 			
-			header("location:http://" . $_SERVER[PHP_SELF] );
-			echo "<META HTTP-EQUIV='REFRESH' CONTENT='1; URL=" . $_SERVER[PHP_SELF] . "'>";
+			header("location:http://" . $_SERVER['PHP_SELF'] );
+			echo "<META HTTP-EQUIV='REFRESH' CONTENT='1; URL=" . $_SERVER['PHP_SELF'] . "'>";
 			exit();
 	}
 	
 	
-	/*$info[error] = mysqli_fetch_array(mysqli_query($db, "SELECT * FROM errors WHERE error_id = '" . mysqli_insert_id($db) . "' LIMIT 1"));
+	/*$info['error'] = mysqli_fetch_array(mysqli_query($db, "SELECT * FROM errors WHERE error_id = '" . mysqli_insert_id($db) . "' LIMIT 1"));
 	
 	echo "ERROR:<P>" . 
 		$message . "<P>";
@@ -95,15 +95,15 @@
 
 /*function test_01() {
 	echo DOMAIN . " that was the domain<P>" . 
-		"SCRIPT_FILENAME --> " . $_SERVER[SCRIPT_FILENAME] . "<P>" .
-		"PHP_SELF --> " . $_SERVER[PHP_SELF] . "<P>" .
+		"SCRIPT_FILENAME --> " . $_SERVER['SCRIPT_FILENAME'] . "<P>" .
+		"PHP_SELF --> " . $_SERVER['PHP_SELF'] . "<P>" .
 		"__LINE__ --> " . __LINE__ . "<P>" .
 		"__FILE__ --> " . __FILE__ . "<P>" .
 		"CURRENT FILE --> fnc.php<P>";
 	
 	//session_unregister("test");
 	//$test = "this is a test session variable"; //session_register("test");
-	//$_SESSION[test] = $test;
+	//$_SESSION['test'] = $test;
 	
 	if ( is_array($_SERVER) ) {
 		foreach ( $_SERVER AS $key => $value ) {
@@ -136,7 +136,7 @@
 	}
 	
 	
-	$send_error = "SECURITY - " . $_SERVER[HTTP_REFERER] . " $_SESSION[wc_user_id]\n\n" .
+	$send_error = "SECURITY - " . $_SERVER['HTTP_REFERER'] . " $_SESSION['wc_user_id']\n\n" .
 		
 		"SERVER INFORMATION\n" .
 		"------------------------------\n" .

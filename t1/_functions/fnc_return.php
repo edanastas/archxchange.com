@@ -59,8 +59,8 @@ return $return['host'];
 	if ( is_array($vars) ) { // IF ARRAY
 		foreach ($vars AS $value) { // LOOP THROUGH ARRAY
 			if ( is_array($value) ) {
-				if ( $value[0] ) { // IF ARRAY VALUE EXISTS
-					return $value[1]; // RETURN
+				if ( $value['0'] ) { // IF ARRAY VALUE EXISTS
+					return $value['1']; // RETURN
 					break;
 				}
 			} else {
@@ -93,7 +93,7 @@ return $return['host'];
 
 
 
-//		//function return_first($var[1],$var[2],$var[3]=NULL) { // RETURN FIRST VALUE
+//		//function return_first($var['1'],$var['2'],$var['3']=NULL) { // RETURN FIRST VALUE
 		function return_first($var_1,$var_2,$var_3=NULL) { // RETURN FIRST VALUE
 	$var = array($var_1,$var_2,$var_3);
 	foreach ($var AS $value) {
@@ -205,7 +205,7 @@ return $return['host'];
 	$code = NULL;
 	
 	for($i=0; $i < $length; $i++) {
-		$code .= $string{mt_rand(0,strlen($string)-1)};
+		$code .= $string[mt_rand(0,strlen($string)-1)];
 	}
 	
 	return $code;

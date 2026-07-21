@@ -60,7 +60,7 @@ if ( !$query = mysqli_query($db, $sql) ) {
 	echo "<div id='projectDepartment'></div>";
 	
 	while ($info = mysqli_fetch_assoc($query)) {
-		echo "<div class='projectList'>". $info['title'] ." ". $info[category] ."</div>";
+		echo "<div class='projectList'>". $info['title'] ." ". $info['category'] ."</div>";
 	}
 }
 

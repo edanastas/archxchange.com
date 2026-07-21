@@ -26,8 +26,8 @@ define('ERROR_MESSAGE', 'ACCESS TEMPORARILY RESTRICTED'); // ERROR_MESSAGE
 define('CRYPT_REF_ID',sha1('REF_ID'));
 define('FORM_WIDTH',340);
 
-$config[forms][width] = 340;
-$config[image][types] = array(
+$config['forms']['width'] = 340;
+$config['image']['types'] = array(
 	1=>"photograph",
 	2=>"construction",
 	"process"=>array(
@@ -67,7 +67,7 @@ require(dirname(__FILE__) . "/db.php"); // CONNECT TO DB — always relative to 
 
 ////////// SITE SETTINGS
 /////////////////////////////////////////////////////////////////////////////////////
-define('DEFAULT_TITLE', 'Welcome to ' . DOMAIN); // WEB PAGE TITLE
+// DEFAULT_TITLE defined in config.php after DOMAIN is available
 //define('IMAGE_HEADER_01', '01'); // WEB PAGE TITLE  ***************************************************************
 //define('ERROR_MESSAGE', 'YOU DO NOT HAVE ACCESS TO VIEW THIS PAGE'); // ERROR_MESSAGE
 
@@ -78,8 +78,8 @@ define('DEFAULT_TITLE', 'Welcome to ' . DOMAIN); // WEB PAGE TITLE
 
 // SITE ACCESS
 /*if ( $config = mysqli_fetch_array(mysqli_query($db, "SELECT * FROM config LIMIT 1") ));
-if ( $config[status] > 0 ) {
-	define('SITE_ACCESS', '$config[status]'); // SITE ACCESS FROM SITE DB
+if ( $config['status'] > 0 ) {
+	define('SITE_ACCESS', '$config['status']'); // SITE ACCESS FROM SITE DB
 } else {
 	define('SITE_ACCESS', '0'); // 
 }*/

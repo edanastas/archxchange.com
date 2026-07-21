@@ -1,9 +1,9 @@
 <?php 
 
 /*
-if ( preg_match("//home/havecigs/public_html/i", $_SERVER[SCRIPT_FILENAME]) ) { ////////// DEVELOPMENT COMPUTER
+if ( preg_match("//home/havecigs/public_html/i", $_SERVER['SCRIPT_FILENAME']) ) { ////////// DEVELOPMENT COMPUTER
 	include(TEMPLATE_BASE_DIR . "../secure/config_smokes.php");
-} elseif ( preg_match("//Library/WebServer/Documents/i", $_SERVER[DOCUMENT_ROOT]) ) { ////////// DEVELOPMENT COMPUTER
+} elseif ( preg_match("//Library/WebServer/Documents/i", $_SERVER['DOCUMENT_ROOT']) ) { ////////// DEVELOPMENT COMPUTER
 	include(TEMPLATE_BASE_DIR . "root/config_smokes.php");
 } else {
 	include(TEMPLATE_BASE_DIR . "../../secure/config_smokes.php");

@@ -20,7 +20,7 @@ require(TEMPLATE_BASE_DIR . "config.php"); // _functions/fnc.php
 $sql = "SELECT * FROM projects p 
 	LEFT JOIN project_titles pt ON p.project_id = pt.project_id 
 	LEFT JOIN project_locations pl ON p.project_id = pl.project_id 
-	WHERE p.project_id = '". $_GET[ref] ."'";
+	WHERE p.project_id = '". $_GET['ref'] ."'";
 
 $log[] = "\$sql --> ". $sql ."<P>";
 
@@ -60,7 +60,7 @@ if ( !$query = mysqli_query($db, $sql) ) {
 	error("there was a db error",$sql);
 } else {
 	while ($project = mysqli_fetch_assoc($query)) {
-		echo "<a href='project.php?". CRYPT_REF_ID ."=". $project[project_id] ."'>". $project[title] ."<a/><br />";
+		echo "<a href='project.php?". CRYPT_REF_ID ."=". $project['project_id'] ."'>". $project['title'] ."<a/><br />";
 	}
 }
 

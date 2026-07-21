@@ -17,95 +17,95 @@ if ( !defined('ACCESS') ) die(ERROR_MESSAGE);
 
 // DATABASE /////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////// 4.0
-if ( $_POST[BACK] ) {
+if ( $_POST['BACK'] ) {
 	header("location:./");
-} elseif ( $_POST[ADD] || $_POST[CHANGE] ) {
+} elseif ( $_POST['ADD'] || $_POST['CHANGE'] ) {
 	
 	////////// CHECK IF DEPARTMENT WAS SUBMITTED?
-	if ( !$_POST[department] ) {
-		$error[department] = "Please enter a department name and submit the form again";
+	if ( !$_POST['department'] ) {
+		$error['department'] = "Please enter a department name and submit the form again";
 	}
 	
 	////////// CHECK EXISTING DEPARTMENTS FOR DUPLICATES
 	$sql = "SELECT * FROM template_departments 
-		WHERE department LIKE '". $_POST[department] ."' ". 
-			($_GET[CRYPT_REF_ID] && $_POST[CHANGE] ? " AND department_id != ". $_GET[CRYPT_REF_ID] : NULL) ." 
+		WHERE department LIKE '". $_POST['department'] ."' ". 
+			($_GET['CRYPT_REF_ID'] && $_POST['CHANGE'] ? " AND department_id != ". $_GET['CRYPT_REF_ID'] : NULL) ." 
 			AND domain_id = '". DOMAIN_ID ."'";
 	
 	if ( !$query = mysqli_query($db, $sql) ) {
 		error("there was an error checking for duplicate departments",$sql);
 	} else {
 		if ( mysqli_fetch_assoc($query) ) {
-			$error[department] = "The department you submitted already exists. Please submit a unique department";
+			$error['department'] = "The department you submitted already exists. Please submit a unique department";
 		}
 	}
 	
 	
 	////////// PROCESS FORM
 	if ( !$error ) {
-		//$db[values] = "department = '". ucwords(strtolower(query_prep($_POST[department]))) ."', 
-		//	notes = '". query_prep($_POST[notes]) ."', 
-		//	". ( $_POST[inactive] ? " inactive = 1" : " inactive = NULL" ) ."";
+		//$db['values'] = "department = '". ucwords(strtolower(query_prep($_POST['department']))) ."', 
+		//	notes = '". query_prep($_POST['notes']) ."', 
+		//	". ( $_POST['inactive'] ? " inactive = 1" : " inactive = NULL" ) ."";
 		
-		if ( $_POST[ADD] ) {
-			$db[action] = "INSERT INTO";
+		if ( $_POST['ADD'] ) {
+			$db['action'] = "INSERT INTO";
 			//"domain_id = '". DOMAIN_ID ."'"
-		} elseif ( $_POST[CHANGE] ) {
-			$db[action] = "UPDATE";
-			$db[where] = "WHERE department_id = ". $_GET[CRYPT_REF_ID] ." AND domain_id = '". DOMAIN_ID ."' LIMIT 1";
+		} elseif ( $_POST['CHANGE'] ) {
+			$db['action'] = "UPDATE";
+			$db['where'] = "WHERE department_id = ". $_GET['CRYPT_REF_ID'] ." AND domain_id = '". DOMAIN_ID ."' LIMIT 1";
 		}
 		
 		
-		$sql = $db[action] ." template_departments SET ".
-			($_POST[ADD] ? "domain_id = '". DOMAIN_ID ."', " : null) .
-			"department = '". ucwords(strtolower(query_prep($_POST[department]))) ."', 
-			notes = '". query_prep($_POST[notes]) ."', 
-			". ( $_POST[inactive] ? " inactive = 1" : " inactive = NULL" ) ." ".
-			$db[where];
+		$sql = $db['action'] ." template_departments SET ".
+			($_POST['ADD'] ? "domain_id = '". DOMAIN_ID ."', " : null) .
+			"department = '". ucwords(strtolower(query_prep($_POST['department']))) ."', 
+			notes = '". query_prep($_POST['notes']) ."', 
+			". ( $_POST['inactive'] ? " inactive = 1" : " inactive = NULL" ) ." ".
+			$db['where'];
 		
 		if ( !mysqli_query($db, $sql) ) {
 			error("there was an error modifying the template_departments table",$sql,1);
 		} else {
 			if ( $last_insert_id = mysqli_insert_id($db) ) {
-				header("location:". $_SERVER[PHP_SELF] ."?". CRYPT_REF_ID ."=". $last_insert_id);
+				header("location:". $_SERVER['PHP_SELF'] ."?". CRYPT_REF_ID ."=". $last_insert_id);
 			}
 		}
 	}
 	
-} elseif ( $_POST[DELETE] ) {
+} elseif ( $_POST['DELETE'] ) {
 	
-	if ( $_POST[DELETE] && !$_POST[confirm_delete] ) 
-		$error[DELETE] = "By deleting this department you will also delete all the associations this department may have to your projects (although the actual projects associated with this department <u>will NOT be deleted</u>).";
-		//$error[DELETE] = "Please be aware that by deleting this department you will also delete all the project associations to this department (although the actual projects associated with this department <u>will NOT be deleted</u>)";
+	if ( $_POST['DELETE'] && !$_POST['confirm_delete'] ) 
+		$error['DELETE'] = "By deleting this department you will also delete all the associations this department may have to your projects (although the actual projects associated with this department <u>will NOT be deleted</u>).";
+		//$error['DELETE'] = "Please be aware that by deleting this department you will also delete all the project associations to this department (although the actual projects associated with this department <u>will NOT be deleted</u>)";
 	
 	if ( !$error ) {
 		
 		// check all other databases that reference departments
 		$sql = "DELETE FROM template_project_departments 
-			WHERE department_id = '". $_GET[CRYPT_REF_ID] ."'";
+			WHERE department_id = '". $_GET['CRYPT_REF_ID'] ."'";
 		if ( !mysqli_query($db, $sql) ) {
-			$error[DELETE] = "there was an error trying to delete the department associations to projects. An administrator has been contacted and will resolve the issue as quickly as possible.";
-			error($error[DELETE],$sql,1);
+			$error['DELETE'] = "there was an error trying to delete the department associations to projects. An administrator has been contacted and will resolve the issue as quickly as possible.";
+			error($error['DELETE'],$sql,1);
 		}
 		
 		/*// template_services
 		STOP! DO NOT NEED TO DO THIS --> SIMPLY HAVE A CATEGORY OF SERVICES THAT ARE UNASSIGNED
 		$sql = "DELETE FROM template_services 
-			WHERE department_id = '". $_GET[CRYPT_REF_ID] ."'";
+			WHERE department_id = '". $_GET['CRYPT_REF_ID'] ."'";
 		if ( !mysqli_query($db, $sql) ) {
-			$error[DELETE] = "there was an error trying to delete the department professional services. An administrator has been contacted and will resolve the issue as quickly as possible.";
-			error($error[DELETE],$sql,1);
+			$error['DELETE'] = "there was an error trying to delete the department professional services. An administrator has been contacted and will resolve the issue as quickly as possible.";
+			error($error['DELETE'],$sql,1);
 		}*/
 		
 		
 		
 		$sql = "DELETE FROM template_departments 
-			WHERE department_id = '". $_GET[CRYPT_REF_ID] ."' 
+			WHERE department_id = '". $_GET['CRYPT_REF_ID'] ."' 
 				AND domain_id IS NOT NULL LIMIT 1";
 		if ( !mysqli_query($db, $sql) ) {
 			error("there was an error deleting the department",$sql,1);
 		} else {
-			header("location:". $_SERVER[PHP_SELF] ."");
+			header("location:". $_SERVER['PHP_SELF'] ."");
 		}
 		
 	}
@@ -125,7 +125,7 @@ include(TEMPLATE_BASE_DIR ."_includes/inc_header_admin.php");
 /////////////////////////////////////////////////////////////////////////////////////
 //echo "<TABLE BORDER=0 BORDERCOLOR=PINK ALIGN=CENTER CELLPADDING=1 CELLSPACING=0 RULES=NONE>";
 echo form_table_start();
-//echo "<FORM ACTION=" . $_SERVER[PHP_SELF] . " METHOD=POST>";
+//echo "<FORM ACTION=" . $_SERVER['PHP_SELF'] . " METHOD=POST>";
 
 
 
@@ -137,7 +137,7 @@ echo form_table_start();
 
 echo "<TABLE BORDER=0 BORDERCOLOR=orange ALIGN=CENTER width=100% CELLPADDING=3 CELLSPACING=0 RULSE=NONE>";
 
-echo "<FORM ACTION='". $_SERVER[PHP_SELF] ."' METHOD=GET>";
+echo "<FORM ACTION='". $_SERVER['PHP_SELF'] ."' METHOD=GET>";
 
 
 	$insert_form[] = array("-",NULL,"Departments Manager"); // TITLE
@@ -156,47 +156,47 @@ echo "<FORM ACTION='". $_SERVER[PHP_SELF] ."' METHOD=GET>";
 	$query = mysqli_query($db, $sql);
 	if ( mysqli_num_rows($query) > 0 ) {
 		
-		$input[department_id] = "<SELECT NAME='". CRYPT_REF_ID ."' ". html_onchange() .">";
+		$input['department_id'] = "<SELECT NAME='". CRYPT_REF_ID ."' ". html_onchange() .">";
 		
 		// INSERT SELECT
-		$input[department_id] .= "<OPTION VALUE=''>SELECT ---></OPTION>";
+		$input['department_id'] .= "<OPTION VALUE=''>SELECT ---></OPTION>";
 		
 		while ( $info = mysqli_fetch_assoc($query) ) {
 			
 			//dev_print($info);
 			// SELECTED
-			if ( $_GET[CRYPT_REF_ID] == $info[department_id] ) {
+			if ( $_GET['CRYPT_REF_ID'] == $info['department_id'] ) {
 				$edit = $info;
 				
-				if ( $previous[department_id] ) $adjacent[previous] = $previous[department_id];
+				if ( $previous['department_id'] ) $adjacent['previous'] = $previous['department_id'];
 				$insert_next = TRUE;
 				
-			} elseif ( $insert_next && !$adjacent[next] ) {
-				$adjacent[next] = $info[department_id];
+			} elseif ( $insert_next && !$adjacent['next'] ) {
+				$adjacent['next'] = $info['department_id'];
 			}
 			
 			
-			$input[department_id] .= "<OPTION VALUE='". $info[department_id] ."' ". 
-				($_GET[CRYPT_REF_ID] == $info[department_id] ? " SELECTED" : NULL) .">". ucwords($info[department]) ." [". $info[department_id] ."]</OPTION>";
+			$input['department_id'] .= "<OPTION VALUE='". $info['department_id'] ."' ". 
+				($_GET['CRYPT_REF_ID'] == $info['department_id'] ? " SELECTED" : NULL) .">". ucwords($info['department']) ." [". $info['department_id'] ."]</OPTION>";
 			$previous = $info;
 		}
-		$input[department_id] .= "</SELECT>";
+		$input['department_id'] .= "</SELECT>";
 	}
 	
 	////////// EXISTING DEPARTMENTS
 	$insert_form[] = array("department_id", "existing departments", 
-		$input[department_id],
+		$input['department_id'],
 		NULL,NULL,NULL);
 	
 	
-	if ( $_GET[CRYPT_REF_ID] ) {
+	if ( $_GET['CRYPT_REF_ID'] ) {
 		////////// ADJACENT - NEXT / PREVIOUS
 		$insert_form[] = array("adjacent", NULL, 
-			($adjacent[previous] ? 
-				"<A HREF='". $_SERVER[PHP_SELF]."?". CRYPT_REF_ID ."=". $adjacent[previous] ."'><SMALL><< PREVIOUS</SMALL></A>" : NULL) .
-			($adjacent[previous] && $adjacent[next] ? " | " : NULL) .
-			($adjacent[next] ? 
-				"<A HREF='". $_SERVER[PHP_SELF]."?". CRYPT_REF_ID ."=". $adjacent[next] ."'><SMALL>NEXT >></SMALL></A>" : NULL),
+			($adjacent['previous'] ? 
+				"<A HREF='". $_SERVER['PHP_SELF']."?". CRYPT_REF_ID ."=". $adjacent['previous'] ."'><SMALL><< PREVIOUS</SMALL></A>" : NULL) .
+			($adjacent['previous'] && $adjacent['next'] ? " | " : NULL) .
+			($adjacent['next'] ? 
+				"<A HREF='". $_SERVER['PHP_SELF']."?". CRYPT_REF_ID ."=". $adjacent['next'] ."'><SMALL>NEXT >></SMALL></A>" : NULL),
 			array(NULL,NULL,"padding-left:40px;"),NULL,NULL);
 	}
 	
@@ -215,7 +215,7 @@ echo "<FORM ACTION='". $_SERVER[PHP_SELF] ."' METHOD=GET>";
 	////////////////////////////////////////////////////////////////////////////////
 	
 	echo "</FORM>
-		<FORM ACTION='". $_SERVER[PHP_SELF] . ($_SERVER[QUERY_STRING] ? "?". $_SERVER[QUERY_STRING] : NULL) ."' METHOD=POST>";
+		<FORM ACTION='". $_SERVER['PHP_SELF'] . ($_SERVER['QUERY_STRING'] ? "?". $_SERVER['QUERY_STRING'] : NULL) ."' METHOD=POST>";
 	
 	
 	////////// SUBTITLE
@@ -224,46 +224,46 @@ echo "<FORM ACTION='". $_SERVER[PHP_SELF] ."' METHOD=GET>";
 	
 	////////// DEPARTMENT
 	$insert_form[] = array("department", "department", // $field_name // WITH TRANSLATION FUNCTION
-		array("TEXT",$edit[department],NULL,NULL), // $input[type], $input[value], $input[style], $input[option]
+		array("TEXT",$edit['department'],NULL,NULL), // $input['type'], $input['value'], $input['style'], $input['option']
 		NULL,NULL,array(value=>1)); // $styles,$trailer,$options
 	
 	
 	
 	////////// DEPARTMENT NOTES
 	$insert_form[] = array("notes", "notes",
-		array("TEXTAREA",$edit[notes],NULL,NULL),
+		array("TEXTAREA",$edit['notes'],NULL,NULL),
 		NULL,NULL,array(value=>1));
 	
 	
 	////////// INACTIVE CHECKBOX
 	$insert_form[] = array("inactive", NULL, 
-		"<INPUT TYPE=CHECKBOX NAME=inactive VALUE=1 ". ($edit[inactive] ? " CHECKED" : NULL) ."> check to make department inactive",
+		"<INPUT TYPE=CHECKBOX NAME=inactive VALUE=1 ". ($edit['inactive'] ? " CHECKED" : NULL) ."> check to make department inactive",
 		NULL,NULL,NULL);
 	
 	
 	//////////////////////////////////////////////////
-	if ( $_GET[CRYPT_REF_ID] ) {
-		$input[submit] = "<INPUT TYPE=SUBMIT NAME='CHANGE' VALUE='SUBMIT CHANGES'> 
+	if ( $_GET['CRYPT_REF_ID'] ) {
+		$input['submit'] = "<INPUT TYPE=SUBMIT NAME='CHANGE' VALUE='SUBMIT CHANGES'> 
 			<INPUT TYPE=SUBMIT NAME='ADD' VALUE='ADD AS NEW'> ";
 		
-		$input[delete] = "<INPUT TYPE=SUBMIT NAME=DELETE VALUE='DELETE...'> 
-			". ($error[DELETE] ? "<INPUT TYPE=CHECKBOX NAME=confirm_delete>check to confirm delete" : null);
+		$input['delete'] = "<INPUT TYPE=SUBMIT NAME=DELETE VALUE='DELETE...'> 
+			". ($error['DELETE'] ? "<INPUT TYPE=CHECKBOX NAME=confirm_delete>check to confirm delete" : null);
 		
 	} else {
-		$input[submit] = "<INPUT TYPE=SUBMIT NAME='ADD' VALUE='ADD DEPARTMENT'> ";
+		$input['submit'] = "<INPUT TYPE=SUBMIT NAME='ADD' VALUE='ADD DEPARTMENT'> ";
 	}
 	
-	$input[submit] .= "<INPUT TYPE=SUBMIT NAME='BACK' VALUE='BACK'>";
+	$input['submit'] .= "<INPUT TYPE=SUBMIT NAME='BACK' VALUE='BACK'>";
 	
 	////////// SUBMIT
 	$insert_form[] = array("SUBMIT", NULL,
-		$input[submit],
+		$input['submit'],
 		NULL,NULL,NULL);
 	
 	
 	////////// DELETE
 	$insert_form[] = array("DELETE", NULL,
-		$input[delete],
+		$input['delete'],
 		NULL,NULL,NULL);
 	
 	

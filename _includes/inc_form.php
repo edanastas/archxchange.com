@@ -37,12 +37,12 @@
 // VARIABLES ////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////// 3.0
-if ( !$form[width] ) { $form[width] = 300; }
-if ( !$form[style] ) { $form[style] = " STYLE='width:" . $form[width] . "px;'"; }
-if ( !$form[maxlength] ) { $form[maxlength] = 255; }
+if ( !$form['width'] ) { $form['width'] = 300; }
+if ( !$form['style'] ) { $form['style'] = " STYLE='width:" . $form['width'] . "px;'"; }
+if ( !$form['maxlength'] ) { $form['maxlength'] = 255; }
 
 if ( !defined("DB_TITLE") ) {
-	define("DB_TITLE",strtoupper(basename($_SERVER[PHP_SELF],".php")));
+	define("DB_TITLE",strtoupper(basename($_SERVER['PHP_SELF'],".php")));
 }
 
 define("COLOR_GUIDE","#888888");
@@ -66,8 +66,8 @@ define("COLOR_GRAY_LIGHT","#EEEEEE");
 ///////////////////////////////////////////////////////////////////////////////////// 11.0
 
 
-$buffer[form] .= "<TABLE BORDER=0 ALIGN=CENTER WIDTH=100% CELLSPACING=0 CELLPADDING=3 RULES=NONE>
-	 <FORM ACTION=" . $_SERVER[PHP_SELF] . "?" . $_SERVER[QUERY_STRING] . " METHOD=POST>";
+$buffer['form'] .= "<TABLE BORDER=0 ALIGN=CENTER WIDTH=100% CELLSPACING=0 CELLPADDING=3 RULES=NONE>
+	 <FORM ACTION=" . $_SERVER['PHP_SELF'] . "?" . $_SERVER['QUERY_STRING'] . " METHOD=POST>";
 
 
 ////////// FORM PROCESSOR
@@ -273,13 +273,13 @@ if ( is_array($fields) ) {
 							
 							// DEFINE FIELD TITLE
 							$html[$field_name][title] = $field_text . " ";
-							$html[$field_name][content] .= "<$field_type NAME='$field_name'" . $form[style] . " ROWS=5>$field_value</$field_type> \n";
+							$html[$field_name][content] .= "<$field_type NAME='$field_name'" . $form['style'] . " ROWS=5>$field_value</$field_type> \n";
 							
 							
 							// SET THE FIRST TEXTAREA FIELD AS THE DISPLAY TEXT
-							if ( !$buffer[index][text] ) {
+							if ( !$buffer['index']['text'] ) {
 								//$list[$field_name][text] = $field_name;
-								$buffer[index][text] = $field_name;
+								$buffer['index']['text'] = $field_name;
 							}
 							
 							
@@ -299,7 +299,7 @@ if ( is_array($fields) ) {
 								// INDEX ////////////////////
 								
 								// LINK ////////////////////$field_text
-								//if ( preg_match("/^http\:\/\//i",trim($field_value)) && !$buffer[index][link] ) {
+								//if ( preg_match("/^http\:\/\//i",trim($field_value)) && !$buffer['index']['link'] ) {
 								//echo "( $field_type_value AS $field_value => $field_text )<BR>";
 								//echo "\$field_text --> $field_text<BR>";
 								//echo "\$field_name --> $field_name<BR>";
@@ -308,17 +308,17 @@ if ( is_array($fields) ) {
 								//echo "\$form_value[$field_name] --> " . $form_value[$field_name] . "<BR>";
 								
 								//echo "\$field_type_value --> $field_type_value<BR>";
-								//if ( preg_match("/http/i",trim($field_value)) && !$buffer[index][link] ) {
+								//if ( preg_match("/http/i",trim($field_value)) && !$buffer['index']['link'] ) {
 								//if ( preg_match("/http/i",trim($field_value)) ) {
 									//echo "HERE!<BR>";
-									//$buffer[index][link] = trim($field_value);
-									//$buffer[index][link] = $field_name;
+									//$buffer['index']['link'] = trim($field_value);
+									//$buffer['index']['link'] = $field_name;
 								//}
 								
 								// SET THE FIRST TEXT FIELD AS THE DISPLAY INDEX LINK
-								if ( !$buffer[index][handle] ) {
+								if ( !$buffer['index']['handle'] ) {
 									//$list[$field_name][handle] = $field_name;
-									$buffer[index][handle] = $field_name;
+									$buffer['index']['handle'] = $field_name;
 									//$list[$field_name][handle] = $field_value;
 								}
 								
@@ -341,14 +341,14 @@ if ( is_array($fields) ) {
 
 
 								// HTML ////////////////////
-								$buffer_form_text_maxlength = " MAXLENGTH=" . $form[maxlength] . "";
+								$buffer_form_text_maxlength = " MAXLENGTH=" . $form['maxlength'] . "";
 								
 								
 							}
 							
 							// DEFINE FIELD TITLE
 							$html[$field_name][title] = $field_text . "";
-							$html[$field_name][content] .= "<INPUT TYPE=$field_type NAME='$field_name'" . $form[style] . "$buffer_form_text_maxlength VALUE='$field_value'> \n";
+							$html[$field_name][content] .= "<INPUT TYPE=$field_type NAME='$field_name'" . $form['style'] . "$buffer_form_text_maxlength VALUE='$field_value'> \n";
 							//echo "\$field_value" . $field_value . "<BR>";
 							
 							
@@ -375,14 +375,14 @@ if ( is_array($fields) ) {
 						// DEFINE FIELD TITLE
 						$html[$field_name][title] = NULL;
 						$html[$field_name][content] .= "<INPUT TYPE=$field_type NAME='$field_name' VALUE='$field_type_value'>
-							<INPUT TYPE=HIDDEN NAME=" . CRYPT_REF_ID . " VALUE='" . $_GET[CRYPT_REF_ID] . "'>";
+							<INPUT TYPE=HIDDEN NAME=" . CRYPT_REF_ID . " VALUE='" . $_GET['CRYPT_REF_ID'] . "'>";
 						
 						$html[$field_name][content] .= "<INPUT TYPE=$field_type NAME=CANCEL VALUE=CANCEL>\n";
 						
 						
-						if ( $_GET[CRYPT_REF_ID] ) {
+						if ( $_GET['CRYPT_REF_ID'] ) {
 							
-							if ( !$form_value[inactive] ) {
+							if ( !$form_value['inactive'] ) {
 								$insert_inactive = "deactivate";
 							} else {
 								$insert_inactive = "activate";
@@ -391,7 +391,7 @@ if ( is_array($fields) ) {
 							$html[$field_name][content] .= "&#160&#160&#160<INPUT TYPE=SUBMIT NAME=SUBMIT VALUE='" . strtoupper($insert_inactive) . "'>";
 							
 							$html[$field_name][content] .= "<BR><INPUT TYPE=$field_type NAME=DELETE VALUE=DELETE> 
-								<INPUT TYPE=CHECKBOX NAME=DELETE_CONFIRM VALUE=" . $_GET[CRYPT_REF_ID] . "> check to confirm";
+								<INPUT TYPE=CHECKBOX NAME=DELETE_CONFIRM VALUE=" . $_GET['CRYPT_REF_ID'] . "> check to confirm";
 						} else {
 							
 						}
@@ -421,9 +421,9 @@ if ( is_array($fields) ) {
 								
 								// RESET CURRENT $form_value (PRINTS OUT 1'S ?)
 								$form_value[$field_name] = NULL;
-								$form_value[$field_name][year] = $format_date[0];
-								$form_value[$field_name][month] = $format_date[1];
-								$form_value[$field_name][day] = $format_date[2];
+								$form_value[$field_name][year] = $format_date['0'];
+								$form_value[$field_name][month] = $format_date['1'];
+								$form_value[$field_name][day] = $format_date['2'];
 							}
 							
 						}
@@ -471,20 +471,20 @@ if ( is_array($fields) ) {
 						
 						//echo "\$form_nums --> $form_nums<BR>";
 						
-						if ( !$_GET[inactive] ) {
-							$query = mysqli_query($db, "SELECT id FROM " . basename($_SERVER[PHP_SELF],".php") . " 
+						if ( !$_GET['inactive'] ) {
+							$query = mysqli_query($db, "SELECT id FROM " . basename($_SERVER['PHP_SELF'],".php") . " 
 								WHERE `inactive` IS NULL");
 							
 							$form_rows = @mysqli_num_rows($query); // GET NUM ROWS FOR COLLATE
-							if ( !$_GET[CRYPT_REF_ID] ) { ++$form_rows; } // IF INSERTING NEW VARIABLE ADD LAST COLLATE VALUE
+							if ( !$_GET['CRYPT_REF_ID'] ) { ++$form_rows; } // IF INSERTING NEW VARIABLE ADD LAST COLLATE VALUE
 							
 							//echo "\$form_rows --> $form_rows<BR>";
 							$html[$field_name][start] .= "<SELECT NAME=$field_name>";
 							for($n = 1; $n <= $form_rows; $n++) {
 								// CHECK SELECTED ORDER NUMBER
 								
-								//$form_value[collate] == 
-								if ( $form_value[$field_name] == $n || !$_GET[CRYPT_REF_ID] ) {
+								//$form_value['collate'] == 
+								if ( $form_value[$field_name] == $n || !$_GET['CRYPT_REF_ID'] ) {
 								//echo "( $form_value[$field_name] == $n )<BR>";
 								//if ( $form_value[$field_name] == $n ) {
 								//if ( $form_value[$field_name] == $n || ( !$form_value[$field_name] && $n == ($form_rows - 1) ) ) {
@@ -511,7 +511,7 @@ if ( is_array($fields) ) {
 						//$create[$field_name][content] .= "`$field_name` int(12) DEFAULT NULL,";
 						
 						// THIS IS THE CODE FROM WISHCENTRAL - CAN ERASE WHEN DONE
-						/*if ( ($row_nums >= 1 && ($row[inactive] || $_POST[ADD_FORM] )) || ($row_nums > 1 && !$row[inactive]) ) {
+						/*if ( ($row_nums >= 1 && ($row['inactive'] || $_POST['ADD_FORM'] )) || ($row_nums > 1 && !$row['inactive']) ) {
 							$row_nums = $row_nums + $add;
 							$html[$field_name][content] .= "<SELECT NAME=$value>";
 							for($n = 1; $n < $row_nums; $n++) {
@@ -542,29 +542,29 @@ if ( is_array($fields) ) {
 			// BUFFER - CREATE (DB) 		//////////////////////////////////////////////////////////
 			//////////////////////////////////////////////////////////////////////////////////////////
 			//////////////////////////////////////////////////////////////////////////////////////////
-			$buffer[db][create] .= $create[$field_name][start] . $create[$field_name][content] . $create[$field_name][end] . "\n";
+			$buffer['db']['create'] .= $create[$field_name][start] . $create[$field_name][content] . $create[$field_name][end] . "\n";
 			
 											//////////////////////////////////////////////////////////
 			// BUFFER - INSERT (DB) 		//////////////////////////////////////////////////////////
 			//////////////////////////////////////////////////////////////////////////////////////////
 			//////////////////////////////////////////////////////////////////////////////////////////
 			if ( !$db[$field_name][none] && !$db[$field_name][collate] ) { // IF NOT COLLATE OR NONE (SUBMIT) DEFINED
-				$buffer[db][insert] .= "`$field_name` = ";
+				$buffer['db']['insert'] .= "`$field_name` = ";
 				if ( $db[$field_name][content] ) { // IF THERE IS NO VALUE FOR DATABASE --> SET TO NULL
-					$buffer[db][insert] .= "'" . $db[$field_name][content] . "'"; // ADD SINGLE QUOTATIONS
+					$buffer['db']['insert'] .= "'" . $db[$field_name][content] . "'"; // ADD SINGLE QUOTATIONS
 				} else {
-					$buffer[db][insert] .= "NULL"; // USE NULL
+					$buffer['db']['insert'] .= "NULL"; // USE NULL
 				}
-				$buffer[db][insert] .= ",\n"; // ADD COMMA FOR NEXT DB FIELD
+				$buffer['db']['insert'] .= ",\n"; // ADD COMMA FOR NEXT DB FIELD
 				
 				//$db[$field_name][start] = "`$field_name` = ";
 				//$db[$field_name][end] = $comma . "";
 				
 				//if ( $db[$field_name][content] ) { $db[$field_name][content] = "'" . $db[$field_name][content] . "'"; } else { $db[$field_name][content] = "NULL"; }
-				//$buffer[db][insert] .= $db[$field_name][start] . $db[$field_name][content] . $db[$field_name][end] . "\n";
-				//$buffer[db][insert] .= $db[$field_name] . "\n";
+				//$buffer['db']['insert'] .= $db[$field_name][start] . $db[$field_name][content] . $db[$field_name][end] . "\n";
+				//$buffer['db']['insert'] .= $db[$field_name] . "\n";
 			} elseif ( $db[$field_name][collate] ) {
-				$buffer[db][collate] .= $db[$field_name][collate]; // SET BUFFER COLLATE VALUE TO SORT BELOW
+				$buffer['db']['collate'] .= $db[$field_name][collate]; // SET BUFFER COLLATE VALUE TO SORT BELOW
 			}
 			
 			
@@ -572,8 +572,8 @@ if ( is_array($fields) ) {
 			// BUFFER - LIST (DB) 			//////////////////////////////////////////////////////////
 			//////////////////////////////////////////////////////////////////////////////////////////
 			//////////////////////////////////////////////////////////////////////////////////////////
-			//echo $buffer[index][handle] = $list[$field_name][handle];
-			//echo $buffer[index][text] = $list[$field_name][text];
+			//echo $buffer['index']['handle'] = $list[$field_name][handle];
+			//echo $buffer['index']['text'] = $list[$field_name][text];
 			//echo "<TR>
 			//	<TD>" . $list[$field_name][handle] . "<BR>
 			//		" . $list[$field_name][text] . "</TD>
@@ -587,7 +587,7 @@ if ( is_array($fields) ) {
 			// BUFFER - FORM (HTML)			//////////////////////////////////////////////////////////
 			//////////////////////////////////////////////////////////////////////////////////////////
 			//////////////////////////////////////////////////////////////////////////////////////////
-			$buffer[form] .= "<TR>
+			$buffer['form'] .= "<TR>
 					<TD ALIGN=RIGHT VALIGN=$field_title_align CLASS='TextGrayDark' STYLE='padding-right:10px;' NOWRAP>\n
 						" . $html[$field_name][title] . " </TD>\n
 					<TD ALIGN=LEFT VALIGN=CENTER NOWRAP CLASS='TextGrayDark'>" . $html[$field_name][start] .
@@ -606,7 +606,7 @@ if ( is_array($fields) ) {
 			////////// HEADER BAR
 			//////////////////////////////
 			if ( $field_name_value == "1" ) {
-				$buffer[form] .= "<TR>
+				$buffer['form'] .= "<TR>
 					<TD HEIGHT=1 BGCOLOR=" . COLOR_GUIDE . " STYLE='padding:0px;' COLSPAN=2></TD>
 				</TR><TR>
 					<TD HEIGHT=3 BGCOLOR=" . COLOR_BACKGROUND . " STYLE='padding:0px;' COLSPAN=2></TD>
@@ -616,7 +616,7 @@ if ( is_array($fields) ) {
 			////////// SPACER
 			//////////////////////////////
 			} elseif ( is_int($field_name_value) ) {
-				$buffer[form] .= "<TR>
+				$buffer['form'] .= "<TR>
 					<TD HEIGHT=" . $field_name_value . " BGCOLOR=" . COLOR_BACKGROUND . " STYLE='padding:0px;' COLSPAN=2></TD>
 				</TR>";
 
@@ -630,7 +630,7 @@ if ( is_array($fields) ) {
 			////////// TEXT ROW
 			//////////////////////////////
 			}*/ else {
-				$buffer[form] .= "<TR>
+				$buffer['form'] .= "<TR>
 					<TD ALIGN=LEFT VALIGN=CENTER HEIGHT=1 BGCOLOR=" . COLOR_GRAY_LIGHT . " STYLE='padding-left:20px;' COLSPAN=2>
 						<B>$field_name_value</B></TD>\n
 				</TR>";
@@ -641,7 +641,7 @@ if ( is_array($fields) ) {
 }
 
 
-$buffer[form] .= "</FORM>
+$buffer['form'] .= "</FORM>
 </TABLE>";
 
 
@@ -651,35 +651,35 @@ $buffer[form] .= "</FORM>
 ////////// DATABASE / HTML PROCESSOR
 /////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
-if ( $_POST[SUBMIT] ) {
+if ( $_POST['SUBMIT'] ) {
 	
 	// CHECK IF TABLE HAS CHANGED
 	////////////////////////////////////////////////////////////////////////////////
 	//$previous_field_name = $field_name;//////////////////////////////////////////////////////////// GANDHI
-	//$alter_table = "ALTER TABLE " . basename($_SERVER[PHP_SELF],".php") . " " . $alter; ////////////////////////////// GANDHI
+	//$alter_table = "ALTER TABLE " . basename($_SERVER['PHP_SELF'],".php") . " " . $alter; ////////////////////////////// GANDHI
 	//if ( $field_type == "TEXT" || $field_type == "TEXTAREA" || $field_type == "RADIO" || $field_type == "SELECT" || $field_type == "CHECKBOX" ) {						
 		//$enter = 0;		
-		//$table_name = basename($_SERVER[PHP_SELF],".php");						
+		//$table_name = basename($_SERVER['PHP_SELF'],".php");						
 		
 		
 		
 		
 		
-		$columns_query = mysqli_query($db, "SHOW COLUMNS FROM `" . basename($_SERVER[PHP_SELF],".php") . "`");																																									
+		$columns_query = mysqli_query($db, "SHOW COLUMNS FROM `" . basename($_SERVER['PHP_SELF'],".php") . "`");																																									
 		while ( $columns = mysqli_fetch_array($columns_query) ) {
 					
-			$new_array[$columns[0]] = $columns[0];
+			$new_array[$columns['0']] = $columns['0'];
 			
-			if ( array_key_exists($columns[0], $alter) ) {
-				$alter[$columns[0]] = NULL;
+			if ( array_key_exists($columns['0'], $alter) ) {
+				$alter[$columns['0']] = NULL;
 				
-				//echo "$columns[0] - $columns[1] - $columns[2] - $columns[3] - $columns[4] <BR>";
-			}// elseif ( $columns[0] != "id" && $columns[0] != "collate" && $columns[0] != "inactive" && $columns[0] != "stamp" ) {
-				//echo "<B>ALTER TABLE WITH $columns[0]</B><BR>";
-				//echo "$columns[0] - $columns[1] - $columns[2] - $columns[3] - $columns[4] <BR>";
+				//echo "$columns['0'] - $columns['1'] - $columns['2'] - $columns['3'] - $columns['4'] <BR>";
+			}// elseif ( $columns['0'] != "id" && $columns['0'] != "collate" && $columns['0'] != "inactive" && $columns['0'] != "stamp" ) {
+				//echo "<B>ALTER TABLE WITH $columns['0']</B><BR>";
+				//echo "$columns['0'] - $columns['1'] - $columns['2'] - $columns['3'] - $columns['4'] <BR>";
 			//}
 			/*
-			if ( $find_field[Field] == $field_name ) {									
+			if ( $find_field['Field'] == $field_name ) {									
 				++$enter;																		
 			}*/
 		}
@@ -692,12 +692,12 @@ if ( $_POST[SUBMIT] ) {
 			///	echo "DO NOTHING $value<BR>";
 			///} else {
 			if ( $value ) {
-				if ( !mysqli_query($db, "ALTER TABLE `" . basename($_SERVER[PHP_SELF],".php") . "` " . $value) ) {
-					echo "COULD NOT ADD COLUMN TO DATABASE<BR>" . "ALTER TABLE `" . basename($_SERVER[PHP_SELF],".php") . "` " . $value;
+				if ( !mysqli_query($db, "ALTER TABLE `" . basename($_SERVER['PHP_SELF'],".php") . "` " . $value) ) {
+					echo "COULD NOT ADD COLUMN TO DATABASE<BR>" . "ALTER TABLE `" . basename($_SERVER['PHP_SELF'],".php") . "` " . $value;
 					exit();
 					///html_error();
 				}
-				//echo "ALTER TABLE `" . basename($_SERVER[PHP_SELF],".php") . "` $value<BR>";
+				//echo "ALTER TABLE `" . basename($_SERVER['PHP_SELF'],".php") . "` $value<BR>";
 			}
 			///}
 		}
@@ -716,35 +716,35 @@ if ( $_POST[SUBMIT] ) {
 	
 	
 	// UPDATE OR INSERT ?
-	if ( $_GET[CRYPT_REF_ID]) { // IF $_GET THEN UPDATE
+	if ( $_GET['CRYPT_REF_ID']) { // IF $_GET THEN UPDATE
 		$action = "UPDATE";
-		$where = "WHERE id = '" . $_GET[CRYPT_REF_ID] . "'";
+		$where = "WHERE id = '" . $_GET['CRYPT_REF_ID'] . "'";
 		$limit = " LIMIT 1";
 	} else { // INSERT NEW
 		$action = "INSERT INTO";
 		$id = "`id` = NULL,";
-		//$buffer[db][insert] .= "collate = '" . $buffer[db][collate] . "',\n"; // 
+		//$buffer['db']['insert'] .= "collate = '" . $buffer['db']['collate'] . "',\n"; // 
 	}
 	
-	//if ( $form_values[deactivate] ) {
-	if ( $_POST[SUBMIT] == "ACTIVATE" ) {
-		$buffer[db][insert] .= "`inactive` = NULL,\n";
+	//if ( $form_values['deactivate'] ) {
+	if ( $_POST['SUBMIT'] == "ACTIVATE" ) {
+		$buffer['db']['insert'] .= "`inactive` = NULL,\n";
 		
-		$buffer[db][collate] = 1; // SET THE COLLATE VALUE TO 1
+		$buffer['db']['collate'] = 1; // SET THE COLLATE VALUE TO 1
 		// IF YOU WANT TO SET COLLATE VALUE TO LAST THEN USE SCRIPT BELOW FOR COLLATE
-		//$query = mysqli_query($db, "SELECT id FROM " . basename($_SERVER[PHP_SELF],".php") . " WHERE inactive IS NULL");
+		//$query = mysqli_query($db, "SELECT id FROM " . basename($_SERVER['PHP_SELF'],".php") . " WHERE inactive IS NULL");
 		//$form_rows = mysqli_num_rows($query); // GET NUM ROWS FOR COLLATE
 		
-	} elseif ( $_POST[SUBMIT] == "DEACTIVATE" ) {
-		$buffer[db][insert] .= "`inactive` = '1',\n";
-		$buffer[db][insert] .= "`collate` = NULL,\n";
-		$buffer[db][collate] = NULL;
+	} elseif ( $_POST['SUBMIT'] == "DEACTIVATE" ) {
+		$buffer['db']['insert'] .= "`inactive` = '1',\n";
+		$buffer['db']['insert'] .= "`collate` = NULL,\n";
+		$buffer['db']['collate'] = NULL;
 	}
 	
 	// SETUP THE DB QUERY
-	$db_query = $action . " `" . basename($_SERVER[PHP_SELF],".php") . "` SET " . 
+	$db_query = $action . " `" . basename($_SERVER['PHP_SELF'],".php") . "` SET " . 
 			$id . 
-			$buffer[db][insert] .
+			$buffer['db']['insert'] .
 			"`stamp` = NOW() " .
 			$where . $limit . ";";
 	
@@ -759,10 +759,10 @@ if ( $_POST[SUBMIT] ) {
 		// PROCESS COLLATE ORDER
 		////////////////////////////////////////////////////////////////////////////////
 												////////////////////////////////////////
-		//if ( $buffer[db][collate] ) {
+		//if ( $buffer['db']['collate'] ) {
 			
-			//$query_collate = mysqli_query($db, "SELECT id,collate,inactive FROM " . basename($_SERVER[PHP_SELF],".php") . ""); 
-			$query_collate = mysqli_query($db, "SELECT * FROM `" . basename($_SERVER[PHP_SELF],".php") . "` " .
+			//$query_collate = mysqli_query($db, "SELECT id,collate,inactive FROM " . basename($_SERVER['PHP_SELF'],".php") . ""); 
+			$query_collate = mysqli_query($db, "SELECT * FROM `" . basename($_SERVER['PHP_SELF'],".php") . "` " .
 				"WHERE `inactive` IS NULL " .
 				"ORDER BY `collate`,`inactive`");
 				//ORDER BY inactive ASC,`collate`,stamp DESC");
@@ -774,25 +774,25 @@ if ( $_POST[SUBMIT] ) {
 			
 			while ( $flush = mysqli_fetch_assoc($query_collate) ) {  ////////// COLLATE
 				
-				//if ( $_GET[CRYPT_REF_ID] == $flush[id] ) { // IF $_GET ID = CURRENT ID -->
+				//if ( $_GET['CRYPT_REF_ID'] == $flush['id'] ) { // IF $_GET ID = CURRENT ID -->
 				
 			//$query_id = mysqli_query($db, "SELECT * FROM wc_users WHERE user_id = LAST_INSERT_ID()");
 			//if ( $last_id = mysqli_fetch_assoc(mysqli_query($db, "SELECT LAST_INSERT_ID()")) ) {
 				//echo "LAST_ID --> " . mysqli_insert_id($db);
 				
-				if ( $_GET[CRYPT_REF_ID] ) {
-					$for = $_GET[CRYPT_REF_ID];
+				if ( $_GET['CRYPT_REF_ID'] ) {
+					$for = $_GET['CRYPT_REF_ID'];
 				} else {
 					$for = mysqli_insert_id($db);
 				}
 				
 				
-				if ( $for == $flush[id] ) { // IF $_GET ID = CURRENT ID -->
+				if ( $for == $flush['id'] ) { // IF $_GET ID = CURRENT ID -->
 					
 					// UPDATE $_GET ID SET TO $_POST COLLATE
-					$flush_query = "UPDATE `" . basename($_SERVER[PHP_SELF],".php") . "` SET 
-						`collate` = '" . $buffer[db][collate] . "' 
-						WHERE id = '" . $for . "' LIMIT 1"; //  - collate: " . $buffer[db][collate] . " - id: " . $_GET[CRYPT_REF_ID]
+					$flush_query = "UPDATE `" . basename($_SERVER['PHP_SELF'],".php") . "` SET 
+						`collate` = '" . $buffer['db']['collate'] . "' 
+						WHERE id = '" . $for . "' LIMIT 1"; //  - collate: " . $buffer['db']['collate'] . " - id: " . $_GET['CRYPT_REF_ID']
 					mysqli_query($db, $flush_query);
 					
 				} else {
@@ -800,14 +800,14 @@ if ( $_POST[SUBMIT] ) {
 					++$collate_order;
 					
 					// CHECK IF YOU ARE ON THE CURRENT COLLATE VALUE IN THE LOOP
-					if ( $buffer[db][collate] == $collate_order ) { // IF $_POST COLLATE = CURRENT COLLATE VALUE -->
+					if ( $buffer['db']['collate'] == $collate_order ) { // IF $_POST COLLATE = CURRENT COLLATE VALUE -->
 						// INCREASE THE COLLATE VALUE
 						++$collate_order; // GO TO NEXT COLLATE VALUE
 					}
 					
-					$flush_query = "UPDATE `" . basename($_SERVER[PHP_SELF],".php") . "` SET 
+					$flush_query = "UPDATE `" . basename($_SERVER['PHP_SELF'],".php") . "` SET 
 						`collate` = '" . $collate_order . "' 
-						WHERE id = '" . $flush[id] . "' LIMIT 1"; //  - collate: " . $buffer[db][collate] . " - id: " . $_GET[CRYPT_REF_ID]
+						WHERE id = '" . $flush['id'] . "' LIMIT 1"; //  - collate: " . $buffer['db']['collate'] . " - id: " . $_GET['CRYPT_REF_ID']
 					mysqli_query($db, $flush_query);
 										
 				}
@@ -821,40 +821,40 @@ if ( $_POST[SUBMIT] ) {
 		
 		
 		
-		echo "<CENTER><BR><BR> ITEM " . $_POST[DELETE_CONFIRM] . " UPDATED<BR></CENTER>";
-		echo "<META HTTP-EQUIV='REFRESH' CONTENT='0; URL=" . $_SERVER[PHP_SELF] . "'>";
+		echo "<CENTER><BR><BR> ITEM " . $_POST['DELETE_CONFIRM'] . " UPDATED<BR></CENTER>";
+		echo "<META HTTP-EQUIV='REFRESH' CONTENT='0; URL=" . $_SERVER['PHP_SELF'] . "'>";
 		exit();
-		//header("location:" . $_SERVER[PHP_SELF] . "");
+		//header("location:" . $_SERVER['PHP_SELF'] . "");
 		//echo "the information has been updated/inserted<BR>";
 		echo $db_query;
 	}
 	
-	//echo $buffer[form];
+	//echo $buffer['form'];
 	//echo "<BR><BR>" . nl2br($db_insert_row) . "<BR><BR>";
 	
-} elseif ( $_POST[DELETE] && $_POST[DELETE_CONFIRM] ) {
+} elseif ( $_POST['DELETE'] && $_POST['DELETE_CONFIRM'] ) {
 	
 	
 	
 	// DELETE ROW
-	if ( !mysqli_query($db, "DELETE FROM `" . basename($_SERVER[PHP_SELF],".php") . "` WHERE id = '" . $_POST[DELETE_CONFIRM] . "' LIMIT 1") ) {
+	if ( !mysqli_query($db, "DELETE FROM `" . basename($_SERVER['PHP_SELF'],".php") . "` WHERE id = '" . $_POST['DELETE_CONFIRM'] . "' LIMIT 1") ) {
 		echo "ERROR: " . mysqli_error($db) . "<P>" . $db_query;
 	} else {
 		
-		echo "<CENTER><BR><BR> ITEM " . $_POST[DELETE_CONFIRM] . " DELETED<BR></CENTER>";
-		echo "<META HTTP-EQUIV='REFRESH' CONTENT='2; URL=" . $_SERVER[PHP_SELF] . "'>";
+		echo "<CENTER><BR><BR> ITEM " . $_POST['DELETE_CONFIRM'] . " DELETED<BR></CENTER>";
+		echo "<META HTTP-EQUIV='REFRESH' CONTENT='2; URL=" . $_SERVER['PHP_SELF'] . "'>";
 		exit();
-		//header("location:" . $_SERVER[PHP_SELF] . "");
+		//header("location:" . $_SERVER['PHP_SELF'] . "");
 		echo $db_query;
 	}
 	
 	
-} elseif ( (!$_POST || !$_POST[CANCEL]) && !$_POST[CANCEL] && ($_GET[CRYPT_REF_ID] || $_GET[INSERT] || $_POST[ADD]) ) {
-//} elseif ( !$_POST[SUBMIT] && ( $_GET[CRYPT_REF_ID] || $_GET[INSERT] || $_POST[ADD] ) ) {
-//if ( $_GET[CRYPT_REF_ID] || $_GET[INSERT] || $_POST[ADD] || ( $_POST && !$_POST[SUBMIT]) ) {
+} elseif ( (!$_POST || !$_POST['CANCEL']) && !$_POST['CANCEL'] && ($_GET['CRYPT_REF_ID'] || $_GET['INSERT'] || $_POST['ADD']) ) {
+//} elseif ( !$_POST['SUBMIT'] && ( $_GET['CRYPT_REF_ID'] || $_GET['INSERT'] || $_POST['ADD'] ) ) {
+//if ( $_GET['CRYPT_REF_ID'] || $_GET['INSERT'] || $_POST['ADD'] || ( $_POST && !$_POST['SUBMIT']) ) {
 	
 	// DISPLAY FORM
-	echo $buffer[form];
+	echo $buffer['form'];
 	
 } else {
 	
@@ -862,14 +862,14 @@ if ( $_POST[SUBMIT] ) {
 	////////////////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////////////////
 	// CHECK IF TABLE EXISTS
-	$query = mysqli_query($db, "SHOW TABLES LIKE '" . basename($_SERVER[PHP_SELF],".php") . "'");
+	$query = mysqli_query($db, "SHOW TABLES LIKE '" . basename($_SERVER['PHP_SELF'],".php") . "'");
 	if ( !mysqli_num_rows($query) ) { // IF TABLE DOES NOT EXIST --> CREATE TABLE
 		
 		// CREATE TABLE SQL
-		$db_query = "CREATE TABLE `" . basename($_SERVER[PHP_SELF],".php") . "` (
+		$db_query = "CREATE TABLE `" . basename($_SERVER['PHP_SELF'],".php") . "` (
 				`id` int(12) NOT NULL auto_increment,
 				`collate` int(12) DEFAULT NULL,
-				" . $buffer[db][create] . "
+				" . $buffer['db']['create'] . "
 				`inactive` enum('1') DEFAULT NULL,
 				`stamp` timestamp(14) NOT NULL,
 				PRIMARY KEY  (`id`)
@@ -880,8 +880,8 @@ if ( $_POST[SUBMIT] ) {
 			echo "ERROR: " . mysqli_error($db) . "<P>" . $db_query;
 		} else {
 			// CREATE TABLE COMPLETED NOTE
-			echo "<BR><BR> TABLE " . basename($_SERVER[PHP_SELF],".php") . " HAS BEEN CREATED<BR>";
-			echo "<META HTTP-EQUIV='REFRESH' CONTENT='2; URL=" . $_SERVER[PHP_SELF] . "'>";
+			echo "<BR><BR> TABLE " . basename($_SERVER['PHP_SELF'],".php") . " HAS BEEN CREATED<BR>";
+			echo "<META HTTP-EQUIV='REFRESH' CONTENT='2; URL=" . $_SERVER['PHP_SELF'] . "'>";
 			exit();
 			//echo "the database was created<BR>";
 			echo $db_query;
@@ -912,61 +912,61 @@ if ( $_POST[SUBMIT] ) {
 			</TR>" . $divider . "";
 		
 		
-		$query = mysqli_query($db, "SELECT * FROM `" . basename($_SERVER[PHP_SELF],".php") . "` ORDER BY `inactive`,`collate`");
+		$query = mysqli_query($db, "SELECT * FROM `" . basename($_SERVER['PHP_SELF'],".php") . "` ORDER BY `inactive`,`collate`");
 		if ( @mysqli_num_rows($query) ) {
 			
 			
-			//echo $link = $buffer[index][handle];
-			//echo $text = $buffer[index][text];
+			//echo $link = $buffer['index']['handle'];
+			//echo $text = $buffer['index']['text'];
 			
 			
 			// GET THE RESULTS OF THE TABLE
 			while ( $results = mysqli_fetch_assoc($query) ) {
 				
-				if ( $results[inactive] ) {
-					$strike[on] = "<STRIKE>";
-					$strike[off] = "</STRIKE>";
+				if ( $results['inactive'] ) {
+					$strike['on'] = "<STRIKE>";
+					$strike['off'] = "</STRIKE>";
 					$insert_index = "-&#160"; // USE A DASH IF INACTIVE
 					$insert_inactive = "&inactive=1"; // IDENTIFY THAT THE ITEM IS INACTIVE TO PREVENT INSERTING COLLATE MENU
 					
 					$divider = NULL;
-					$results[$buffer[index][text]] = NULL;
+					$results[$buffer['index']['text']] = NULL;
 					
 				} else {
 					$insert_index = ++$list_index . ".";
-					$strike[on] = NULL;
-					$strike[off] = NULL;
+					$strike['on'] = NULL;
+					$strike['off'] = NULL;
 				}
 				
 				echo "<TR>
 					<TD ALIGN=RIGHT VALIGN=TOP CLASS='TextGray' BGCOLOR=" . COLOR_BACKGROUND . " STYLE='padding-right:5px;'>" . $insert_index . "</TD>
 					<TD CLASS='TextGray' BGCOLOR=" . COLOR_BACKGROUND . " STYLE='padding-right:5px;padding-left:5px;'>
-						" . $strike[on] . "<A HREF='" . $_SERVER[PHP_SELF] . "?" . CRYPT_REF_ID . "=" . $results[id] . $insert_inactive . "'>";
-						if ( !$results[$buffer[index][handle]] ) {
-							echo "DATABASE ID: " . $results[id];
+						" . $strike['on'] . "<A HREF='" . $_SERVER['PHP_SELF'] . "?" . CRYPT_REF_ID . "=" . $results['id'] . $insert_inactive . "'>";
+						if ( !$results[$buffer['index']['handle']] ) {
+							echo "DATABASE ID: " . $results['id'];
 						} else {
-							echo "<B>" . $results[$buffer[index][handle]] . "</B>"; //  ($results[collate])
+							echo "<B>" . $results[$buffer['index']['handle']] . "</B>"; //  ($results['collate'])
 						}
 						
-						echo "</A>" . $strike[off];
+						echo "</A>" . $strike['off'];
 						
 						//
 						foreach ( $results AS $key => $link ) {
 							//if ( preg_match("/^http:///i",$link) && !$link_inserted ) {
 							if ( preg_match("/^http:///i",$link) ) {
-							//if ( $results[link] ) {
+							//if ( $results['link'] ) {
 							
 								echo " - <A TARGET=LINK HREF='" . $link . "'>
 									<FONT CLASS='TextRed'>" . html_link_domain($link) . "</FONT></A>";
-								//dev_print(html_link_domain($results[link]));
+								//dev_print(html_link_domain($results['link']));
 								break;
 							}
 						}
 						
 						
-							//$buffer[index][link]
+							//$buffer['index']['link']
 						echo "<BR>
-							" . html_links($results[$buffer[index][text]], "LINK", 500) . "</TD>
+							" . html_links($results[$buffer['index']['text']], "LINK", 500) . "</TD>
 				</TR>" . $divider . "";
 				
 			}
@@ -977,7 +977,7 @@ if ( $_POST[SUBMIT] ) {
 			</TR><TR>
 				<TD></TD>
 				<TD CLASS='TextGray' BGCOLOR=" . COLOR_BACKGROUND . ">
-					THE TABLE <B>" . basename($_SERVER[PHP_SELF],".php") . "</B> IS EMPTY</TD>
+					THE TABLE <B>" . basename($_SERVER['PHP_SELF'],".php") . "</B> IS EMPTY</TD>
 			</TR><TR>
 				<TD HEIGHT=10 BGCOLOR=" . COLOR_BACKGROUND . " COLSPAN=2></TD>
 			</TR>" . $divider . "";
@@ -988,7 +988,7 @@ if ( $_POST[SUBMIT] ) {
 			</TR><TR>
 			<TD WIDTH=20></TD>
 			<TD CLASS='TextGray' BGCOLOR=" . COLOR_BACKGROUND . ">
-				<FORM ACTION=" . $_SERVER[PHP_SELF] . " METHOD=POST>
+				<FORM ACTION=" . $_SERVER['PHP_SELF'] . " METHOD=POST>
 				<INPUT TYPE=SUBMIT NAME=ADD VALUE='ADD " . DB_TITLE . "'>
 				</FORM></TD>
 		</TR>";
