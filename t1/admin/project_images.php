@@ -30,8 +30,8 @@ function local_project_menu($name="project_id",$default_id=null) {
 	$sql = "SELECT * FROM template_projects WHERE domain_id = '". DOMAIN_ID ."'";
 	$query = mysqli_query($db, $sql);
 	while ( $projects = mysqli_fetch_assoc($query) ) {
-		$return .= "<option value='". $projects['project_id'] ."' ". 
-			(( $_POST[$name] ? $_POST[$name] : ( $default_id ? $default_id : $_REQUEST['CRYPT_REF_ID'])) == $projects['project_id'] ? " SELECTED" : NULL) .">". substr($projects['title'],0,50) ."</option>";
+		$return .= "<option value='". ${projects}['project_id'] ."' ". 
+			(( $_POST[$name] ? $_POST[$name] : ( $default_id ? $default_id : ${_REQUEST}['CRYPT_REF_ID'])) == ${projects}['project_id'] ? " SELECTED" : NULL) .">". substr({$projects['title'],0,50) ."</option>";
 	}
 	$return .= "</select>";
 	
@@ -42,10 +42,10 @@ function local_project_menu($name="project_id",$default_id=null) {
 // insert image type_id menu
 function local_type_id_menu($prefix="type_id_",$index=null,$default_type_id=null,$options=null) {
 	global $config;
-	//$config['image']['types']
-	$return = "<select name='". $prefix . $index ."'>". ($options['optional'] ? "<option value=''>Select Type --></options>":null);
-		if ( is_array($config['image']['types']) ) {
-			foreach ($config['image']['types'] AS $key => $value) {
+	//{$config['image']['types']
+	$return = "<select name='". $prefix . $index ."'>". ({$options['optional'] ? "<option value=''>Select Type --></options>":null);
+		if ( is_array({$config['image']['types']) ) {
+			foreach ({$config['image']['types'] AS $key => $value) {
 				if ( is_array($value)) {
 					$return .= "<optgroup label='". $key ."'>";
 					/*if ( $key == "photographers") {
@@ -53,10 +53,10 @@ function local_type_id_menu($prefix="type_id_",$index=null,$default_type_id=null
 						$query = mysqli_query($db, $sql);
 						while ($info = mysqli_fetch_assoc($query)) {
 							
-							//$types[$info['type']][$info['contact_id']] = $info['contact'];
-								//$types['photographers'][$info['contact_id']] = $info['contact'];
+							//$types[{$info['type']][{$info['contact_id']] = ${info}['contact'];
+								//{$types['photographers'][{$info['contact_id']] = ${info}['contact'];
 							
-							$types[$info['type']] .= "<option value='". $info['contact_id'] ."'>". ucwords($info['contact']) ."</option>\n";
+							$types[{$info['type']] .= "<option value='". ${info}['contact_id'] ."'>". ucwords({$info['contact']) ."</option>\n";
 							
 							if ( is_array($types) ) {
 							
@@ -65,16 +65,16 @@ function local_type_id_menu($prefix="type_id_",$index=null,$default_type_id=null
 								foreach ($types AS $key => $value ) {
 									
 									if ( $key == "photographer" ) {
-										//$menu['photographers'] = "<optgroup label='". $key ."s'>". $value ."</optgroup>";
-										$menu['photographers'] .= $value;
+										//{$menu['photographers'] = "<optgroup label='". $key ."s'>". $value ."</optgroup>";
+										${menu}['photographers'] .= $value;
 									} else {
-										//$menu['others'] = "<optgroup label='". $key ."s'>". $value ."</optgroup>";
-										$menu['others'] .= $value;
+										//{$menu['others'] = "<optgroup label='". $key ."s'>". $value ."</optgroup>";
+										${menu}['others'] .= $value;
 									}
 								}
 							}
 							
-							$return .= $menu['photographers'] . $menu['others'];
+							$return .= ${menu}['photographers'] . ${menu}['others'];
 							
 							
 						}
@@ -118,49 +118,49 @@ function local_form_image_details($index) {
 
 // DATABASE /////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////// 4.0
-if ( $_POST['BACK'] ) {
-	header("location:project.php?". CRYPT_REF_ID ."=". $_POST['project_id']);
-} elseif ( $_POST['ADD_IMAGES'] ) {
+if ( ${_POST}['BACK'] ) {
+	header("location:project.php?". CRYPT_REF_ID ."=". ${_POST}['project_id']);
+} elseif ( ${_POST}['ADD_IMAGES'] ) {
 	
 	
-	if ( $_FILES['1']['name'] 
-		|| $_FILES['2']['name'] 
-		|| $_FILES['3']['name'] 
-		|| $_FILES['4']['name'] 
-		|| $_FILES['5']['name'] 
-		|| $_FILES['6']['name'] ) {
+	if ( ${_FILES}['1']['name'] 
+		|| ${_FILES}['2']['name'] 
+		|| ${_FILES}['3']['name'] 
+		|| ${_FILES}['4']['name'] 
+		|| ${_FILES}['5']['name'] 
+		|| ${_FILES}['6']['name'] ) {
 		//dev_print($_FILES);
 		
 		// add to database
 		foreach ( $_FILES AS $key => $file ) {
 			
-			//echo "$key => ". $file['name'] ."<br />";
+			//echo "$key => ". ${file}['name'] ."<br />";
 			
-			if ( $file['name'] ) {
+			if ( ${file}['name'] ) {
 				//echo "file for key $key exists inserting into db <p>";
 				
 				$sql = "INSERT INTO template_images SET 
 					image_id = NULL, 
 					domain_id = '". DOMAIN_ID ."', 
-					project_id = ". ($_POST['project_id'] ? "'". $_POST['project_id'] ."'" : 
-						($_POST['project_id'] ? "'". $_POST['project_id'] ."'" : "NULL")) .",
+					project_id = ". ({$_POST['project_id'] ? "'". ${_POST}['project_id'] ."'" : 
+						({$_POST['project_id'] ? "'". ${_POST}['project_id'] ."'" : "NULL")) .",
 					
 					type_id = ". ($_POST['type_id_'. $key] ? "'". $_POST['type_id_'. $key] ."'" : 
-						($_POST['type_id'] ? "'". $_POST['type_id'] ."'" : "NULL")) .",
-					contact_id = ". ($file['type'] ? "'". $file['type'] ."'" : "NULL") .",
+						({$_POST['type_id'] ? "'". ${_POST}['type_id'] ."'" : "NULL")) .",
+					contact_id = ". ({$file['type'] ? "'". ${file}['type'] ."'" : "NULL") .",
 					
-					file_type = ". ($file['type'] ? "'". $file['type'] ."'" : "NULL") .",
-					file_size = ". ($file['size'] ? "'". $file['size'] ."'" : "NULL") .",
-					file_name = ". ($file['name'] ? "'". $file['name'] ."'" : "NULL") .",
+					file_type = ". ({$file['type'] ? "'". ${file}['type'] ."'" : "NULL") .",
+					file_size = ". ({$file['size'] ? "'". ${file}['size'] ."'" : "NULL") .",
+					file_name = ". ({$file['name'] ? "'". ${file}['name'] ."'" : "NULL") .",
 					
 					title = ". ($_POST['image_title_'. $key] ? "'". $_POST['image_title_'. $key] ."'" : 
-						($_POST['title'] ? "'". $_POST['title'] ."'" : "NULL")) .",
+						({$_POST['title'] ? "'". ${_POST}['title'] ."'" : "NULL")) .",
 					
 					caption = ". ($_POST['image_caption_'. $key] ? "'". $_POST['image_caption_'. $key] ."'" : 
-						($_POST['caption'] ? "'". $_POST['caption'] ."'" : "NULL")) .",
+						({$_POST['caption'] ? "'". ${_POST}['caption'] ."'" : "NULL")) .",
 					
 					date = ". ($_POST['date_'. $key] ? "'". $_POST['date_'. $key] ."'" : 
-						($_POST['date'] ? "'". $_POST['date'] ."'" : "NULL")) ."";
+						({$_POST['date'] ? "'". ${_POST}['date'] ."'" : "NULL")) ."";
 				
 				$alert[] = $sql;
 				
@@ -182,7 +182,7 @@ if ( $_POST['BACK'] ) {
 					// sudo chmod 1777 /tmp
 					// http://meta.wikimedia.org/wiki/Running_MediaWiki_on_Mac_OS_X
 					$file_uploaded = $last_insert_id .".png";
-					$command = (LOCAL ? "/usr/local/bin/convert" : "convert") ." -resize 800x800'>' ". $file['tmp_name'] ." ". 
+					$command = (LOCAL ? "/usr/local/bin/convert" : "convert") ." -resize 800x800'>' ". ${file}['tmp_name'] ." ". 
 						(LOCAL ? ROOT_DIR ."uploads/" : "../uploads/") ."". $file_uploaded;
 					//$command = "convert '". $_FILES[$key][tmp_name] ."' ../uploads/". $last_insert_id .".png";
 					//$command = "convert ../uploads/". $file ." ../uploads/". $last_insert_id .".png";
@@ -206,8 +206,8 @@ if ( $_POST['BACK'] ) {
 					
 					
 					if (file_exists($filename)) {
-						header("location:project.php?". CRYPT_REF_ID ."=". $_GET['CRYPT_REF_ID']);
-						$alert[] = "location:project.php?". CRYPT_REF_ID ."=". $_GET['CRYPT_REF_ID'];
+						header("location:project.php?". CRYPT_REF_ID ."=". ${_GET}['CRYPT_REF_ID']);
+						$alert[] = "location:project.php?". CRYPT_REF_ID ."=". ${_GET}['CRYPT_REF_ID'];
 					} else {
 						$sql = "DELETE FROM template_images WHERE image_id = '". $last_insert_id ."' AND domain_id = '". DOMAIN_ID ."' LIMIT 1";
 						if (!mysqli_query($db, $sql)) error("there was an error removing a new image from the database because the new image file could not be uploaded",$sql,1,null,"remove the image manually (". LOCAL_DOMAIN ."upload/". $file_uploaded .")");
@@ -224,26 +224,26 @@ if ( $_POST['BACK'] ) {
 	
 	
 	
-} elseif ( $_POST['UPDATE_IMAGE'] && $_GET['image_id'] ) { // 
+} elseif ( ${_POST}['UPDATE_IMAGE'] && ${_GET}['image_id'] ) { // 
 	
 	
-	if ( $_FILES['update_image_file']['name'] ) {
+	if ( ${_FILES}['update_image_file']['name'] ) {
 		
 		
-		$alert[] = "image upload info --> ". $_FILES['update_image_file']['tmp_name'] .",". $_GET['image_id'] ."";
-		if ( image_upload($_FILES['update_image_file']['tmp_name'],$_GET['image_id']) ) {
+		$alert[] = "image upload info --> ". ${_FILES}['update_image_file']['tmp_name'] .",". ${_GET}['image_id'] ."";
+		if ( image_upload({$_FILES['update_image_file']['tmp_name'],{$_GET['image_id']) ) {
 			$alert[] = "upload was successful!";
 		}
 	}
 	
 	$sql = "UPDATE template_images SET 
-		project_id = ". ($_POST['project_id'] ? "'". $_POST['project_id'] ."'" : "NULL") .",
-		type_id = ". ($_POST['type_id'] ? "'". $_POST['type_id'] ."'" : "NULL") .",
-		contact_id = ". ($_POST['contact_id'] ? "'". $_POST['contact_id'] ."'" : "NULL") .",
-		title = ". ($_POST['title'] ? "'". $_POST['title'] ."'" : "NULL") .",
-		caption = ". ($_POST['caption'] ? "'". $_POST['caption'] ."'" : "NULL") .",
-		date = ". ($_POST['date'] ? "'". $_POST['date'] ."'" : "NULL") ." 
-		WHERE domain_id = '". DOMAIN_ID ."' AND image_id = '". $_GET['image_id'] ."' LIMIT 1";
+		project_id = ". ({$_POST['project_id'] ? "'". ${_POST}['project_id'] ."'" : "NULL") .",
+		type_id = ". ({$_POST['type_id'] ? "'". ${_POST}['type_id'] ."'" : "NULL") .",
+		contact_id = ". ({$_POST['contact_id'] ? "'". ${_POST}['contact_id'] ."'" : "NULL") .",
+		title = ". ({$_POST['title'] ? "'". ${_POST}['title'] ."'" : "NULL") .",
+		caption = ". ({$_POST['caption'] ? "'". ${_POST}['caption'] ."'" : "NULL") .",
+		date = ". ({$_POST['date'] ? "'". ${_POST}['date'] ."'" : "NULL") ." 
+		WHERE domain_id = '". DOMAIN_ID ."' AND image_id = '". ${_GET}['image_id'] ."' LIMIT 1";
 	
 	$alert[] = $sql;
 	
@@ -252,36 +252,36 @@ if ( $_POST['BACK'] ) {
 		
 		$alert[] = mysqli_error($db);
 		
-		$error['SUBMIT'] = "There was an error updating your file information. An administrator has been contacted to resolve the issues. If you need immediate assistance please submit a trouble ticket.";
-		error($error['SUBMIT'],$sql,1);
+		${error}['SUBMIT'] = "There was an error updating your file information. An administrator has been contacted to resolve the issues. If you need immediate assistance please submit a trouble ticket.";
+		error({$error['SUBMIT'],$sql,1);
 	} else {
 		
-		$alert[] = "location:project.php?". CRYPT_REF_ID ."=". $_POST['project_id'];
-		//header("location:project.php?". CRYPT_REF_ID ."=". $_POST['project_id']);
+		$alert[] = "location:project.php?". CRYPT_REF_ID ."=". ${_POST}['project_id'];
+		//header("location:project.php?". CRYPT_REF_ID ."=". ${_POST}['project_id']);
 		
 	}
 				
 	
 	
-} elseif ( $_POST['DELETE_IMAGE'] ) {
+} elseif ( ${_POST}['DELETE_IMAGE'] ) {
 	
-	if ( !$_POST['delete_confirmation'] ) {
-		$error['DELETE'] = "Please confirm that you want to delete this image and all the image information associated with it (caption, date, etc.).";
+	if ( !{$_POST['delete_confirmation'] ) {
+		${error}['DELETE'] = "Please confirm that you want to delete this image and all the image information associated with it (caption, date, etc.).";
 		
-		//$error['DELETE'] = "you are trying to delete ". ROOT_DIR ."/uploads/". $_GET['image_id'] .".png";
+		//{$error['DELETE'] = "you are trying to delete ". ROOT_DIR ."/uploads/". ${_GET}['image_id'] .".png";
 		
 		
 	} else {
 		
 		$sql = "DELETE FROM template_images 
-			WHERE domain_id = '". DOMAIN_ID ."' AND image_id = '". $_GET['image_id'] ."' LIMIT 1";
+			WHERE domain_id = '". DOMAIN_ID ."' AND image_id = '". ${_GET}['image_id'] ."' LIMIT 1";
 		if ( !mysqli_query($db, $sql) ) {
-			$error['DELETE'] = "There was an error deleting this image. An administrator has been contacted to resolve the issues. If you need immediate assistance please submit a trouble ticket.";
-			error($error['DELETE'],$sql,1);
+			${error}['DELETE'] = "There was an error deleting this image. An administrator has been contacted to resolve the issues. If you need immediate assistance please submit a trouble ticket.";
+			error({$error['DELETE'],$sql,1);
 		} else {
-			$file_loc = ROOT_DIR ."/uploads/". $_GET['image_id'] .".png";
+			$file_loc = ROOT_DIR ."/uploads/". ${_GET}['image_id'] .".png";
 			if ( !unlink($file_loc) ) error("the file (". $file_loc .") could not be removed",3,null,"manually remove the file, the member was not informed of the error");
-			header("location:project.php?". CRYPT_REF_ID ."=". $_POST['project_id']);
+			header("location:project.php?". CRYPT_REF_ID ."=". ${_POST}['project_id']);
 		}
 	}
 }
@@ -364,7 +364,7 @@ echo "<STYLE TYPE=\"text/css\">
 /////////////////////////////////////////////////////////////////////////////////////
 //echo "<TABLE BORDER=0 BORDERCOLOR=PINK ALIGN=CENTER CELLPADDING=1 CELLSPACING=0 RULES=NONE>";
 echo form_table_start();
-//echo "<FORM ACTION=" . $_SERVER['PHP_SELF'] . " METHOD=POST>";
+//echo "<FORM ACTION=" . ${_SERVER}['PHP_SELF'] . " METHOD=POST>";
 
 
 
@@ -376,7 +376,7 @@ echo form_table_start();
 
 echo "<TABLE BORDER=0 BORDERCOLOR=orange ALIGN=CENTER width=100% CELLPADDING=3 CELLSPACING=0 RULSE=NONE>";
 /*
-echo "<FORM ACTION='". $_SERVER['PHP_SELF'] ."' METHOD=GET>";
+echo "<FORM ACTION='". ${_SERVER}['PHP_SELF'] ."' METHOD=GET>";
 
 
 	$insert_form[] = array("-",NULL,"Departments Manager"); // TITLE
@@ -395,47 +395,47 @@ echo "<FORM ACTION='". $_SERVER['PHP_SELF'] ."' METHOD=GET>";
 	$query = mysqli_query($db, $sql);
 	if ( mysqli_num_rows($query) > 0 ) {
 		
-		$input['department_id'] = "<SELECT NAME='". CRYPT_REF_ID ."' ". html_onchange() .">";
+		${input}['department_id'] = "<SELECT NAME='". CRYPT_REF_ID ."' ". html_onchange() .">";
 		
 		// INSERT SELECT
-		$input['department_id'] .= "<OPTION VALUE=''>SELECT ---></OPTION>";
+		${input}['department_id'] .= "<OPTION VALUE=''>SELECT ---></OPTION>";
 		
 		while ( $info = mysqli_fetch_assoc($query) ) {
 			
 			//dev_print($info);
 			// SELECTED
-			if ( $_GET['CRYPT_REF_ID'] == $info['department_id'] ) {
+			if ( ${_GET}['CRYPT_REF_ID'] == ${info}['department_id'] ) {
 				$edit = $info;
 				
-				if ( $previous['department_id'] ) $adjacent['previous'] = $previous['department_id'];
+				if ( ${previous}['department_id'] ) ${adjacent}['previous'] = ${previous}['department_id'];
 				$insert_next = TRUE;
 				
-			} elseif ( $insert_next && !$adjacent['next'] ) {
-				$adjacent['next'] = $info['department_id'];
+			} elseif ( $insert_next && !{$adjacent['next'] ) {
+				${adjacent}['next'] = ${info}['department_id'];
 			}
 			
 			
-			$input['department_id'] .= "<OPTION VALUE='". $info['department_id'] ."' ". 
-				($_GET['CRYPT_REF_ID'] == $info['department_id'] ? " SELECTED" : NULL) .">". ucwords($info['department']) ." [". $info['department_id'] ."]</OPTION>";
+			${input}['department_id'] .= "<OPTION VALUE='". ${info}['department_id'] ."' ". 
+				({$_GET['CRYPT_REF_ID'] == ${info}['department_id'] ? " SELECTED" : NULL) .">". ucwords({$info['department']) ." [". ${info}['department_id'] ."]</OPTION>";
 			$previous = $info;
 		}
-		$input['department_id'] .= "</SELECT>";
+		${input}['department_id'] .= "</SELECT>";
 	}
 	
 	////////// EXISTING DEPARTMENTS
 	$insert_form[] = array("department_id", "existing departments", 
-		$input['department_id'],
+		${input}['department_id'],
 		NULL,NULL,NULL);
 	
 	
-	if ( $_GET['CRYPT_REF_ID'] ) {
+	if ( ${_GET}['CRYPT_REF_ID'] ) {
 		////////// ADJACENT - NEXT / PREVIOUS
 		$insert_form[] = array("adjacent", NULL, 
-			($adjacent['previous'] ? 
-				"<A HREF='". $_SERVER['PHP_SELF']."?". CRYPT_REF_ID ."=". $adjacent['previous'] ."'><SMALL><< PREVIOUS</SMALL></A>" : NULL) .
-			($adjacent['previous'] && $adjacent['next'] ? " | " : NULL) .
-			($adjacent['next'] ? 
-				"<A HREF='". $_SERVER['PHP_SELF']."?". CRYPT_REF_ID ."=". $adjacent['next'] ."'><SMALL>NEXT >></SMALL></A>" : NULL),
+			({$adjacent['previous'] ? 
+				"<A HREF='". ${_SERVER}['PHP_SELF']."?". CRYPT_REF_ID ."=". ${adjacent}['previous'] ."'><SMALL><< PREVIOUS</SMALL></A>" : NULL) .
+			({$adjacent['previous'] && ${adjacent}['next'] ? " | " : NULL) .
+			({$adjacent['next'] ? 
+				"<A HREF='". ${_SERVER}['PHP_SELF']."?". CRYPT_REF_ID ."=". ${adjacent}['next'] ."'><SMALL>NEXT >></SMALL></A>" : NULL),
 			array(NULL,NULL,"padding-left:40px;"),NULL,NULL);
 	}
 	
@@ -457,8 +457,8 @@ echo "<FORM ACTION='". $_SERVER['PHP_SELF'] ."' METHOD=GET>";
 	
 	*/
 	
-	echo "<FORM name=uploadForm enctype='multipart/form-data' ACTION='". $_SERVER['PHP_SELF'] . 
-		($_SERVER['QUERY_STRING'] ? "?". $_SERVER['QUERY_STRING'] : NULL) ."' METHOD=post>
+	echo "<FORM name=uploadForm enctype='multipart/form-data' ACTION='". ${_SERVER}['PHP_SELF'] . 
+		({$_SERVER['QUERY_STRING'] ? "?". ${_SERVER}['QUERY_STRING'] : NULL) ."' METHOD=post>
 		<INPUT TYPE=HIDDEN NAME=MAX_FILE_SIZE VALUE=5000000>"; //  onSubmit=\"disableForm(this);\"
 	
 	
@@ -466,14 +466,14 @@ echo "<FORM ACTION='". $_SERVER['PHP_SELF'] ."' METHOD=GET>";
 	$insert_form[] = array("-", NULL, "IMAGE MANAGER");
 	
 	
-	if ( $_GET['image_id'] ) {
+	if ( ${_GET}['image_id'] ) {
 		
 		////////// GET IMAGE INFORMATION
 		//////////////////////////////////////////////////
-		if ( $_GET['image_id'] ) {
+		if ( ${_GET}['image_id'] ) {
 			$sql = "SELECT * FROM template_images ti 
 			WHERE ti.domain_id = '". DOMAIN_ID."' 
-				AND ti.image_id = '". $_GET['image_id'] ."' LIMIT 1";
+				AND ti.image_id = '". ${_GET}['image_id'] ."' LIMIT 1";
 			$query = mysqli_query($db, $sql);
 			$edit = mysqli_fetch_assoc($query);
 		}
@@ -481,9 +481,9 @@ echo "<FORM ACTION='". $_SERVER['PHP_SELF'] ."' METHOD=GET>";
 		
 		////////// IMAGES
 		$insert_form[] = array("image", null,
-			"<IMG border=0 SRC='". LOCAL_DOMAIN ."/uploads/". $edit['image_id'] .".png' style='height:200px;'>",
-			//pop_image("http://". DOMAIN ."/uploads/". $edit['image_id'] .".png"),
-			//pop_image(ROOT_DIR ."domain/uploads/". $edit['image_id'] .".png"),
+			"<IMG border=0 SRC='". LOCAL_DOMAIN ."/uploads/". ${edit}['image_id'] .".png' style='height:200px;'>",
+			//pop_image("http://". DOMAIN ."/uploads/". ${edit}['image_id'] .".png"),
+			//pop_image(ROOT_DIR ."domain/uploads/". ${edit}['image_id'] .".png"),
 			NULL,NULL,array(value=>1));
 		
 		
@@ -580,79 +580,79 @@ echo "<FORM ACTION='". $_SERVER['PHP_SELF'] ."' METHOD=GET>";
 	
 	////////// DEPARTMENT
 	//$insert_form[] = array("tags", "tags", // $field_name // WITH TRANSLATION FUNCTION
-	//	array("TEXT",$edit['department'],NULL,NULL), // $input['type'], $input['value'], $input['style'], $input['option']
+	//	array("TEXT",{$edit['department'],NULL,NULL), // ${input}['type'], ${input}['value'], ${input}['style'], ${input}['option']
 	//	NULL,NULL,array(value=>1)); // $styles,$trailer,$options
 	
 
 	
 	////////// IMAGE TITLE
 	$insert_form[] = array("title", "title",
-		array("TEXT",$edit['title'],"","id='imageTitle'"),
+		array("TEXT",{$edit['title'],"","id='imageTitle'"),
 		NULL,NULL,array(value=>1));
 	
 	////////// DEFAULT IMAGE TYPES
 	$insert_form[] = array("project_id", "project",
-		local_project_menu("project_id",$edit['project_id']),
+		local_project_menu("project_id",{$edit['project_id']),
 		NULL,NULL,array(value=>1));
 		
 	
 	
 	////////// DEFAULT IMAGE TYPES
 	$insert_form[] = array("type_id", "image type",
-		local_type_id_menu($prefix="type_id",null,$edit['type_id']),
+		local_type_id_menu($prefix="type_id",null,{$edit['type_id']),
 		NULL,NULL,array(value=>1));
 	////////// IMAGE CAPTION
 	$insert_form[] = array("caption", "caption",
-		array("TEXTAREA",$edit['caption'],NULL,"ROWS=5 id='imageCaption'"),
+		array("TEXTAREA",{$edit['caption'],NULL,"ROWS=5 id='imageCaption'"),
 		NULL,NULL,array(value=>1));
 	
 	
 	////////// INACTIVE CHECKBOX
 	//$insert_form[] = array("inactive", NULL, 
-	//	"<INPUT TYPE=CHECKBOX NAME=inactive VALUE=1 ". ($edit['inactive'] ? " CHECKED" : NULL) ."> check to make department inactive",
+	//	"<INPUT TYPE=CHECKBOX NAME=inactive VALUE=1 ". ({$edit['inactive'] ? " CHECKED" : NULL) ."> check to make department inactive",
 	//	NULL,NULL,NULL);
 	
 	////////// DEFAULT DATE
 	$insert_form[] = array("date", "date",
-		"<script>DateInput('date',false,'YYYY-MM-DD'". ($edit['date'] ? ",'". $edit['date'] ."'" : null) .")</script>",
+		"<script>DateInput('date',false,'YYYY-MM-DD'". ({$edit['date'] ? ",'". ${edit}['date'] ."'" : null) .")</script>",
 		NULL,NULL,NULL);
 	
 	
 	//////////////////////////////////////////////////
-	/*if ( $_GET['CRYPT_REF_ID'] ) {
-		$input['submit'] = "<INPUT TYPE=SUBMIT NAME='CHANGE' VALUE='SUBMIT CHANGES'> 
+	/*if ( ${_GET}['CRYPT_REF_ID'] ) {
+		${input}['submit'] = "<INPUT TYPE=SUBMIT NAME='CHANGE' VALUE='SUBMIT CHANGES'> 
 			<INPUT TYPE=SUBMIT NAME='ADD' VALUE='ADD AS NEW'> ";
 		
-		$input['delete'] = "<INPUT TYPE=SUBMIT NAME=DELETE VALUE='DELETE...'> 
-			". ($error['DELETE'] ? "<INPUT TYPE=CHECKBOX NAME=confirm_delete>check to confirm delete" : null);
+		${input}['delete'] = "<INPUT TYPE=SUBMIT NAME=DELETE VALUE='DELETE...'> 
+			". ({$error['DELETE'] ? "<INPUT TYPE=CHECKBOX NAME=confirm_delete>check to confirm delete" : null);
 		
 	} else {*/
-		//$input['submit'] = "<INPUT TYPE=SUBMIT NAME='ADD' VALUE='UPLOAD IMAGES' onClick=\"uploadingImages();return safeSubmit(this);\">"; // onMouseUp=\"this.disabled=true;\"
+		//{$input['submit'] = "<INPUT TYPE=SUBMIT NAME='ADD' VALUE='UPLOAD IMAGES' onClick=\"uploadingImages();return safeSubmit(this);\">"; // onMouseUp=\"this.disabled=true;\"
 	//}
 	
-	if ( $_GET['image_id'] ) {
+	if ( ${_GET}['image_id'] ) {
 		
-		$input['SUBMIT'] = "<INPUT TYPE=SUBMIT NAME='UPDATE_IMAGE' VALUE='UPDATE IMAGE'>"; // onClick=\"safeSubmit(this);\"
+		${input}['SUBMIT'] = "<INPUT TYPE=SUBMIT NAME='UPDATE_IMAGE' VALUE='UPDATE IMAGE'>"; // onClick=\"safeSubmit(this);\"
 		
 		
-		$input['DELETE'] = "<INPUT TYPE=SUBMIT NAME='DELETE_IMAGE' VALUE='DELETE IMAGE...'> 
+		${input}['DELETE'] = "<INPUT TYPE=SUBMIT NAME='DELETE_IMAGE' VALUE='DELETE IMAGE...'> 
 				<INPUT TYPE=CHECKBOX NAME='delete_confirmation'> check to confirm delete"; // onClick=\"safeSubmit(this);\"
 		
 	} else {
-		$input['SUBMIT'] = "<INPUT TYPE=SUBMIT NAME='ADD_IMAGES' VALUE='UPLOAD IMAGES' onClick=\"return uploadingImages();return safeSubmit(this);\">";
+		${input}['SUBMIT'] = "<INPUT TYPE=SUBMIT NAME='ADD_IMAGES' VALUE='UPLOAD IMAGES' onClick=\"return uploadingImages();return safeSubmit(this);\">";
 	}
 	
-	$input['SUBMIT'] .= "<INPUT TYPE=SUBMIT NAME='BACK' VALUE='BACK'>";
+	${input}['SUBMIT'] .= "<INPUT TYPE=SUBMIT NAME='BACK' VALUE='BACK'>";
 	
 	////////// SUBMIT
 	$insert_form[] = array("SUBMIT", NULL,
-		$input['SUBMIT'],
+		${input}['SUBMIT'],
 		NULL,NULL,NULL);
 	
 	
 	////////// DELETE
 	$insert_form[] = array("DELETE", NULL,
-		$input['DELETE'],
+		${input}['DELETE'],
 		NULL,NULL,NULL);
 	
 	

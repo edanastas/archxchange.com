@@ -5,16 +5,16 @@
 
 
 		function config_redirect_set() { // SET REDIRECT VALUE
-	if ( $_SESSION['config_redirect'] == '' || !$_SESSION['config_redirect'] ) {
-		//$_SESSION['redirect'] = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ($_SERVER['QUERY_STRING'] ? "?" . $_SERVER['QUERY_STRING'] : NULL);
-		//$_SESSION['redirect'] = $_SERVER['SCRIPT_URI'] . ($_SERVER['QUERY_STRING'] ? "?" . $_SERVER['QUERY_STRING'] : NULL);
+	if ( ${_SESSION}['config_redirect'] == '' || !{$_SESSION['config_redirect'] ) {
+		//{$_SESSION['redirect'] = "http://" . ${_SERVER}['HTTP_HOST'] . ${_SERVER}['REQUEST_URI'] . ({$_SERVER['QUERY_STRING'] ? "?" . ${_SERVER}['QUERY_STRING'] : NULL);
+		//{$_SESSION['redirect'] = ${_SERVER}['SCRIPT_URI'] . ({$_SERVER['QUERY_STRING'] ? "?" . ${_SERVER}['QUERY_STRING'] : NULL);
 		
 		// THIS SETTING WORKS FOR THE SERVER
-		$_SESSION['config_redirect'] = "http://" . (LOCAL ? "concord.local" : $_SERVER['HTTP_HOST']) . $_SERVER['REQUEST_URI'];
-		//echo "setting the redirect session var to (http://" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'] . ")<BR>";
+		${_SESSION}['config_redirect'] = "http://" . (LOCAL ? "concord.local" : ${_SERVER}['HTTP_HOST']) . ${_SERVER}['REQUEST_URI'];
+		//echo "setting the redirect session var to (http://" . ${_SERVER}['SERVER_NAME'] . ${_SERVER}['REQUEST_URI'] . ")<BR>";
 		
-		//echo "redirect --> " . $_SERVER['SCRIPT_URI'] . ($_SERVER['QUERY_STRING'] ? "?" . $_SERVER['QUERY_STRING'] : NULL) . "<P>";
-		//echo "\$_SESSION['redirect'] --> $_SESSION['redirect']<P>";
+		//echo "redirect --> " . ${_SERVER}['SCRIPT_URI'] . ({$_SERVER['QUERY_STRING'] ? "?" . ${_SERVER}['QUERY_STRING'] : NULL) . "<P>";
+		//echo "\${_SESSION}['redirect'] --> ${_SESSION}['redirect']<P>";
 		// EXAMPLE: http://www.domain.com/path/file.php?query_string=some_value
 	}
 }
@@ -25,11 +25,11 @@
 
 
 		function config_redirect() { // REDIRECT
-	if ( $_SESSION['config_redirect'] ) {
-		$temp = $_SESSION['config_redirect']; // SET TEMP TO RESET SESSION REDIRECT
-		$_SESSION['config_redirect'] = NULL; // UNSET SESSION REDIRECT
+	if ( ${_SESSION}['config_redirect'] ) {
+		$temp = ${_SESSION}['config_redirect']; // SET TEMP TO RESET SESSION REDIRECT
+		${_SESSION}['config_redirect'] = NULL; // UNSET SESSION REDIRECT
 		
-		//echo "we are redirecting \$_SESSION['redirect'] --> " . $_SESSION['redirect'] . "<P>";exit;
+		//echo "we are redirecting \${_SESSION}['redirect'] --> " . ${_SESSION}['redirect'] . "<P>";exit;
 		header("Location:" . $temp ); // REDIRECT
 		exit;
 	} else {
@@ -46,12 +46,12 @@
 	
 	////////// DEFINE SESSION VARIABLES
 	/////////////////////////////////////////////////////////////////////////////////////
-	if ( $info['user_id'] ) {
-		define('USER_ID', $info['user_id']); // USER_ID
-		define('USER_EMAIL', strtolower($info['email'])); // EMAIL
-		define('USER_LANG', $info['language_code']); // LANGUAGE_CODE
-		define('USER_FIRSTNAME', stripslashes($info['firstname'])); // FIRSTNAME
-		define('USER_LASTNAME', stripslashes($info['lastname'])); // LASTNAME
+	if ( ${info}['user_id'] ) {
+		define('USER_ID', ${info}['user_id']); // USER_ID
+		define('USER_EMAIL', strtolower({$info['email'])); // EMAIL
+		define('USER_LANG', ${info}['language_code']); // LANGUAGE_CODE
+		define('USER_FIRSTNAME', stripslashes({$info['firstname'])); // FIRSTNAME
+		define('USER_LASTNAME', stripslashes({$info['lastname'])); // LASTNAME
 	} else {
 		define('USER_ID', NULL); // USER_ID
 		define('USER_EMAIL', NULL); // EMAIL
@@ -69,34 +69,34 @@
 
 /*		function config_die($redirect,$alert=NULL,$sql=NULL) { // REDIRECTS WITH PRETTY MESSAGE
 	
-	//if ( !preg_match("/cron/i",$_SERVER['PHP_SELF'] ) ) {
+	//if ( !preg_match("/cron/i",{$_SERVER['PHP_SELF'] ) ) {
 	if ( !defined('CRON') ) {
 			
 		
-		if (!$redirect['url']) {
-			if ( preg_match("/" . preg_quote($_SERVER['HTTP_HOST'], "/") . "/i", $_SERVER['HTTP_REFERER']) ) { // IF NOT OUR WEBSITE --> DO NOT GO BACK ONE (GO TO HOME PAGE)
-				$redirect['url'] = "javascript:history.back(1)";
+		if (!{$redirect['url']) {
+			if ( preg_match("/" . preg_quote({$_SERVER['HTTP_HOST'], "/") . "/i", ${_SERVER}['HTTP_REFERER']) ) { // IF NOT OUR WEBSITE --> DO NOT GO BACK ONE (GO TO HOME PAGE)
+				${redirect}['url'] = "javascript:history.back(1)";
 			} else {
-				$redirect['url'] = "http://" . $_SERVER['HTTP_HOST'] . "";
+				${redirect}['url'] = "http://" . ${_SERVER}['HTTP_HOST'] . "";
 			}
 		}
 		
-		if (!$redirect['timer']) $redirect['timer'] = "0";
+		if (!{$redirect['timer']) ${redirect}['timer'] = "0";
 		
-		if (!$redirect['redirecting']) {
-			$redirect['redirecting'] = trans("redirecting",1) ."...";
+		if (!{$redirect['redirecting']) {
+			${redirect}['redirecting'] = trans("redirecting",1) ."...";
 		} else {
-			$redirect['redirecting'] .= "...";
+			${redirect}['redirecting'] .= "...";
 		}
 		
-		if (!$redirect['anchor']) $redirect['anchor'] = "click here to redirect manually";
+		if (!{$redirect['anchor']) ${redirect}['anchor'] = "click here to redirect manually";
 		
 		
 		if ( !headers_sent() ) {
 			echo "<HTML>
 			<HEAD>
 				<TITLE>". ( defined('TITLE') ? TITLE : DOMAIN ." - Undergoing Maintenance!" ) ."</TITLE>
-					<META HTTP-EQUIV='refresh' CONTENT='". (int) $redirect['timer'] .";URL=". $redirect['url'] ."'>
+					<META HTTP-EQUIV='refresh' CONTENT='". (int) ${redirect}['timer'] .";URL=". ${redirect}['url'] ."'>
 					<LINK REL=stylesheet HREF='" . TEMPLATE_DOMAIN . "styles.css' TYPE='text/css'></LINK>
 			</HEAD>
 			
@@ -114,15 +114,15 @@
 										<IMG SRC='" . TEMPLATE_BASE_DIR . "images/header_text_" . IMAGE_HEADER_01 . ".gif'></TD>
 								</TR><TR>
 									<TD ALIGN=LEFT VALIGN=CENTER STYLE='padding-left:80px;color:777777;'>
-										<I>". $redirect['redirecting'] ."</I>
+										<I>". ${redirect}['redirecting'] ."</I>
 											". TRANSPARENT ."</TD>
 								</TR><TR>
 									<TD ALIGN=CENTER VALIGN=BOTTOM>
-										<FONT COLOR=RED><B><I><BIG>". $redirect['message'] ."</BIG></I></B></FONT>
+										<FONT COLOR=RED><B><I><BIG>". ${redirect}['message'] ."</BIG></I></B></FONT>
 											</TD>
 								</TR><TR>
 									<TD ALIGN=RIGHT VALIGN=TOP STYLE='padding-top:10px;padding-right:80px;'>". TRANSPARENT ."
-										<A HREF='". $redirect['url'] ."'><I>(". $redirect['anchor'] .")</I></A>
+										<A HREF='". ${redirect}['url'] ."'><I>(". ${redirect}['anchor'] .")</I></A>
 											</FONT></TD>
 								</TR><TR>
 									<TD HEIGHT=40></TD>
@@ -137,9 +137,9 @@
 			</HTML>";
 			
 		} else {
-			echo "<META HTTP-EQUIV='refresh' CONTENT='0;URL=". $redirect['url'] ."'>".
-				"$redirect['message']<BR>".
-				"<A HREF='". $redirect['url'] ."'>". $redirect['anchor'] ."</A>";
+			echo "<META HTTP-EQUIV='refresh' CONTENT='0;URL=". ${redirect}['url'] ."'>".
+				"{$redirect['message']<BR>".
+				"<A HREF='". ${redirect}['url'] ."'>". ${redirect}['anchor'] ."</A>";
 			
 		}
 		
@@ -150,7 +150,7 @@
 		
 		$div = "----------------------------\n";
 		
-		mail(EMAIL_EMERGENCY,"DEMESSI! - ". $_SERVER['HTTP_HOST'],$alert);
+		mail(EMAIL_EMERGENCY,"DEMESSI! - ". ${_SERVER}['HTTP_HOST'],$alert);
 		mail("admin@demessi.com",
 			"POTENTIAL ATTACK!!",
 			$alert .
@@ -190,7 +190,7 @@
 	echo "<HTML>
 		<HEAD>
 			<TITLE>". DOMAIN ." - Undergoing Maintenance!</TITLE>
-			<META HTTP-EQUIV='refresh' CONTENT='". (int) $redirect['timer'] .";URL=". $redirect['url'] ."'>
+			<META HTTP-EQUIV='refresh' CONTENT='". (int) ${redirect}['timer'] .";URL=". ${redirect}['url'] ."'>
 			<LINK REL=stylesheet HREF='" . TEMPLATE_DOMAIN . "styles.css' TYPE='text/css'></LINK>
 		</HEAD>
 	<BODY>

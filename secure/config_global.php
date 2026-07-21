@@ -4,7 +4,7 @@
 ///////////////////////////////////////////////////////////////////////////////////// 1.0
 
 
-define('LOCAL', ( preg_match("/^(concord\.local|192\.168\.)/i", $_SERVER['HTTP_HOST']) ? TRUE : FALSE )); // LOCAL DEV SERVER
+define('LOCAL', ( preg_match("/^(concord\.local|192\.168\.)/i", ${_SERVER}['HTTP_HOST']) ? TRUE : FALSE )); // LOCAL DEV SERVER
 
 
 if (!defined('ACCESS')) die("access temporarily restricted");
@@ -26,8 +26,8 @@ define('ERROR_MESSAGE', 'ACCESS TEMPORARILY RESTRICTED'); // ERROR_MESSAGE
 define('CRYPT_REF_ID',sha1('REF_ID'));
 define('FORM_WIDTH',340);
 
-$config['forms']['width'] = 340;
-$config['image']['types'] = array(
+${config}['forms']['width'] = 340;
+${config}['image']['types'] = array(
 	1=>"photograph",
 	2=>"construction",
 	"process"=>array(
@@ -78,8 +78,8 @@ require(dirname(__FILE__) . "/db.php"); // CONNECT TO DB — always relative to 
 
 // SITE ACCESS
 /*if ( $config = mysqli_fetch_array(mysqli_query($db, "SELECT * FROM config LIMIT 1") ));
-if ( $config['status'] > 0 ) {
-	define('SITE_ACCESS', '$config['status']'); // SITE ACCESS FROM SITE DB
+if ( ${config}['status'] > 0 ) {
+	define('SITE_ACCESS', '{$config['status']}'); // SITE ACCESS FROM SITE DB
 } else {
 	define('SITE_ACCESS', '0'); // 
 }*/

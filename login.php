@@ -20,18 +20,18 @@ define("TITLE","Login"); // PAGE TITLE
 
 // DATABASE /////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////// 4.0
-if ( $_POST['LOGIN'] ) {
+if ( ${_POST}['LOGIN'] ) {
 	
 	// CHECK USERNAME
-	if ( !$_POST['username'] || !$_POST['password'] ) {
-		$error['LOGIN'] = "please submit both your username and password";
-	} elseif ( user_login(user_check_login($_POST['password'],$_POST['username'])) ) {
+	if ( !{$_POST['username'] || !{$_POST['password'] ) {
+		${error}['LOGIN'] = "please submit both your username and password";
+	} elseif ( user_login(user_check_login({$_POST['password'],{$_POST['username'])) ) {
 		
-		//echo "logging in ". sha1(sha1($_POST['password'])) ."<p>";
+		//echo "logging in ". sha1(sha1({$_POST['password'])) ."<p>";
 		config_redirect();
 		//header("location:./");
 	} else {
-		$error['LOGIN'] = "The username and/or password did not match our records. Would you like your password emailed to you? <a href='". TEMPLATE_BASE_DIR ."forgot.php'>forgot password</a>";
+		${error}['LOGIN'] = "The username and/or password did not match our records. Would you like your password emailed to you? <a href='". TEMPLATE_BASE_DIR ."forgot.php'>forgot password</a>";
 	}
 	
 }
@@ -52,7 +52,7 @@ include(TEMPLATE_BASE_DIR . "_includes/inc_header.php");
 /////////////////////////////////////////////////////////////////////////////////////
 //echo "<TABLE BORDER=0 BORDERCOLOR=PINK ALIGN=CENTER CELLPADDING=1 CELLSPACING=0 RULES=NONE>";
 echo form_table_start();
-echo "<FORM ACTION=" . $_SERVER['PHP_SELF'] . " METHOD=POST>";
+echo "<FORM ACTION=" . ${_SERVER}['PHP_SELF'] . " METHOD=POST>";
 
 
 
@@ -72,17 +72,17 @@ echo "<FORM ACTION=" . $_SERVER['PHP_SELF'] . " METHOD=POST>";
 	
 	////////// USERNAME
 	$insert_form[] = array("username", trans("username"),
-		array("TEXT",$edit['username'],NULL,"MAXLENGTH=30"),
+		array("TEXT",{$edit['username'],NULL,"MAXLENGTH=30"),
 		NULL,NULL,NULL);
 	
 	////////// PASSWORD
 	$insert_form[] = array("password", trans("password"),
-		array("PASSWORD",$edit['password'],NULL,NULL),
+		array("PASSWORD",{$edit['password'],NULL,NULL),
 		NULL,NULL,NULL);
 	
 	////////// SUBMIT
 	$insert_form[] = array("LOGIN",NULL,
-		"<INPUT TYPE=SUBMIT NAME=LOGIN VALUE='Login'>", // $input['type'], $input['value'], $input['style'], $input['option']
+		"<INPUT TYPE=SUBMIT NAME=LOGIN VALUE='Login'>", // ${input}['type'], ${input}['value'], ${input}['style'], ${input}['option']
 		NULL,NULL,NULL); // $styles,$trailer,$options
 	
 	

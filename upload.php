@@ -42,19 +42,19 @@ if ( $_FILES["file"] ) {
 	$error = null;
 	
 	// Validate upload
-	if ( $_FILES['file']['error'] !== UPLOAD_ERR_OK ) {
-		$error = "Upload error code: " . $_FILES['file']['error'];
+	if ( ${_FILES}['file']['error'] !== UPLOAD_ERR_OK ) {
+		$error = "Upload error code: " . ${_FILES}['file']['error'];
 	}
 	
 	// Validate file size (max 10MB)
-	if ( !$error && $_FILES['file']['size'] > 10485760 ) {
+	if ( !$error && ${_FILES}['file']['size'] > 10485760 ) {
 		$error = "File too large. Maximum 10MB allowed.";
 	}
 	
 	// Validate MIME type
 	if ( !$error ) {
 		$finfo = finfo_open(FILEINFO_MIME_TYPE);
-		$mime_type = finfo_file($finfo, $_FILES['file']['tmp_name']);
+		$mime_type = finfo_file($finfo, ${_FILES}['file']['tmp_name']);
 		finfo_close($finfo);
 		
 		if ( !in_array($mime_type, $allowed_types) ) {
@@ -64,7 +64,7 @@ if ( $_FILES["file"] ) {
 	
 	// Validate extension
 	if ( !$error ) {
-		$ext = strtolower(pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION));
+		$ext = strtolower(pathinfo({$_FILES['file']['name'], PATHINFO_EXTENSION));
 		if ( !in_array($ext, $allowed_extensions) ) {
 			$error = "Invalid file extension. Allowed: " . implode(', ', $allowed_extensions);
 		}
@@ -72,7 +72,7 @@ if ( $_FILES["file"] ) {
 	
 	// Verify it's a real image
 	if ( !$error ) {
-		$imginfo = @getimagesize($_FILES['file']['tmp_name']);
+		$imginfo = @getimagesize({$_FILES['file']['tmp_name']);
 		if ( !$imginfo ) {
 			$error = "File is not a valid image.";
 		}
@@ -86,7 +86,7 @@ if ( $_FILES["file"] ) {
 		$filename = $base_img_dir . $uniq . '.' . $ext;
 		
 		// move uploaded file to destination
-		if ( move_uploaded_file($_FILES['file']['tmp_name'], $filename) ) {
+		if ( move_uploaded_file({$_FILES['file']['tmp_name'], $filename) ) {
 			dev_print($imginfo);
 			echo "\$filename --> " . htmlspecialchars($filename) . "<p>";
 		} else {

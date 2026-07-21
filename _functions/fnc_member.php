@@ -19,10 +19,10 @@
 	//if ( USER_ACCESS != NULL && USER_ACCESS >= $access ) {
 	//if ( defined('USER_ACCESS') && USER_ACCESS >= ( is_numeric($access) ? $access : ACCESS ) ) {
 	if ( defined('USER_ACCESS') && USER_ACCESS != NULL && (int) USER_ACCESS >= (int) $access ) {
-	//if ( defined('USER_ACCESS') && USER_ACCESS >= ( $access ? $access : ACCESS ) || preg_match("/concord.local|demessi.com/i", $_SERVER['HTTP_HOST']) ) {
+	//if ( defined('USER_ACCESS') && USER_ACCESS >= ( $access ? $access : ACCESS ) || preg_match("/concord.local|demessi.com/i", ${_SERVER}['HTTP_HOST']) ) {
 		return TRUE;
 	} else {
-		//header("location:login.php" . return_value("?" . $_SERVER['PHP_SELF'] . "?" . $_SERVER['QUERY_STRING'],NULL) );
+		//header("location:login.php" . return_value("?" . ${_SERVER}['PHP_SELF'] . "?" . ${_SERVER}['QUERY_STRING'],NULL) );
 		//exit();
 		return FALSE;
 	}
@@ -40,38 +40,38 @@
 	session_regenerate_id();
 	
 	// CHECK IF MEMBER IS LOGGED IN
-	$_SESSION['user_id'] = sha1($info['user_id']);
-	$_SESSION['password'] = $info['password'];
+	${_SESSION}['user_id'] = sha1({$info['user_id']);
+	${_SESSION}['password'] = ${info}['password'];
 	
-	setcookie("id", sha1($info['user_id']), time() + 31536000, "", ".".DOMAIN);
-	setcookie("lang", $info['language_code'], time() + 31536000, "", ".".DOMAIN);
+	setcookie("id", sha1({$info['user_id']), time() + 31536000, "", ".".DOMAIN);
+	setcookie("lang", ${info}['language_code'], time() + 31536000, "", ".".DOMAIN);
 	
 	//echo "before --> the user_id is --> [" . USER_ID . "]";
 	//dev_print(cart_qty()); echo "<P>";
 	
-	///cart_login($info['user_id']); // COPY SESSION CART ITEMS TO DATABASE CART
+	///cart_login({$info['user_id']); // COPY SESSION CART ITEMS TO DATABASE CART
 	
 	//echo "after --> ";
 	//dev_print(cart_qty()); echo "<P>";
 	//exit();
 	
 	
-	//if ( preg_match("/checkout.php/i",$_SERVER['PHP_SELF']) ) {
-	//	header("location:" . $_SERVER['PHP_SELF'] . "");
+	//if ( preg_match("/checkout.php/i",{$_SERVER['PHP_SELF']) ) {
+	//	header("location:" . ${_SERVER}['PHP_SELF'] . "");
 	//} else
 	
 	//dev_print($_SESSION);
 	//exit;
 	
-	/*if ( $_SESSION['redirect'] ) { // IF QUERY_STRING RETURN TO QUERY_STRING
-		//$_SESSION['redirect'] = $_SERVER['QUERY_STRING'];
-		header("Location:" . $_SESSION['redirect'] );
-	} elseif ( preg_match("/checkout.php/i", $_SERVER['PHP_SELF']) ) { // IF CHECKOUT LOGIN RETURN TO CHECKOUT
+	/*if ( ${_SESSION}['redirect'] ) { // IF QUERY_STRING RETURN TO QUERY_STRING
+		//{$_SESSION['redirect'] = ${_SERVER}['QUERY_STRING'];
+		header("Location:" . ${_SESSION}['redirect'] );
+	} elseif ( preg_match("/checkout.php/i", ${_SERVER}['PHP_SELF']) ) { // IF CHECKOUT LOGIN RETURN TO CHECKOUT
 		header("Location:./checkout.php");
 	} else*/
 	
 	//echo "what is going on here!<P>";
-	//echo "what is the redirect ? \$_SESSION['redirect'] --> " . $_SESSION['redirect'] . "<P>";
+	//echo "what is the redirect ? \${_SESSION}['redirect'] --> " . ${_SESSION}['redirect'] . "<P>";
 //	config_redirect();
 //ANASTAS:changed
 	
@@ -101,15 +101,15 @@
 	/*
 	*/
 	// DELETE SESSION INFORMATION
-	//$_SESSION['user_id'] = NULL;
-	unset($_SESSION['user_id']);
-	//$_SESSION['password'] = NULL;
-	unset($_SESSION['password']);
+	//{$_SESSION['user_id'] = NULL;
+	unset({$_SESSION['user_id']);
+	//{$_SESSION['password'] = NULL;
+	unset({$_SESSION['password']);
 	
-	//$_SESSION['checkout'] = NULL;
-	unset($_SESSION['checkout']);
-	//$_SESSION['selection'] = NULL;
-	unset($_SESSION['selection']);
+	//{$_SESSION['checkout'] = NULL;
+	unset({$_SESSION['checkout']);
+	//{$_SESSION['selection'] = NULL;
+	unset({$_SESSION['selection']);
 	
 	
 	//dev_print($_SESSION);
@@ -124,19 +124,19 @@
 	
 	// UNSET COOKIE INFORMATION
 	//setcookie("id", NULL, time() + 31536000);
-	//setcookie("id", sha1($info['user_id']), time() + 31536000);
-	setcookie("id", $_COOKIE['id'], time() - 3600, "", ".". DOMAIN);
-	setcookie("id", $_COOKIE['id'], time() - 3600);
+	//setcookie("id", sha1({$info['user_id']), time() + 31536000);
+	setcookie("id", ${_COOKIE}['id'], time() - 3600, "", ".". DOMAIN);
+	setcookie("id", ${_COOKIE}['id'], time() - 3600);
 	setcookie(session_name(), $_COOKIE[session_name()], time() - 3600, "", ".". DOMAIN);
 	setcookie(session_name(), $_COOKIE[session_name()], time() - 3600);
 	
 	// NO NEED TO UNSET LANGUAGE PREFERENCE
 	//setcookie("lang", NULL, time() + 31536000);
-	//setcookie("lang", $info['language_code'], time() + 31536000);
+	//setcookie("lang", ${info}['language_code'], time() + 31536000);
 	//setcookie("lang", NULL, time() + 31536000);
 	
-	if ( $_SERVER['QUERY_STRING'] ) { // IF QUERY_STRING RETURN TO QUERY_STRING
-		header("Location:./" . return_on($_SERVER['QUERY_STRING'], $_SERVER['QUERY_STRING']) );
+	if ( ${_SERVER}['QUERY_STRING'] ) { // IF QUERY_STRING RETURN TO QUERY_STRING
+		header("Location:./" . return_on({$_SERVER['QUERY_STRING'], ${_SERVER}['QUERY_STRING']) );
 	} else { // RETURN TO HOMEPAGE
 		header("Location:./");
 	}
@@ -151,16 +151,16 @@
 		function member_query($fields=NULL,$user_id=USER_ID) {
 	
 	if ( is_array($fields) ) {
-		$sql['fields'] = implode(", ", $fields);
+		${sql}['fields'] = implode(", ", $fields);
 	} elseif ( $fields ) {
-		$sql['fields'] = $fields;
+		${sql}['fields'] = $fields;
 	} else { // DEFAULT QUERY
-		$sql['fields'] = "u.user_id, u.domain_id, u.address_id, u.email, u.firstname, u.lastname, u.dob, u.gender, 
+		${sql}['fields'] = "u.user_id, u.domain_id, u.address_id, u.email, u.firstname, u.lastname, u.dob, u.gender, 
 			u.phone, u.fax, u.timezone_id, u.language_code, u.source, u.source_other";//, d.domain, d.shipping ";
 	}
 	
 	//LEFT JOIN domains d ON d.domain_id = u.domain_id 
-	$query = "SELECT ". $sql['fields'] ." 
+	$query = "SELECT ". ${sql}['fields'] ." 
 		FROM users u 
 		WHERE u.user_id = '" . $user_id . "' "; // , promotion_types // AND promotion_code = source
 	/*

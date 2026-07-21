@@ -25,17 +25,17 @@ if ( $_POST ) {
 	
 	////////// PROCESS SUBSECTION POST DATA
 	////////////////////////////////////////////////////////////////////////////////
-	if ( $_POST['SUBMIT_IDENTIFIER'] ) {
+	if ( ${_POST}['SUBMIT_IDENTIFIER'] ) {
 		
 		// CHECK IF FIELD SUBMITTED
-		if ( !$_POST['fieldname'] ) {
-			$error['fieldname'] = "please submit this field";
+		if ( !{$_POST['fieldname'] ) {
+			${error}['fieldname'] = "please submit this field";
 		}
 		
 		// SETUP AN SQL QUERY ARRAY TO PROCESS IF THERE ARE NO ERRORS
-		$db['insert'][] = "INSERT INTO `table_name` SET fieldname = '" . $_POST['fieldname'] . "'"; // INSERT SAMPLE
-		$db['insert'][] = "UPDATE `table_name` SET fieldname = '" . $_POST['fieldname'] . "' WHERE id = '" . $_POST['id'] . "' LIMIT 1"; // INSERT SAMPLE
-		$db['insert'][] = "DELETE FROM `table_name` WHERE id = '" . $_POST['id'] . "' LIMIT 1";
+		${db}['insert'][] = "INSERT INTO `table_name` SET fieldname = '" . ${_POST}['fieldname'] . "'"; // INSERT SAMPLE
+		${db}['insert'][] = "UPDATE `table_name` SET fieldname = '" . ${_POST}['fieldname'] . "' WHERE id = '" . ${_POST}['id'] . "' LIMIT 1"; // INSERT SAMPLE
+		${db}['insert'][] = "DELETE FROM `table_name` WHERE id = '" . ${_POST}['id'] . "' LIMIT 1";
 		
 	}
 	
@@ -44,14 +44,14 @@ if ( $_POST ) {
 	////////////////////////////////////////////////////////////////////////////////
 	
 	////////// IF NO ERRORS -->
-	if ( !$error && $db['insert'] ) {
+	if ( !$error && ${db}['insert'] ) {
 		
 		////////// MODIFY DATABASE
 		////////////////////////////////////////
-		foreach( $db['insert'] AS $process ) {
-			// PROCESS $db['insert'] ARRAY
+		foreach( ${db}['insert'] AS $process ) {
+			// PROCESS ${db}['insert'] ARRAY
 			if ( !mysqli_query($db, $process) ) {
-				$error['error'] = "there has been an error modifying the database\n" . mysqli_error($db) . "";
+				${error}['error'] = "there has been an error modifying the database\n" . mysqli_error($db) . "";
 			}
 		}
 		
@@ -74,7 +74,7 @@ include(BASE_DIR . "_includes/inc_header.php");
 /////////////////////////////////////////////////////////////////////////////////////
 //echo "<TABLE BORDER=0 ALIGN=CENTER WIDTH=100% CELLPADDING=1 CELLSPACING=0 RULES=NONE>";
 echo form_table_start();
-echo "<FORM ACTION=" . $_SERVER['PHP_SELF'] . " METHOD=POST>";
+echo "<FORM ACTION=" . ${_SERVER}['PHP_SELF'] . " METHOD=POST>";
 
 
 
@@ -104,29 +104,29 @@ echo "<FORM ACTION=" . $_SERVER['PHP_SELF'] . " METHOD=POST>";
 
 	////////// SUBMIT
 	$insert_form[] = array("SUBMIT",NULL,
-		"<INPUT TYPE=SUBMIT NAME=SUBMIT VALUE=SUBMIT>", // $input['type'], $input['value'], $input['style'], $input['option']
+		"<INPUT TYPE=SUBMIT NAME=SUBMIT VALUE=SUBMIT>", // ${input}['type'], ${input}['value'], ${input}['style'], ${input}['option']
 		NULL,NULL,NULL); // $styles,$trailer,$options
 	
 	
 	
 	////////////////////////////////////////////////////////////////////////////////
 	
-	$input['sample'] = "<SELECT NAME=sample>";
-	$input['sample'] .= "<OPTION STYLE='color:CCC;' VALUE=''>SELECT</OPTION>";
+	${input}['sample'] = "<SELECT NAME=sample>";
+	${input}['sample'] .= "<OPTION STYLE='color:CCC;' VALUE=''>SELECT</OPTION>";
 	
 	$query_samples = mysqli_query($db, "SELECT * FROM samples " . "");
 	while ( $results = mysqli_fetch_assoc($query_samples) ) {
 		
-		$input['sample'] .= "<OPTION VALUE='" . $results['sample'] . "' " . // SAMPLES SELECT
-			return_match($_POST['sample'], $results['sample'], "SELECTED") . ">" . $results['sample'] . " (" . $results['sample_id'] . ")</OPTION>";
+		${input}['sample'] .= "<OPTION VALUE='" . ${results}['sample'] . "' " . // SAMPLES SELECT
+			return_match({$_POST['sample'], ${results}['sample'], "SELECTED") . ">" . ${results}['sample'] . " (" . ${results}['sample_id'] . ")</OPTION>";
 		
 	}
 	
-	$input['sample'] .= "</SELECT>";
+	${input}['sample'] .= "</SELECT>";
 	
 	////////// SAMPLE
 	$insert_form[] = array("sample", trans("sample"), // $field_name
-		$input['sample'], // $input['type'], $input['value'], $input['style'], $input['option']
+		${input}['sample'], // ${input}['type'], ${input}['value'], ${input}['style'], ${input}['option']
 		NULL,NULL,NULL); // $styles,$trailer,$options
 	
 	
@@ -136,12 +136,12 @@ echo "<FORM ACTION=" . $_SERVER['PHP_SELF'] . " METHOD=POST>";
 
 	////////// FIELDNAME
 	$insert_form[] = array("fieldname", trans("fieldname"), // $field_name // WITH TRANSLATION FUNCTION
-		array("TEXT",$edit['fieldname'],NULL,NULL), // $input['type'], $input['value'], $input['style'], $input['option']
-		NULL,NULL,array("no_post" => $_POST['fieldname'])); // $styles,$trailer,$options
+		array("TEXT",{$edit['fieldname'],NULL,NULL), // ${input}['type'], ${input}['value'], ${input}['style'], ${input}['option']
+		NULL,NULL,array("no_post" => ${_POST}['fieldname'])); // $styles,$trailer,$options
 		
 		
 		/********** EXAMPLE: WHEN YOU DO NOT WANT TO REPOST FORM DATA ******************/
-		NULL,NULL,array(no_post=>$_POST['fieldname']
+		NULL,NULL,array(no_post=>{$_POST['fieldname']
 						value=>2)); // SEE inpput_form FUNCTION FOR VALUE DEFINITIONS
 		/************************************************* END EXAMPLE *****************/
 			

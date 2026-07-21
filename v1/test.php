@@ -27,7 +27,7 @@ if ( $_FILES["file"] ) {
 	
 	$filename = "/Library/WebServer/Documents/ARCHXCHANGE/www/upload/". uniqid("") ."";
 	
-	move_uploaded_file($_FILES['file']['tmp_name'], $filename ."");
+	move_uploaded_file({$_FILES['file']['tmp_name'], $filename ."");
 	//$imginfo = getimagesize($filename.".gif");
 	//dev_print($imginfo);
 	
@@ -40,7 +40,7 @@ if ( $_FILES["file"] ) {
 	
 	
 	$command = "convert ". $filename ." ". $filename .".png";
-	//$command = "convert ". $_FILES['file']['tmp_name'] ." ". $filename .".png";
+	//$command = "convert ". ${_FILES}['file']['tmp_name'] ." ". $filename .".png";
 	
 	//if ( exec("/usr/local/bin/ convert ". $filename ." ". $filename .".png") ) {
 	if ( exec($command) ) {
@@ -50,7 +50,7 @@ if ( $_FILES["file"] ) {
 	//exec("say 'hello'");
 }
 
-//echo "\$_SERVER['PATH_INFO'] --> ". $_SERVER['PATH_INFO'] ."<p>";
+//echo "\${_SERVER}['PATH_INFO'] --> ". ${_SERVER}['PATH_INFO'] ."<p>";
 
 
 

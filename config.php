@@ -7,12 +7,12 @@ if (!defined('ACCESS')) die("access temporarily restricted");
 if ( !defined('CRON') && !LOCAL ) { // IF NOT RUN BY CRONTAB CONTINUE
 	
 	// MAKE SURE THE URL HAS THE www. IN FRONT OF IT
-	//( !preg_match("/faq.php|index.php|contact.php|products.php/i",$_SERVER['PHP_SELF']) ) // DO NOT REDIRECT TO www ON THESE PAGES
-	//if ( !preg_match("/www./i",$_SERVER['HTTP_HOST']) || preg_match("/\.$|\:80$/i",$_SERVER['HTTP_HOST']) ) {
-	if ( !preg_match("/www./i",$_SERVER['HTTP_HOST']) || preg_match("/\.$|\:80$/i",$_SERVER['HTTP_HOST']) ) {
-		header("location:http://www.". DOMAIN . $_SERVER['REQUEST_URI']);
+	//( !preg_match("/faq.php|index.php|contact.php|products.php/i",{$_SERVER['PHP_SELF']) ) // DO NOT REDIRECT TO www ON THESE PAGES
+	//if ( !preg_match("/www./i",{$_SERVER['HTTP_HOST']) || preg_match("/\.$|\:80$/i",{$_SERVER['HTTP_HOST']) ) {
+	if ( !preg_match("/www./i",{$_SERVER['HTTP_HOST']) || preg_match("/\.$|\:80$/i",{$_SERVER['HTTP_HOST']) ) {
+		header("location:http://www.". DOMAIN . ${_SERVER}['REQUEST_URI']);
 	} elseif ( defined('SSL') ) { // IS SSL REQUIRED ON THE PAGE --> define('SSL',TRUE); // ADD TO PAGE HEADER
-		if ( !$_SERVER['HTTPS'] ) header("location:https://www.". DOMAIN . $_SERVER['REQUEST_URI']);
+		if ( !{$_SERVER['HTTPS'] ) header("location:https://www.". DOMAIN . ${_SERVER}['REQUEST_URI']);
 			
 	}
 
@@ -43,8 +43,8 @@ define('DEV_TRANS', TRUE); // DEVELOPER TRANSLATION STATE
 define('DEV', (LOCAL ? TRUE : FALSE)); // DEVELOPER STATE
 
 // we may possibly change these to less security risk config variables
-//$config['dev'] = TRUE; // DEVELOPER STATE
-//$config['dev_trans'] = TRUE; // DEVELOPER STATE
+//{$config['dev'] = TRUE; // DEVELOPER STATE
+//{$config['dev_trans'] = TRUE; // DEVELOPER STATE
 
 
 ////////// DEVELOPMENT STATE
@@ -98,28 +98,28 @@ define('ROOT_DIR', (LOCAL ? '/home/archx/' : '/www/domains/archxchange.com/')); 
 //echo "here!<p>";
 /*
 $user = mysqli_fetch_assoc(mysqli_query($db, "SELECT user_id,email,language_code,firstname,lastname,access FROM users 
-		WHERE SHA1(user_id) = '" . $_SESSION['user_id'] . "' AND password = '" . $_SESSION['password'] . "'"));
+		WHERE SHA1(user_id) = '" . ${_SESSION}['user_id'] . "' AND password = '" . ${_SESSION}['password'] . "'"));
 dev_print($user);
 
 $user = mysqli_fetch_assoc(mysqli_query($db, "SELECT user_id,email,language_code,firstname,lastname,access,password FROM users WHERE username = 'anastas'"));
 dev_print($user);
 
-echo "sha1(\$user['user_id']) --> ". sha1($user['user_id']) ."<p>";
-echo "sha1(\$user['password']) --> ". sha1($user['password']) ."<p>";
-echo "\$user['password'] --> ". $user['password'] ."<p>";
+echo "sha1(\${user}['user_id']) --> ". sha1({$user['user_id']) ."<p>";
+echo "sha1(\${user}['password']) --> ". sha1({$user['password']) ."<p>";
+echo "\${user}['password'] --> ". ${user}['password'] ."<p>";
 
 dev_print($_SESSION);
 */
 
 // SETUP USER ACCESS
 if ( @$user = mysqli_fetch_assoc(mysqli_query($db, "SELECT user_id,email,language_code,firstname,lastname,access FROM users 
-		WHERE SHA1(user_id) = '" . db_escape($_SESSION['user_id']) . "' AND SHA1(password) = '" . db_escape($_SESSION['password']) . "'")) ) { // MEMBERS --> CHECK FOR SESSION VARIABLES
+		WHERE SHA1(user_id) = '" . db_escape({$_SESSION['user_id']) . "' AND SHA1(password) = '" . db_escape({$_SESSION['password']) . "'")) ) { // MEMBERS --> CHECK FOR SESSION VARIABLES
 	//echo "here! 1<p>";
-	define('USER_ACCESS', ( $user['access'] < 3 ? 3 : $user['access'] )); // STATUS
+	define('USER_ACCESS', ( ${user}['access'] < 3 ? 3 : ${user}['access'] )); // STATUS
 	config_user($user);
 	
 } elseif ( @$user = mysqli_fetch_assoc(mysqli_query($db, "SELECT user_id,email,language_code,firstname,lastname FROM users 
-		WHERE SHA1(user_id) = '" . db_escape($_COOKIE['id']) . "'")) ) { // MEMBERS --> CHECK FOR SESSION VARIABLES
+		WHERE SHA1(user_id) = '" . db_escape({$_COOKIE['id']) . "'")) ) { // MEMBERS --> CHECK FOR SESSION VARIABLES
 	//echo "here! 2<p>";
 	define('USER_ACCESS', 1); // STATUS
 	config_user($user);
@@ -134,8 +134,8 @@ if ( @$user = mysqli_fetch_assoc(mysqli_query($db, "SELECT user_id,email,languag
 // MOVED TO REGISTRATION PAGE UNTIL SETUP A SETTINGS PAGE
 // LANGUAGE THAT IS USED TO REGISTER WILL BE THE DEFAULT LANGUAGE
 // IF CHANGED SET THE LANGUAGE CODE
-/*if ( $_POST['language_change'] && USER_ID != NULL ) {
-	$sql = "UPDATE users SET language_code = '". $_POST['language_change'] ."' WHERE user_id = '". USER_ID ."' LIMIT 1";
+/*if ( ${_POST}['language_change'] && USER_ID != NULL ) {
+	$sql = "UPDATE users SET language_code = '". ${_POST}['language_change'] ."' WHERE user_id = '". USER_ID ."' LIMIT 1";
 	if ( !mysqli_query($db, $sql) ) {
 		mail(EMAIL_ADMIN,"ERROR - LANGUAGE CODE","COULD NOT UPDATE USERS LANGUAGE CODE\n\n". $sql);
 	}

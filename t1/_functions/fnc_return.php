@@ -10,7 +10,7 @@
 // www.amazon.com/gp/registry/registry.html/ref=wlem-si-html_viewall/104-5286992-6636711?id=2KGT0YDSKQ1NS
 // www.amazon.com
 $return = parse_url($url);
-return $return['host'];
+return ${return}['host'];
 
 /*return preg_replace(
 	array("/(http)?(s)?(:\/\/)?([\.\-\_\w]+)(.*)/i"), // [\.\-\_\w] // ([\w\.\/\=\?\,\;\-\_\~\!\@\#\$\%\+\&]*)([\.\-\_\w]+)
@@ -59,8 +59,8 @@ return $return['host'];
 	if ( is_array($vars) ) { // IF ARRAY
 		foreach ($vars AS $value) { // LOOP THROUGH ARRAY
 			if ( is_array($value) ) {
-				if ( $value['0'] ) { // IF ARRAY VALUE EXISTS
-					return $value['1']; // RETURN
+				if ( ${value}['0'] ) { // IF ARRAY VALUE EXISTS
+					return ${value}['1']; // RETURN
 					break;
 				}
 			} else {
@@ -93,7 +93,7 @@ return $return['host'];
 
 
 
-//		//function return_first($var['1'],$var['2'],$var['3']=NULL) { // RETURN FIRST VALUE
+//		//function return_first({$var['1'],{$var['2'],{$var['3']=NULL) { // RETURN FIRST VALUE
 		function return_first($var_1,$var_2,$var_3=NULL) { // RETURN FIRST VALUE
 	$var = array($var_1,$var_2,$var_3);
 	foreach ($var AS $value) {
